@@ -1,12 +1,13 @@
-package br.com.soluevo.cobrei
+package br.com.soluevo.cobrei.application
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import br.com.soluevo.cobrei.R
 
-class MainActivity : AppCompatActivity() {
+class NavigationHostActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.host_navigation_activity)
     }
 }
