@@ -37,8 +37,8 @@ android {
 
     flavorDimensions "default"
     productFlavors {
-        sandbox {
-            buildConfigField("String", "BASE_URL", "\"http://monitor-stant.herokuapp.com/\"")
+        develop {
+            buildConfigField("String", "BASE_URL", "\"http://develop.com/\"")
         }
 
         mock {
@@ -46,7 +46,7 @@ android {
         }
 
         prod {
-            buildConfigField("String", "BASE_URL", "\"http://polls.apiblueprint.org/\"")
+            buildConfigField("String", "BASE_URL", "\"http://prod.com/\"")
         }
     }
 }

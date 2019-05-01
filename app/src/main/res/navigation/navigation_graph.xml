@@ -8,19 +8,12 @@
               android:name="br.com.soluevo.cobrei.application.modules.login.LoginFragment"
               android:label="login_fragment"
               tools:layout="@layout/login_fragment">
-        <action android:id="@+id/toSettings"
-                app:destination="@id/settingsFragment"/>
-        <action android:id="@+id/ToAccount"
+        <action android:id="@+id/toAccount"
                 app:destination="@id/accountFragment"/>
     </fragment>
 
-    <fragment android:id="@+id/settingsFragment"
-              android:name="br.com.soluevo.cobrei.SettingsFragment"
-              android:label="fragment_settings"
-              tools:layout="@layout/fragment_settings"/>
-
     <fragment android:id="@+id/accountFragment"
-              android:name="br.com.soluevo.cobrei.AccountFragment"
+              android:name="br.com.soluevo.cobrei.application.modules.account.AccountFragment"
               android:label="fragment_account"
               tools:layout="@layout/fragment_account">
         <action android:id="@+id/action_accountFragment_to_nameFragment" app:destination="@+id/nameFragment"
@@ -28,7 +21,7 @@
     </fragment>
 
     <fragment android:id="@+id/nameFragment"
-              android:name="br.com.soluevo.cobrei.NameFragment"
+              android:name="br.com.soluevo.cobrei.application.modules.account.NameFragment"
               android:label="fragment_name"
               tools:layout="@layout/fragment_name">
         <argument android:name="nameArg"
