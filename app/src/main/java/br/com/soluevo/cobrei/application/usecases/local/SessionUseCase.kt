@@ -2,8 +2,9 @@ package br.com.soluevo.cobrei.application.usecases.local
 
 import br.com.soluevo.cobrei.domain.response.AuthResponse
 import br.com.soluevo.cobrei.service.local.session.SessionLocalDataSource
+import javax.inject.Inject
 
-class SessionUseCase(private val mSessionLocalDataSource: SessionLocalDataSource) {
+class SessionUseCase @Inject constructor(private val mSessionLocalDataSource: SessionLocalDataSource) {
 
     fun saveAuthResponseInSession(authResponse: AuthResponse) {
         mSessionLocalDataSource.saveAuthInSession(authResponse)

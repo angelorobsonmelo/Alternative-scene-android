@@ -9,9 +9,10 @@ import okhttp3.Route
 
 class TokenAuthenticator: Authenticator {
 
+    // Todo Implementar lógica após o token expirar
     override fun authenticate(route: Route?, response: Response): Request? {
         val session = CobreiApplication.mSessionUseCase!!.getAuthResponseInSession()
-//        StantObrasApplication.authUseCase?.reAuth(session?.user!!)
+//        CobreiApplication.authUserAndSaveInSessionUseCase?.reAuth(session?.user!!)
         return response.request().newBuilder().header("Authorization", "Bearer").build()
     }
 

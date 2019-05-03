@@ -54,14 +54,13 @@ class CustomInterceptorRequest : Interceptor {
     }
 
     private fun getRequestbuilder(original: Request): Request.Builder {
-        val isLogged = CobreiApplication.mSessionUseCase?.isLogged()
+        val isLogged = CobreiApplication.mSessionUseCase?.isLogged() ?: false
 
-        return if (isLogged!!) {
+        return if (isLogged) {
             val session = CobreiApplication.mSessionUseCase!!.getAuthResponseInSession()
 
             original.newBuilder()
-//                .addHeader("Authorization", "Bearer ${session?.Token}")
-//                .addHeader("code", "${session?.user?.financialCode}")
+                .addHeader("Authorization", "Bearer ${session?.token}")
         } else {
             original.newBuilder()
         }

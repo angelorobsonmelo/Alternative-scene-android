@@ -37,8 +37,8 @@ android {
 
     flavorDimensions "default"
     productFlavors {
-        develop {
-            buildConfigField("String", "BASE_URL", "\"http://develop.com/\"")
+        staging {
+            buildConfigField("String", "BASE_URL", "\"https://cobrei-staging.herokuapp.com/\"")
         }
 
         mock {
@@ -113,6 +113,12 @@ dependencies {
 
     // Navigation For Kotlin use navigation-ui-ktx
     implementation 'androidx.navigation:navigation-ui-ktx:2.0.0'
+
+
+    // Dagger 2
+    implementation 'com.google.dagger:dagger:2.14.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt 'com.google.dagger:dagger-compiler:2.14.1'
 
     testImplementation 'junit:junit:4.12'
 

@@ -2,29 +2,30 @@ package br.com.soluevo.cobrei.application
 
 import android.app.Application
 import android.content.Intent
-import br.com.soluevo.cobrei.application.injections.InjectionUseCase
+import br.com.soluevo.cobrei.application.commom.di.components.application.DaggerApplicationComponent
+import br.com.soluevo.cobrei.application.commom.di.modules.application.ApplicationModule
 import br.com.soluevo.cobrei.application.usecases.local.SessionUseCase
-import br.com.soluevo.cobrei.application.usecases.remote.auth.AuthUseCase
 
-class CobreiApplication: Application() {
+class CobreiApplication : Application() {
 
     companion object {
-        @JvmStatic
-       var mSessionUseCase: SessionUseCase? = null
-       var authUseCase: AuthUseCase? = null
+
+        var mSessionUseCase: SessionUseCase? = null
         lateinit var instance: CobreiApplication
     }
 
     override fun onCreate() {
         super.onCreate()
-        mSessionUseCase = InjectionUseCase.provideSessionUseCase(applicationContext)
-        authUseCase = InjectionUseCase.provideAuthseCase()
-
-        if (mSessionUseCase!!.isLogged()) {
-            startActivity(Intent(applicationContext, NavigationHostActivity::class.java))
-        }
-
+        setUpInjections()
         instance = this
+    }
+
+    private fun setUpInjections() {
+        val applicationComponent = DaggerApplicationComponent.builder()
+            .applicationModule(ApplicationModule(this))
+            .build()
+
+        mSessionUseCase = applicationComponent.getSessionUseCase()
     }
 
 }
