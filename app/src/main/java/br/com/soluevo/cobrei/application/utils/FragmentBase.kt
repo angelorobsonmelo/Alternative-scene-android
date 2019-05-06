@@ -6,7 +6,7 @@ import androidx.navigation.findNavController
 import br.com.soluevo.cobrei.R
 import br.com.soluevo.cobrei.application.CobreiApplication
 
-abstract class FragmentBase: Fragment() {
+open class FragmentBase: Fragment() {
 
     fun showAlert(message: String) {
         val builder = AlertDialog.Builder(context!!)

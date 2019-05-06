@@ -1,9 +1,12 @@
 package br.com.soluevo.cobrei.application.modules.login
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -17,14 +20,21 @@ import br.com.soluevo.cobrei.application.commom.di.modules.application.Applicati
 import br.com.soluevo.cobrei.application.commom.di.modules.application.ContextModule
 import br.com.soluevo.cobrei.application.modules.login.di.component.DaggerUsersComponent
 import br.com.soluevo.cobrei.application.utils.FragmentBase
+import br.com.soluevo.cobrei.application.utils.facebookmanager.FBCallbackManager
+import br.com.soluevo.cobrei.application.utils.facebookmanager.FacebookCallBack
+import br.com.soluevo.cobrei.application.utils.facebookmanager.UserFacebook
 import br.com.soluevo.cobrei.databinding.LoginFragmentBinding
 import br.com.soluevo.cobrei.domain.request.AuthRequest
+import com.facebook.CallbackManager
+import com.facebook.login.widget.LoginButton
 import javax.inject.Inject
 
-class LoginFragment : FragmentBase(), LoginHandler {
+class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
 
     private lateinit var binding: LoginFragmentBinding
     private lateinit var validator: Validator
+    private lateinit var buttonFacebookLogin: LoginButton
+    private lateinit var callbackManager: CallbackManager
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -51,6 +61,7 @@ class LoginFragment : FragmentBase(), LoginHandler {
         injectDependency()
         setupFragmentBinding()
         setupValidator()
+        setupFacebookLogin()
         initObserveOnSuccess()
         initOserveOnError()
     }
@@ -75,9 +86,24 @@ class LoginFragment : FragmentBase(), LoginHandler {
         validator.enableFormValidationMode()
     }
 
-    override fun auth(authRequest: AuthRequest) {
+    private fun setupFacebookLogin() {
+        callbackManager = CallbackManager.Factory.create()
+        buttonFacebookLogin = binding.authFacebookButton
+        buttonFacebookLogin.fragment = this
+
+        FBCallbackManager(buttonFacebookLogin, this, callbackManager)
+    }
+
+    override fun onPressLoginButton(authRequest: AuthRequest) {
         if (validator.validate()) {
             viewModel.auth(authRequest)
+        }
+    }
+
+    override fun onPressFacebookButton(view: View) {
+        if (view == binding.facebookButtonCustom) {
+            binding.progressBar.visibility = VISIBLE
+            binding.authFacebookButton.performClick()
         }
     }
 
@@ -93,5 +119,22 @@ class LoginFragment : FragmentBase(), LoginHandler {
         })
     }
 
+    override fun fbCallbackOnSuccess(userFacebook: UserFacebook) {
+        binding.progressBar.visibility = VISIBLE
+        goToMainScreen()
+    }
+
+    override fun fbCallbackOnError(localizedMessage: String) {
+        binding.progressBar.visibility = GONE
+        showAlert(localizedMessage)
+    }
+
+    override fun fbCallbackOnCancel() {
+        binding.progressBar.visibility = GONE
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+    }
 
 }

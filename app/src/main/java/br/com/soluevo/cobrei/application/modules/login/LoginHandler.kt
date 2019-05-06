@@ -5,5 +5,7 @@ import br.com.soluevo.cobrei.domain.request.AuthRequest
 
 interface LoginHandler {
 
-    fun auth(authRequest: AuthRequest)
+    fun onPressLoginButton(authRequest: AuthRequest)
+    fun onPressFacebookButton(view: View)
+
 }

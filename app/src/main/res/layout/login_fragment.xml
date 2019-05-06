@@ -46,7 +46,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:text="@={authRequest.userName}"
+                        android:text="@={authRequest.email}"
                         app:validateEmpty="@{true}"
                         app:validateTypeAutoDismiss="@{true}"
                         android:hint="@string/e_mail"/>
@@ -81,9 +81,9 @@
                     android:id="@+id/auth_submit_button"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
-                    android:onClick="@{() -> handler.auth(authRequest)}"
+                    android:onClick="@{() -> handler.onPressLoginButton(authRequest)}"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    android:layout_marginTop="26dp"
+                    android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@+id/auth_password_text_input_layout"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="37dp"
@@ -93,7 +93,27 @@
                     android:layout_marginBottom="8dp"
                     android:text="@string/enter"
                     android:backgroundTint="@color/tomato"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintVertical_bias="0.02"/>
+
+            <com.facebook.login.widget.LoginButton
+                    android:id="@+id/auth_facebook_button"
+                    android:layout_width="160dp"
+                    android:layout_height="22dp"
+                    android:visibility="gone" tools:layout_editor_absoluteY="404dp"
+                    tools:layout_editor_absoluteX="206dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/facebook_button_custom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enter_with_facebook"
+                    android:onClick="@{handler::onPressFacebookButton}"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/auth_submit_button"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"/>
 
             <ProgressBar
                     style="?android:attr/progressBarStyle"

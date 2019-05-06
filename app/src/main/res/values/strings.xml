@@ -10,4 +10,9 @@
     <string name="e_mail" translatable="false">E-mail</string>
     <string name="password">Password</string>
     <string name="enter">LOGIN</string>
+
+    <string name="facebook_app_id" translatable="false">476689902868869</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb476689902868869</string>
+    <string name="enter_with_facebook">Login with Facebook</string>
+
 </resources>
