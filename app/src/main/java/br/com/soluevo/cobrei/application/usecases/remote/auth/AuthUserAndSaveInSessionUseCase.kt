@@ -13,7 +13,7 @@ class AuthUserAndSaveInSessionUseCase(private val authRemoteDataSource: AuthRemo
         authRemoteDataSource.auth(autuRequest, object : BaseRemoteDataSource.RemoteDataSourceCallback<AuthResponse> {
 
             override fun onSuccess(response: AuthResponse) {
-                CobreiApplication.mSessionUseCase?.saveAuthResponseInSession(response)
+                CobreiApplication.mSessionUseCase.saveAuthResponseInSession(response)
                 callback.onSuccess(response)
             }
 

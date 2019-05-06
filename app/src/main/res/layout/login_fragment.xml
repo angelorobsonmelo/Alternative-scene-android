@@ -46,7 +46,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:text="@={authRequest.email}"
+                        android:text="@={authRequest.username}"
                         app:validateEmpty="@{true}"
                         app:validateTypeAutoDismiss="@{true}"
                         android:hint="@string/e_mail"/>

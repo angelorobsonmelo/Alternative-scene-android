@@ -1,4 +1,4 @@
-package br.com.soluevo.cobrei.application.utils.extensions
+package br.com.soluevo.cobrei.application.commom.utils.extensions
 
 import android.graphics.Bitmap
 import android.util.Base64

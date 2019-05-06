@@ -1,6 +1,6 @@
-package br.com.soluevo.cobrei.application.utils.facebookmanager
+package br.com.soluevo.cobrei.application.commom.utils.facebookmanager
 
-import br.com.soluevo.cobrei.application.utils.handlerstatuscode.HandlerErrorStatusCode
+import br.com.soluevo.cobrei.application.commom.utils.handlerstatuscode.HandlerErrorStatusCode
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback

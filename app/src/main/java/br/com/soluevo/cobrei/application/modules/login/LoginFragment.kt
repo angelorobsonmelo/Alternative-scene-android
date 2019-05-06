@@ -12,17 +12,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
 import br.com.ilhasoft.support.validation.Validator
 import br.com.soluevo.cobrei.R
-import br.com.soluevo.cobrei.application.CobreiApplication
-import br.com.soluevo.cobrei.application.commom.di.modules.application.ApplicationModule
 import br.com.soluevo.cobrei.application.commom.di.modules.application.ContextModule
 import br.com.soluevo.cobrei.application.modules.login.di.component.DaggerUsersComponent
-import br.com.soluevo.cobrei.application.utils.FragmentBase
-import br.com.soluevo.cobrei.application.utils.facebookmanager.FBCallbackManager
-import br.com.soluevo.cobrei.application.utils.facebookmanager.FacebookCallBack
-import br.com.soluevo.cobrei.application.utils.facebookmanager.UserFacebook
+import br.com.soluevo.cobrei.application.commom.utils.FragmentBase
+import br.com.soluevo.cobrei.application.commom.utils.facebookmanager.FBCallbackManager
+import br.com.soluevo.cobrei.application.commom.utils.facebookmanager.FacebookCallBack
+import br.com.soluevo.cobrei.application.commom.utils.facebookmanager.UserFacebook
 import br.com.soluevo.cobrei.databinding.LoginFragmentBinding
 import br.com.soluevo.cobrei.domain.request.AuthRequest
 import com.facebook.CallbackManager
@@ -70,7 +67,6 @@ class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
         DaggerUsersComponent.builder()
             .contextModule(ContextModule(context!!))
             .build()
-
             .inject(this)
     }
 

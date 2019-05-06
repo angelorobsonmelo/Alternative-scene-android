@@ -1,4 +1,4 @@
-package br.com.soluevo.cobrei.application.utils
+package br.com.soluevo.cobrei.application.commom.utils
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView

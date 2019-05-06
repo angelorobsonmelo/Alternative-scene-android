@@ -1,4 +1,4 @@
-package br.com.soluevo.cobrei.application.utils.bindingAdapter
+package br.com.soluevo.cobrei.application.commom.utils.bindingAdapter
 
 import android.graphics.BitmapFactory
 import android.view.View
@@ -6,9 +6,9 @@ import android.view.View.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import br.com.soluevo.cobrei.application.utils.extensions.convertDateToString
-import br.com.soluevo.cobrei.application.utils.extensions.convertDateToStringDDMMM
-import br.com.soluevo.cobrei.application.utils.extensions.formatToViewDateTimeDefaults
+import br.com.soluevo.cobrei.application.commom.utils.extensions.convertDateToString
+import br.com.soluevo.cobrei.application.commom.utils.extensions.convertDateToStringDDMMM
+import br.com.soluevo.cobrei.application.commom.utils.extensions.formatToViewDateTimeDefaults
 import com.squareup.picasso.Picasso
 import java.util.*
 

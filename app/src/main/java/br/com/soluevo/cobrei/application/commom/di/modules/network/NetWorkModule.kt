@@ -4,6 +4,7 @@ import android.content.Context
 import br.com.soluevo.cobrei.BuildConfig
 import br.com.soluevo.cobrei.service.CustomInterceptorRequest
 import br.com.soluevo.cobrei.service.TokenAuthenticator
+import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -80,6 +81,7 @@ class NetWorkModule {
     @Singleton
     fun provideGson(): Gson {
         return GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create()
     }

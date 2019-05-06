@@ -1,7 +1,7 @@
 package br.com.soluevo.cobrei.service
 
 import br.com.soluevo.cobrei.application.CobreiApplication
-import br.com.soluevo.cobrei.application.utils.handlerstatuscode.HandlerErrorStatusCode
+import br.com.soluevo.cobrei.application.commom.utils.handlerstatuscode.HandlerErrorStatusCode
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

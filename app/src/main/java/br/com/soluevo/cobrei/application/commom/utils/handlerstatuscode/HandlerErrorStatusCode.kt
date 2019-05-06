@@ -1,4 +1,4 @@
-package br.com.soluevo.cobrei.application.utils.handlerstatuscode
+package br.com.soluevo.cobrei.application.commom.utils.handlerstatuscode
 
 import br.com.soluevo.cobrei.R
 

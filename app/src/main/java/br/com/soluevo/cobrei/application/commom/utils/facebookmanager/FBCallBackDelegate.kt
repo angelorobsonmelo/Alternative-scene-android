@@ -1,4 +1,4 @@
-package br.com.soluevo.cobrei.application.utils.facebookmanager
+package br.com.soluevo.cobrei.application.commom.utils.facebookmanager
 
 interface FacebookCallBack {
 
