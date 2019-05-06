@@ -14,6 +14,7 @@ import br.com.ilhasoft.support.validation.Validator
 import br.com.soluevo.cobrei.R
 import br.com.soluevo.cobrei.application.CobreiApplication
 import br.com.soluevo.cobrei.application.commom.di.modules.application.ApplicationModule
+import br.com.soluevo.cobrei.application.commom.di.modules.application.ContextModule
 import br.com.soluevo.cobrei.application.modules.login.di.component.DaggerUsersComponent
 import br.com.soluevo.cobrei.application.utils.FragmentBase
 import br.com.soluevo.cobrei.databinding.LoginFragmentBinding
@@ -42,16 +43,16 @@ class LoginFragment : FragmentBase(), LoginHandler {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkIfUserIsLogged()
+//        checkIfUserIsLogged()
         initElements()
     }
 
-    private fun checkIfUserIsLogged() {
-        val isLogged = CobreiApplication.mSessionUseCase?.isLogged() ?: false
+ /*   private fun checkIfUserIsLogged() {
+        val isLogged = CobreiApplication.mSessionUseCase.isLogged() ?: false
         if (isLogged) {
             goToMainScreen()
         }
-    }
+    }*/
 
     private fun initElements() {
         injectDependency()
@@ -63,8 +64,9 @@ class LoginFragment : FragmentBase(), LoginHandler {
 
     private fun injectDependency() {
         DaggerUsersComponent.builder()
-            .applicationModule(ApplicationModule(CobreiApplication.instance))
+            .contextModule(ContextModule(context!!))
             .build()
+
             .inject(this)
     }
 

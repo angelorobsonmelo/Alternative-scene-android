@@ -1,16 +1,15 @@
 package br.com.soluevo.cobrei.application
 
 import android.app.Application
-import android.content.Intent
 import br.com.soluevo.cobrei.application.commom.di.components.application.DaggerApplicationComponent
-import br.com.soluevo.cobrei.application.commom.di.modules.application.ApplicationModule
+import br.com.soluevo.cobrei.application.commom.di.modules.application.ContextModule
 import br.com.soluevo.cobrei.application.usecases.local.SessionUseCase
 
 class CobreiApplication : Application() {
 
     companion object {
 
-        var mSessionUseCase: SessionUseCase? = null
+        lateinit var mSessionUseCase: SessionUseCase
         lateinit var instance: CobreiApplication
     }
 
@@ -22,7 +21,7 @@ class CobreiApplication : Application() {
 
     private fun setUpInjections() {
         val applicationComponent = DaggerApplicationComponent.builder()
-            .applicationModule(ApplicationModule(this))
+            .contextModule(ContextModule(applicationContext))
             .build()
 
         mSessionUseCase = applicationComponent.getSessionUseCase()

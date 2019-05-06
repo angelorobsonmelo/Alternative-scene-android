@@ -2,7 +2,6 @@ package br.com.soluevo.cobrei.application.commom.di.modules.network
 
 import android.content.Context
 import br.com.soluevo.cobrei.BuildConfig
-import br.com.soluevo.cobrei.application.commom.di.modules.application.ApplicationModule
 import br.com.soluevo.cobrei.service.CustomInterceptorRequest
 import br.com.soluevo.cobrei.service.TokenAuthenticator
 import com.google.gson.Gson
@@ -17,12 +16,15 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
+import javax.inject.Singleton
 
-@Module(includes = [ApplicationModule::class])
+@Module
 class NetWorkModule {
 
     @Provides
-    fun provideFile(context: Context): File {
+    @Singleton
+    fun provideFile(@Named("ApplicationContext") context: Context): File {
         val file = File(context.filesDir, "cache_dir")
         val isNotExists = !file.exists()
         if (isNotExists)
@@ -31,21 +33,25 @@ class NetWorkModule {
     }
 
     @Provides
+    @Singleton
     fun provideCache(cacheFile: File): Cache {
         return Cache(cacheFile, 10 * 1000 * 1000)  // 10 MiB cache
     }
 
     @Provides
+    @Singleton
     fun provideCustomInterceptorRequest(): CustomInterceptorRequest {
         return CustomInterceptorRequest()
     }
 
     @Provides
+    @Singleton
     fun provideTokenAuthenticator(): TokenAuthenticator {
         return TokenAuthenticator()
     }
 
     @Provides
+    @Singleton
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -53,6 +59,7 @@ class NetWorkModule {
     }
 
     @Provides
+    @Singleton
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         customInterceptorRequest: CustomInterceptorRequest,
@@ -70,6 +77,7 @@ class NetWorkModule {
     }
 
     @Provides
+    @Singleton
     fun provideGson(): Gson {
         return GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -77,6 +85,7 @@ class NetWorkModule {
     }
 
     @Provides
+    @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
