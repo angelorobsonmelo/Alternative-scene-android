@@ -43,16 +43,9 @@ class LoginFragment : FragmentBase(), LoginHandler {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        checkIfUserIsLogged()
+        checkIfUserIsLogged()
         initElements()
     }
-
- /*   private fun checkIfUserIsLogged() {
-        val isLogged = CobreiApplication.mSessionUseCase.isLogged() ?: false
-        if (isLogged) {
-            goToMainScreen()
-        }
-    }*/
 
     private fun initElements() {
         injectDependency()
@@ -92,10 +85,6 @@ class LoginFragment : FragmentBase(), LoginHandler {
         viewModel.successObserver.observe(this, Observer {
             goToMainScreen()
         })
-    }
-
-    private fun goToMainScreen() {
-        view?.findNavController()?.navigate(R.id.toAccount)
     }
 
     private fun initOserveOnError() {
