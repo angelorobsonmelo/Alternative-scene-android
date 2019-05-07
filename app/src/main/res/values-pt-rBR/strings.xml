@@ -11,5 +11,6 @@
     <string name="settings">Configurações</string>
     <string name="personal_data">Dados Pessoais</string>
     <string name="bank_data">Dados Bancários</string>
-
+    <string name="document_number">N° documento: %s</string>
+    <string name="bank_document_number">N° documento banco: %s</string>
 </resources>
