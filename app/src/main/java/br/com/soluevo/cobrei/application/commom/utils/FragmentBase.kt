@@ -2,9 +2,6 @@ package br.com.soluevo.cobrei.application.commom.utils
 
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import br.com.soluevo.cobrei.R
-import br.com.soluevo.cobrei.application.CobreiApplication
 
 open class FragmentBase: Fragment() {
 
@@ -20,9 +17,10 @@ open class FragmentBase: Fragment() {
         alert.show()
     }
 
-    override fun onResume() {
+  /*  override fun onResume() {
         super.onResume()
         checkIfUserIsLogged()
+        activity?.bottomNavigation?.visibility = VISIBLE
     }
 
      fun checkIfUserIsLogged() {
@@ -33,7 +31,7 @@ open class FragmentBase: Fragment() {
     }
 
      fun goToMainScreen() {
-        view?.findNavController()?.navigate(R.id.toAccount)
-    }
+        view?.findNavController()?.navigate(R.id.accountFragment)
+    }*/
 
 }

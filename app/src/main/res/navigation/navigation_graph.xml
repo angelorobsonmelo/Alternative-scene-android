@@ -15,15 +15,13 @@
     <fragment android:id="@+id/accountFragment"
               android:name="br.com.soluevo.cobrei.application.modules.account.AccountFragment"
               android:label="fragment_account"
-              tools:layout="@layout/fragment_account">
-        <action android:id="@+id/action_accountFragment_to_nameFragment" app:destination="@+id/nameFragment"
-                app:popUpToInclusive="false"/>
+              tools:layout="@layout/account_fragment">
     </fragment>
 
-    <fragment android:id="@+id/nameFragment"
-              android:name="br.com.soluevo.cobrei.application.modules.account.NameFragment"
+    <fragment android:id="@+id/settingsFragment"
+              android:name="br.com.soluevo.cobrei.application.modules.invoice.InvoiceFragment"
               android:label="fragment_name"
-              tools:layout="@layout/fragment_name">
+              tools:layout="@layout/invoice_fragment">
         <argument android:name="nameArg"
                   app:argType="string"/>
     </fragment>

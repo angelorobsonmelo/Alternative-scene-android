@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import br.com.ilhasoft.support.validation.Validator
 import br.com.soluevo.cobrei.R
 import br.com.soluevo.cobrei.application.commom.di.modules.application.ContextModule
@@ -24,6 +25,7 @@ import br.com.soluevo.cobrei.databinding.LoginFragmentBinding
 import br.com.soluevo.cobrei.domain.request.AuthRequest
 import com.facebook.CallbackManager
 import com.facebook.login.widget.LoginButton
+import kotlinx.android.synthetic.main.host_navigation_activity.*
 import javax.inject.Inject
 
 class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
@@ -50,8 +52,13 @@ class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkIfUserIsLogged()
         initElements()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.bottomNavigation?.visibility = GONE
+        activity?.toolbar?.visibility = GONE
     }
 
     private fun initElements() {
@@ -131,6 +138,10 @@ class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callbackManager.onActivityResult(requestCode, resultCode, data)
+    }
+
+    fun goToMainScreen() {
+        view?.findNavController()?.navigate(R.id.accountFragment)
     }
 
 }

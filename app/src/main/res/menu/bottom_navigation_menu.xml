@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/bottomNavFragment"
+            android:icon="@drawable/ic_format_list_numbered_24dp"
+            android:title="Cobrança"/>
+    <item
+            android:id="@+id/settingsFragment"
+            android:icon="@drawable/ic_pan_tool_24dp"
+            android:title="Cobrar"/>
+
+    <item
+            android:id="@+id/accountFragment"
+            android:icon="@drawable/ic_settings_24dp"
+            android:title="Configuração"/>
+</menu>

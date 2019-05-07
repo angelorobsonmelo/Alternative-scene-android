@@ -100,8 +100,9 @@
                     android:id="@+id/auth_facebook_button"
                     android:layout_width="160dp"
                     android:layout_height="22dp"
-                    android:visibility="gone" tools:layout_editor_absoluteY="404dp"
-                    tools:layout_editor_absoluteX="206dp"/>
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/facebook_button_custom"
