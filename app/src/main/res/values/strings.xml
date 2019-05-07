@@ -19,5 +19,6 @@
     <string name="bank_data">Bank data</string>
     <string name="document_number">Document n°: %s</string>
     <string name="bank_document_number">Bank document n°: %s</string>
+    <string name="no_data">No data at this time</string>
 
 </resources>

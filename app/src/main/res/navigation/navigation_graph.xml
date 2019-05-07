@@ -19,9 +19,9 @@
     </fragment>
 
     <fragment android:id="@+id/settingsFragment"
-              android:name="br.com.soluevo.cobrei.application.modules.invoice.InvoiceFragment"
+              android:name="br.com.soluevo.cobrei.application.modules.invoices.invoices.InvoicesFragment"
               android:label="fragment_name"
-              tools:layout="@layout/invoice_fragment">
+              tools:layout="@layout/invoices_fragment">
         <argument android:name="nameArg"
                   app:argType="string"/>
     </fragment>

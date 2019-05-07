@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 open class BaseViewModel<T>: ViewModel() {
 
     val successObserver   = MutableLiveData<T>()
-    var emptyObserver     = MutableLiveData<String>()
+    var emptyObserver     = MutableLiveData<Boolean>()
     val errorObserver     = MutableLiveData<String>()
     val isLoadingObserver = MutableLiveData<Boolean>()
 
