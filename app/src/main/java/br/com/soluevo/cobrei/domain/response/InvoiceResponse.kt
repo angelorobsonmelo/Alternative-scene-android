@@ -9,5 +9,6 @@ data class InvoiceResponse(
     val value: Int,
     val bankSlug: String,
     val description: String,
-    val status: Boolean
+    val status: Boolean,
+    val dateTime: String
 )

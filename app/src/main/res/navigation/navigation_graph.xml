@@ -18,11 +18,9 @@
               tools:layout="@layout/account_fragment">
     </fragment>
 
-    <fragment android:id="@+id/settingsFragment"
+    <fragment android:id="@+id/invoicesFragment"
               android:name="br.com.soluevo.cobrei.application.modules.invoices.invoices.InvoicesFragment"
-              android:label="fragment_name"
+              android:label="invoicesFragment"
               tools:layout="@layout/invoices_fragment">
-        <argument android:name="nameArg"
-                  app:argType="string"/>
     </fragment>
 </navigation>

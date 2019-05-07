@@ -5,9 +5,12 @@ import android.view.View
 import android.view.View.*
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import br.com.soluevo.cobrei.R
 import br.com.soluevo.cobrei.application.commom.utils.extensions.convertDateToString
 import br.com.soluevo.cobrei.application.commom.utils.extensions.convertDateToStringDDMMM
+import br.com.soluevo.cobrei.application.commom.utils.extensions.formatToServerDateTimeDefaults
 import br.com.soluevo.cobrei.application.commom.utils.extensions.formatToViewDateTimeDefaults
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -16,6 +19,11 @@ import java.util.*
 @BindingAdapter("date")
 fun convertDateToString(textView: TextView, date: Date) {
     textView.text = date.convertDateToString()
+}
+
+@BindingAdapter("dateTime")
+fun convertdateTimeToString(textView: TextView, date: Date) {
+    textView.text = date.formatToServerDateTimeDefaults()
 }
 
 @BindingAdapter("initialDate")
@@ -46,14 +54,14 @@ fun loadImageFromPath(view: ImageView, path: String) {
     view.setImageBitmap(BitmapFactory.decodeFile(path))
 }
 
-//@BindingAdapter( "status")
-//fun status(imageView: ImageView, status: Boolean) {
-//    if (status) {
-//        imageView.setImageDrawable(ContextCompat.getDrawable(imageView.context, R.drawable.ic_check))
-//    } else {
-//        imageView.setImageDrawable(ContextCompat.getDrawable(imageView.context, R.drawable.ic_error))
-//    }
-//}
+@BindingAdapter( "status")
+fun status(imageView: ImageView, status: Boolean) {
+    if (status) {
+        imageView.setImageDrawable(ContextCompat.getDrawable(imageView.context, R.drawable.ic_check))
+    } else {
+        imageView.setImageDrawable(ContextCompat.getDrawable(imageView.context, R.drawable.ic_error))
+    }
+}
 
 //@BindingAdapter( "wasSent")
 //fun wasSent(imageView: ImageView, status: Boolean) {

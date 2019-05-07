@@ -26,6 +26,7 @@ class InvoicesAdapter(
     }
 
     override fun getItemCount() = invoices.size
+
     fun updateItems(proposals: MutableList<InvoiceResponse>) {
         this.invoices.clear()
         this.invoices.addAll(proposals)

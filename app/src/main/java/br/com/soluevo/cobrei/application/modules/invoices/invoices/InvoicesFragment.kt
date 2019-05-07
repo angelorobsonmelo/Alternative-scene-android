@@ -18,6 +18,7 @@ import br.com.soluevo.cobrei.application.commom.utils.FragmentBase
 import br.com.soluevo.cobrei.application.modules.invoices.invoices.adapter.InvoicesAdapter
 import br.com.soluevo.cobrei.application.modules.invoices.invoices.di.component.DaggerInvoicesComponent
 import br.com.soluevo.cobrei.databinding.InvoicesFragmentBinding
+import kotlinx.android.synthetic.main.host_navigation_activity.*
 import javax.inject.Inject
 
 class InvoicesFragment : FragmentBase() {
@@ -45,10 +46,22 @@ class InvoicesFragment : FragmentBase() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showToolbar()
+        showBottomNavigation()
         setUpElements()
     }
 
+    private fun showToolbar() {
+        activity?.toolbar?.visibility = View.VISIBLE
+        activity?.toolbar?.title = getString(R.string.settings)
+    }
+
+    private fun showBottomNavigation() {
+        activity?.bottomNavigation?.visibility = View.VISIBLE
+    }
+
     private fun setUpElements() {
+        activity?.toolbar?.title = getString(R.string.charges)
         injectDependency()
         setUpDataBinding()
         setupRecyclerView()
