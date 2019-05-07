@@ -12,7 +12,7 @@ data class User(
     val email: String,
     val phoneNumber: String,
     val bankSlug: String,
-    val backAgency: Int,
+    val bankAgency: Int,
     val bankAccount: Int,
     val bankHolder: String,
     val bankDocumentNumber: Int,

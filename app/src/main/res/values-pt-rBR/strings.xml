@@ -8,5 +8,8 @@
     <string name="unknown_error">Erro desconhecido, entre em contato com o administrador do sistema</string>
     <string name="password">Senha</string>
     <string name="enter">Entrar</string>
+    <string name="settings">Configurações</string>
+    <string name="personal_data">Dados Pessoais</string>
+    <string name="bank_data">Dados Bancários</string>
 
 </resources>
