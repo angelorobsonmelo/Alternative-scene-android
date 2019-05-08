@@ -8,8 +8,8 @@
               android:name="br.com.soluevo.cobrei.application.modules.login.LoginFragment"
               android:label="login_fragment"
               tools:layout="@layout/login_fragment">
-        <action android:id="@+id/toAccount"
-                app:destination="@id/accountFragment"/>
+        <action android:id="@+id/to_invoicesFragment"
+                app:destination="@id/invoicesFragment"/>
     </fragment>
 
     <fragment android:id="@+id/accountFragment"

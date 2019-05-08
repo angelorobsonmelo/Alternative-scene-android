@@ -141,7 +141,8 @@ class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
     }
 
     fun goToMainScreen() {
-        view?.findNavController()?.navigate(R.id.invoicesFragment)
+        val view = activity?.bottomNavigation?.findViewById<View>(R.id.invoicesFragment)
+        view?.performClick()
     }
 
 }
