@@ -27,5 +27,6 @@
     <string name="invoices">Invoices</string>
     <string name="collect">Collect</string>
     <string name="collects">Collects</string>
+    <string name="clients">Clients</string>
 
 </resources>

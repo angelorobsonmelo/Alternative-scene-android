@@ -8,6 +8,7 @@ data class Client(
     val documentNumber: Int,
     val email: String,
     val phoneNumber: String,
-    val description: String,
-    val data: Client
-)
+    val description: String
+) {
+    constructor() : this("", "", "", 0, "", "", "")
+}

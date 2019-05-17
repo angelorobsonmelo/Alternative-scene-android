@@ -127,6 +127,9 @@ dependencies {
     // Facebook SDK
     implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
 
+    // Search spinner
+    implementation 'com.github.MdFarhanRaja:SearchableSpinner:2.0'
+
     // Dagger 2
     implementation 'com.google.dagger:dagger:2.14.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

@@ -21,5 +21,6 @@
     <string name="date_time">Data/Hora</string>
     <string name="invoices">Cobranças</string>
     <string name="collect">Cobrar</string>
+    <string name="clients">Clientes</string>
 
 </resources>

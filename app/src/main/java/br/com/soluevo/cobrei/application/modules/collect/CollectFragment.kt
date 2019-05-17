@@ -1,6 +1,7 @@
 package br.com.soluevo.cobrei.application.modules.collect
 
 
+import `in`.galaxyofandroid.spinerdialog.SpinnerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,14 +16,19 @@ import br.com.soluevo.cobrei.application.commom.di.modules.application.ContextMo
 import br.com.soluevo.cobrei.application.commom.utils.FragmentBase
 import br.com.soluevo.cobrei.application.modules.collect.di.component.DaggerCollectComponent
 import br.com.soluevo.cobrei.databinding.CollectFragmentBinding
+import br.com.soluevo.cobrei.domain.Client
+import br.com.soluevo.cobrei.domain.request.CollectRequest
 import kotlinx.android.synthetic.main.host_navigation_activity.*
+import java.util.*
 import javax.inject.Inject
 
 
-class CollectFragment : FragmentBase() {
+class CollectFragment : FragmentBase(), CollectHandler {
 
     private lateinit var binding: CollectFragmentBinding
     private lateinit var validator: Validator
+    private var spinnerDialog: SpinnerDialog? = null
+    private var client = Client()
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -30,6 +36,8 @@ class CollectFragment : FragmentBase() {
     private val viewModel: CollectViewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory)[CollectViewModel::class.java]
     }
+
+    private var clients = mutableListOf<Client>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,6 +75,8 @@ class CollectFragment : FragmentBase() {
     private fun setUpDataBinding() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        binding.handler = this
+        binding.collectRequest = CollectRequest()
     }
 
     private fun setupValidator() {
@@ -76,8 +86,18 @@ class CollectFragment : FragmentBase() {
 
     private fun initObserverSuccess() {
         viewModel.successObserver.observe(this, Observer {
-
+            clients = it
+            setUpClientsDialog()
         })
+    }
+
+    private fun setUpClientsDialog() {
+        spinnerDialog = SpinnerDialog(activity, clients.map { it.name } as ArrayList<String>, "Select Client")
+
+        spinnerDialog?.bindOnSpinerListener { _, position ->
+            client = clients[position]
+            binding.getClientsButton.text = client.name
+        }
     }
 
     private fun initObserverError() {
@@ -86,5 +106,19 @@ class CollectFragment : FragmentBase() {
         })
     }
 
+    override fun onPressShowClientsDialog() {
+        spinnerDialog?.showSpinerDialog()
+    }
+
+    override fun onPressSaveCollect(collectRequest: CollectRequest) {
+        if (validator.validate()) {
+            if (client.name.isNotBlank()) {
+                collectRequest.value = binding.valueEditText.value
+                collectRequest.clientUuid = client.authUuid
+            }
+        }
+
+
+    }
 
 }
