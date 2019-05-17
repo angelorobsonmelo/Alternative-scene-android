@@ -7,7 +7,7 @@
             android:enabled="true"
             android:title="@string/invoices"/>
     <item
-            android:id="@+id/bottomNavFragment"
+            android:id="@+id/collectFragment"
             android:icon="@drawable/ic_pan_tool_24dp"
             android:title="Cobrar"/>
 

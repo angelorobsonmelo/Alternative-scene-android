@@ -81,7 +81,7 @@ class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
         binding.lifecycleOwner = this
         binding.handler = this
         binding.viewModel = viewModel
-        binding.authRequest = AuthRequest()
+        binding.authRequest = AuthRequest("admin", "invoiceSoluevo@3")
     }
 
     private fun setupValidator() {

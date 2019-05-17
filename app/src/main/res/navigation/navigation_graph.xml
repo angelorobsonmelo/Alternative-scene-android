@@ -23,4 +23,8 @@
               android:label="invoicesFragment"
               tools:layout="@layout/invoices_fragment">
     </fragment>
+    <fragment android:id="@+id/collectFragment"
+              android:name="br.com.soluevo.cobrei.application.modules.collect.CollectFragment"
+              android:label="fragment_collect"
+              tools:layout="@layout/fragment_collect"/>
 </navigation>

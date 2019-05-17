@@ -54,10 +54,10 @@ class CustomInterceptorRequest : Interceptor {
     }
 
     private fun getRequestbuilder(original: Request): Request.Builder {
-        val isLogged = CobreiApplication.mSessionUseCase?.isLogged() ?: false
+        val isLogged = CobreiApplication.mSessionUseCase.isLogged()
 
         return if (isLogged) {
-            val session = CobreiApplication.mSessionUseCase!!.getAuthResponseInSession()
+            val session = CobreiApplication.mSessionUseCase.getAuthResponseInSession()
 
             original.newBuilder()
                 .addHeader("Authorization", "Bearer ${session?.token}")
