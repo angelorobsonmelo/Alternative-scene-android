@@ -2,11 +2,12 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:id="@+id/bottomNavFragment"
-            android:icon="@drawable/ic_format_list_numbered_24dp"
-            android:title="Cobrança"/>
-    <item
             android:id="@+id/invoicesFragment"
+            android:icon="@drawable/ic_format_list_numbered_24dp"
+            android:enabled="true"
+            android:title="@string/invoices"/>
+    <item
+            android:id="@+id/bottomNavFragment"
             android:icon="@drawable/ic_pan_tool_24dp"
             android:title="Cobrar"/>
 

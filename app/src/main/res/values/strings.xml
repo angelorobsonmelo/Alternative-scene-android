@@ -25,5 +25,6 @@
     <string name="value">Value</string>
     <string name="client">Client</string>
     <string name="date_time">Date/Time</string>
+    <string name="invoices">Invoices</string>
 
 </resources>

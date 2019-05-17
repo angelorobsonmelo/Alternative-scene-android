@@ -19,4 +19,5 @@
     <string name="value">Valor</string>
     <string name="client">Cliente</string>
     <string name="date_time">Data/Hora</string>
+    <string name="invoices">Cobranças</string>
 </resources>

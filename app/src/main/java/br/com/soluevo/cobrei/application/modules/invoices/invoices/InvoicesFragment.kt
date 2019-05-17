@@ -53,7 +53,7 @@ class InvoicesFragment : FragmentBase() {
 
     private fun showToolbar() {
         activity?.toolbar?.visibility = View.VISIBLE
-        activity?.toolbar?.title = getString(R.string.settings)
+        activity?.toolbar?.title = getString(R.string.charges)
     }
 
     private fun showBottomNavigation() {
@@ -61,7 +61,6 @@ class InvoicesFragment : FragmentBase() {
     }
 
     private fun setUpElements() {
-        activity?.toolbar?.title = getString(R.string.charges)
         injectDependency()
         setUpDataBinding()
         setupRecyclerView()
