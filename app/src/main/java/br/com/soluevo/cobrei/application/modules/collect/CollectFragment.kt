@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import br.com.soluevo.cobrei.R
+import br.com.soluevo.cobrei.application.CobreiApplication
 import br.com.soluevo.cobrei.application.commom.di.modules.application.ContextModule
 import br.com.soluevo.cobrei.application.commom.utils.FragmentBase
 import br.com.soluevo.cobrei.application.modules.collect.di.component.DaggerCollectComponent
@@ -59,6 +61,7 @@ class CollectFragment : FragmentBase(), CollectHandler {
         setupValidator()
         initObserverSuccess()
         initObserverError()
+        initObserverCreateInvoiceSuccess()
     }
 
     private fun setUpToolbar() {
@@ -115,10 +118,17 @@ class CollectFragment : FragmentBase(), CollectHandler {
             if (client.name.isNotBlank()) {
                 collectRequest.value = binding.valueEditText.value
                 collectRequest.clientUuid = client.authUuid
+                collectRequest.authUuid = CobreiApplication.mSessionUseCase.getAuthResponseInSession()?.user?.uuid!!
+
+                viewModel.createInvoice(collectRequest)
             }
         }
+    }
 
-
+    private fun initObserverCreateInvoiceSuccess() {
+        viewModel.successCreateInvoiceObserver.observe(this, Observer {
+            Toast.makeText(context, "Criou", Toast.LENGTH_LONG).show()
+        })
     }
 
 }

@@ -1,6 +1,7 @@
 package br.com.soluevo.cobrei.service.remote.invoices
 
 import androidx.annotation.NonNull
+import br.com.soluevo.cobrei.domain.request.CollectRequest
 import br.com.soluevo.cobrei.domain.response.InvoiceResponse
 import br.com.soluevo.cobrei.service.BaseRemoteDataSource
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,6 +31,24 @@ class InvoiceRemoteDataSourceImpl(private val apiDataSource: InvoiceApiDataSourc
             .subscribe(
                 {
                     callback.onSuccess(it)
+                },
+                { throwable ->
+                    callback.onError(throwable.localizedMessage)
+                }
+            )
+    }
+
+    override fun createInvoice(
+        collectRequest: CollectRequest,
+        callback: BaseRemoteDataSource.VoidRemoteDataSourceCallback
+    ) {
+        apiDataSource.createInvoice(collectRequest).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { callback.isLoading(true) }
+            .doAfterTerminate { callback.isLoading(false) }
+            .subscribe(
+                {
+                    callback.onSuccess()
                 },
                 { throwable ->
                     callback.onError(throwable.localizedMessage)
