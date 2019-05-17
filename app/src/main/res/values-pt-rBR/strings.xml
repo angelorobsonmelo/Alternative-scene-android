@@ -14,10 +14,12 @@
     <string name="document_number">N° documento: %s</string>
     <string name="bank_document_number">N° documento banco: %s</string>
     <string name="no_data">Não há dados no momento</string>
-    <string name="charges">Cobranças</string>
+    <string name="collects">Cobranças</string>
     <string name="status">Status</string>
     <string name="value">Valor</string>
     <string name="client">Cliente</string>
     <string name="date_time">Data/Hora</string>
     <string name="invoices">Cobranças</string>
+    <string name="collect">Cobrar</string>
+
 </resources>

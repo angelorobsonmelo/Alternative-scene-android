@@ -26,5 +26,5 @@
     <fragment android:id="@+id/collectFragment"
               android:name="br.com.soluevo.cobrei.application.modules.collect.CollectFragment"
               android:label="fragment_collect"
-              tools:layout="@layout/fragment_collect"/>
+              tools:layout="@layout/collect_fragment"/>
 </navigation>

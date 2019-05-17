@@ -53,7 +53,7 @@ class InvoicesFragment : FragmentBase() {
 
     private fun showToolbar() {
         activity?.toolbar?.visibility = View.VISIBLE
-        activity?.toolbar?.title = getString(R.string.charges)
+        activity?.toolbar?.title = getString(R.string.collects)
     }
 
     private fun showBottomNavigation() {

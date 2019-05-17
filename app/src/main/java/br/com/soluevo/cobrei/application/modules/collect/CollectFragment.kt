@@ -5,17 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import br.com.ilhasoft.support.validation.Validator
 import br.com.soluevo.cobrei.R
 import br.com.soluevo.cobrei.application.commom.di.modules.application.ContextModule
 import br.com.soluevo.cobrei.application.commom.utils.FragmentBase
 import br.com.soluevo.cobrei.application.modules.collect.di.component.DaggerCollectComponent
+import br.com.soluevo.cobrei.databinding.CollectFragmentBinding
+import kotlinx.android.synthetic.main.host_navigation_activity.*
 import javax.inject.Inject
 
 
 class CollectFragment : FragmentBase() {
+
+    private lateinit var binding: CollectFragmentBinding
+    private lateinit var validator: Validator
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -28,15 +35,26 @@ class CollectFragment : FragmentBase() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        return inflater.inflate(R.layout.fragment_collect, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.collect_fragment, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setUpElements()
+    }
+
+    private fun setUpElements() {
+        setUpToolbar()
         injectDependency()
+        setUpDataBinding()
+        setupValidator()
         initObserverSuccess()
         initObserverError()
+    }
+
+    private fun setUpToolbar() {
+        activity?.toolbar?.title = getString(R.string.collect)
     }
 
     private fun injectDependency() {
@@ -46,6 +64,15 @@ class CollectFragment : FragmentBase() {
             .inject(this)
     }
 
+    private fun setUpDataBinding() {
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+    }
+
+    private fun setupValidator() {
+        validator = Validator(binding)
+        validator.enableFormValidationMode()
+    }
 
     private fun initObserverSuccess() {
         viewModel.successObserver.observe(this, Observer {
