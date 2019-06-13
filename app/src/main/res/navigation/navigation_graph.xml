@@ -5,7 +5,7 @@
             app:startDestination="@id/loginFragment">
 
     <fragment android:id="@+id/loginFragment"
-              android:name="br.com.soluevo.cobrei.application.modules.login.LoginFragment"
+              android:name="br.com.angelorobson.alternativescene.application.modules.login.LoginFragment"
               android:label="login_fragment"
               tools:layout="@layout/login_fragment">
         <action android:id="@+id/to_invoicesFragment"
@@ -13,18 +13,18 @@
     </fragment>
 
     <fragment android:id="@+id/accountFragment"
-              android:name="br.com.soluevo.cobrei.application.modules.account.AccountFragment"
+              android:name="br.com.angelorobson.alternativescene.application.modules.account.AccountFragment"
               android:label="fragment_account"
               tools:layout="@layout/account_fragment">
     </fragment>
 
     <fragment android:id="@+id/invoicesFragment"
-              android:name="br.com.soluevo.cobrei.application.modules.invoices.invoices.InvoicesFragment"
+              android:name="br.com.angelorobson.alternativescene.application.modules.invoices.invoices.InvoicesFragment"
               android:label="invoicesFragment"
               tools:layout="@layout/invoices_fragment">
     </fragment>
     <fragment android:id="@+id/collectFragment"
-              android:name="br.com.soluevo.cobrei.application.modules.collect.CollectFragment"
+              android:name="br.com.angelorobson.alternativescene.application.modules.collect.CollectFragment"
               android:label="fragment_collect"
               tools:layout="@layout/collect_fragment"/>
 </navigation>

@@ -6,13 +6,13 @@
 
     <data>
         <variable name="viewModel"
-                  type="br.com.soluevo.cobrei.application.modules.collect.CollectViewModel"/>
+                  type="br.com.angelorobson.alternativescene.application.modules.collect.CollectViewModel"/>
 
         <variable name="handler"
-                  type="br.com.soluevo.cobrei.application.modules.collect.CollectHandler"/>
+                  type="br.com.angelorobson.alternativescene.application.modules.collect.CollectHandler"/>
 
         <variable name="collectRequest"
-                  type="br.com.soluevo.cobrei.domain.request.CollectRequest"/>
+                  type="br.com.angelorobson.alternativescene.domain.request.CollectRequest"/>
 
     </data>
 

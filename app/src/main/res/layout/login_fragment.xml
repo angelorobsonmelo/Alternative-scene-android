@@ -9,13 +9,13 @@
 
         <variable
                 name="authRequest"
-                type="br.com.soluevo.cobrei.domain.request.AuthRequest"/>
+                type="br.com.angelorobson.alternativescene.domain.request.AuthRequest"/>
         <variable
                 name="handler"
-                type="br.com.soluevo.cobrei.application.modules.login.LoginHandler"/>
+                type="br.com.angelorobson.alternativescene.application.modules.login.LoginHandler"/>
         <variable
                 name="viewModel"
-                type="br.com.soluevo.cobrei.application.modules.login.LoginViewModel"/>
+                type="br.com.angelorobson.alternativescene.application.modules.login.LoginViewModel"/>
     </data>
 
     <ScrollView

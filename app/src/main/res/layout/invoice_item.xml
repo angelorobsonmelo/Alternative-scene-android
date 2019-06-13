@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="invoice"
-                type="br.com.soluevo.cobrei.domain.response.InvoiceResponse"/>
+                type="br.com.angelorobson.alternativescene.domain.response.InvoiceResponse"/>
     </data>
 
     <TableLayout
