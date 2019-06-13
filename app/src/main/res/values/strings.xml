@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <string name="app_name">Cobrei</string>
+    <string name="app_name">Alternative Scene</string>
     <string name="unauthorized">Incorrect e-mail or password.</string>
     <string name="internal_error">An internal error occurred.</string>
     <string name="unknown_error">Unknown error, contact your system administrator</string>

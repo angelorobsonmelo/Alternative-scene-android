@@ -5,12 +5,12 @@ import br.com.angelorobson.alternativescene.application.commom.di.components.app
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.usecases.local.SessionUseCase
 
-class CobreiApplication : Application() {
+class AlternativeSceneApplication : Application() {
 
     companion object {
 
         lateinit var mSessionUseCase: SessionUseCase
-        lateinit var instance: CobreiApplication
+        lateinit var instance: AlternativeSceneApplication
     }
 
     override fun onCreate() {

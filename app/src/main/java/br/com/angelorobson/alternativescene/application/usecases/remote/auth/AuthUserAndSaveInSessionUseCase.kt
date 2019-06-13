@@ -1,6 +1,6 @@
 package br.com.angelorobson.alternativescene.application.usecases.remote.auth
 
-import br.com.angelorobson.alternativescene.application.CobreiApplication
+import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
 import br.com.angelorobson.alternativescene.domain.request.AuthRequest
 import br.com.angelorobson.alternativescene.domain.response.AuthResponse
 import br.com.angelorobson.alternativescene.service.BaseRemoteDataSource
@@ -13,7 +13,7 @@ class AuthUserAndSaveInSessionUseCase(private val authRemoteDataSource: AuthRemo
         authRemoteDataSource.auth(autuRequest, object : BaseRemoteDataSource.RemoteDataSourceCallback<AuthResponse> {
 
             override fun onSuccess(response: AuthResponse) {
-                CobreiApplication.mSessionUseCase.saveAuthResponseInSession(response)
+                AlternativeSceneApplication.mSessionUseCase.saveAuthResponseInSession(response)
                 callback.onSuccess(response)
             }
 

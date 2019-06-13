@@ -1,6 +1,6 @@
 package br.com.angelorobson.alternativescene.service
 
-import br.com.angelorobson.alternativescene.application.CobreiApplication
+import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
 import br.com.angelorobson.alternativescene.application.commom.utils.handlerstatuscode.HandlerErrorStatusCode
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -54,10 +54,10 @@ class CustomInterceptorRequest : Interceptor {
     }
 
     private fun getRequestbuilder(original: Request): Request.Builder {
-        val isLogged = CobreiApplication.mSessionUseCase.isLogged()
+        val isLogged = AlternativeSceneApplication.mSessionUseCase.isLogged()
 
         return if (isLogged) {
-            val session = CobreiApplication.mSessionUseCase.getAuthResponseInSession()
+            val session = AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()
 
             original.newBuilder()
                 .addHeader("Authorization", "Bearer ${session?.token}")

@@ -24,7 +24,7 @@ open class FragmentBase: Fragment() {
     }
 
      fun checkIfUserIsLogged() {
-        val isLogged = CobreiApplication.mSessionUseCase.isLogged()
+        val isLogged = AlternativeSceneApplication.mSessionUseCase.isLogged()
         if (isLogged) {
             goToMainScreen()
         }

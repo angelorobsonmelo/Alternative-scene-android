@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import br.com.angelorobson.alternativescene.R
-import br.com.angelorobson.alternativescene.application.CobreiApplication
+import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
 import br.com.angelorobson.alternativescene.application.modules.collect.di.component.DaggerCollectComponent
@@ -118,7 +118,7 @@ class CollectFragment : FragmentBase(), CollectHandler {
             if (client.name.isNotBlank()) {
                 collectRequest.value = binding.valueEditText.value
                 collectRequest.clientUuid = client.authUuid
-                collectRequest.authUuid = CobreiApplication.mSessionUseCase.getAuthResponseInSession()?.user?.uuid!!
+                collectRequest.authUuid = AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()?.user?.uuid!!
 
                 viewModel.createInvoice(collectRequest)
             }

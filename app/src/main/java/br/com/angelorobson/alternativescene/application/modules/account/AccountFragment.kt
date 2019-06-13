@@ -8,7 +8,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import br.com.angelorobson.alternativescene.R
-import br.com.angelorobson.alternativescene.application.CobreiApplication
+import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
 import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
 import br.com.angelorobson.alternativescene.databinding.AccountFragmentBinding
 import kotlinx.android.synthetic.main.host_navigation_activity.*
@@ -47,6 +47,6 @@ class AccountFragment : FragmentBase() {
         binding.user = getUserLogged()
     }
 
-    private fun getUserLogged() = CobreiApplication.mSessionUseCase.getAuthResponseInSession()?.user
+    private fun getUserLogged() = AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()?.user
 
 }

@@ -65,7 +65,6 @@ class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
         injectDependency()
         setupFragmentBinding()
         setupValidator()
-        setupFacebookLogin()
         initObserveOnSuccess()
         initOserveOnError()
     }
@@ -91,8 +90,6 @@ class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
 
     private fun setupFacebookLogin() {
         callbackManager = CallbackManager.Factory.create()
-        buttonFacebookLogin = binding.authFacebookButton
-        buttonFacebookLogin.fragment = this
 
         FBCallbackManager(buttonFacebookLogin, this, callbackManager)
     }
@@ -106,7 +103,7 @@ class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
     override fun onPressFacebookButton(view: View) {
         if (view == binding.facebookButtonCustom) {
             binding.progressBar.visibility = VISIBLE
-            binding.authFacebookButton.performClick()
+
         }
     }
 
