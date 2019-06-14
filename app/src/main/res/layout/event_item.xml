@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   xmlns:tools="http://schemas.android.com/tools"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:layout_margin="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                       android:layout_height="165dp">
+
+        <ImageView
+                android:id="@+id/folterImageView"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/heavy_metal_default"
+                android:contentDescription="TODO"
+                android:cropToPadding="false"
+                android:adjustViewBounds="false"
+                android:scaleType="fitXY"/>
+
+        <TextView
+                android:id="@+id/dateEventTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="18 DE JANEIRO - 18:00HS"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/folterImageView"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:textStyle="bold"/>
+
+        <TextView
+                android:id="@+id/titleEventTextView"
+                android:text="TextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/dateEventTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                tools:text="NOITE DO METAL"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+
+        <TextView
+                android:id="@+id/eventLocalTextView"
+                android:text="TextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:ellipsize="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/titleEventTextView"
+                tools:text="The Place Club - Maceió, AL"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

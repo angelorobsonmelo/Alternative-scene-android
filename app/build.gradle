@@ -45,8 +45,8 @@ android {
             buildConfigField("String", "BASE_URL", "\"http://localhost:8080/\"")
         }
 
-        fakeApi {
-            buildConfigField("String", "BASE_URL", "\"https://private-35ede-cobrei.apiary-mock.com/\"")
+        local {
+            buildConfigField("String", "BASE_URL", "\"http://10.0.0.100:8080/api/rest/\"")
         }
 
         prod {
