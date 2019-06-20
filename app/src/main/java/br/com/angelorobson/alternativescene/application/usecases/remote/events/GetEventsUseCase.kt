@@ -6,16 +6,20 @@ import br.com.angelorobson.alternativescene.domain.filter.EventFilter
 import br.com.angelorobson.alternativescene.service.commom.ResponseListBase
 import br.com.angelorobson.alternativescene.service.remote.events.EventsApiDataSource
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class GetEventsUseCase(private val eventsApiDataSource: EventsApiDataSource) {
+
+    private val disposables = CompositeDisposable()
 
     fun getAll(
         eventFilter: EventFilter,
         page: Int,
         callback: UseCaseBaseCallback.UseCaseCallback<ResponseListBase<Event>>
     ) {
-        eventsApiDataSource.getEvent(eventFilter, page)
+        val disposable = eventsApiDataSource.getEvent(eventFilter, page)
             .observeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { callback.isLoading(true) }
@@ -29,5 +33,10 @@ class GetEventsUseCase(private val eventsApiDataSource: EventsApiDataSource) {
                 }
             )
 
+        disposables.add(disposable)
+    }
+
+    fun clearDisposable() {
+        disposables.clear()
     }
 }
