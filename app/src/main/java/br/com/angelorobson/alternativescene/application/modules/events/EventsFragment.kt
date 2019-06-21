@@ -41,7 +41,6 @@ class EventsFragment : FragmentBase() {
     private lateinit var recyclerView: RecyclerView
 
     private val events = mutableListOf<Event>()
-
     private var eventsAdapter = EventsAdapter(events)
 
     override fun onCreateView(
@@ -49,9 +48,6 @@ class EventsFragment : FragmentBase() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.events_fragment, container, false)
-        setUpDagger()
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
         return binding.root
     }
 
@@ -62,10 +58,13 @@ class EventsFragment : FragmentBase() {
     }
 
     private fun setUpElements() {
+        setUpDagger()
+        setUpDataBinding()
         setUpRecyclerView()
         setUpEndlessScrollListener()
         initSuccessOberserver()
         initErrorOberserver()
+        initSwipeToRefreshLayoutEvents()
     }
 
     private fun setUpDagger() {
@@ -73,6 +72,11 @@ class EventsFragment : FragmentBase() {
             .contextModule(ContextModule(context!!))
             .build()
             .inject(this)
+    }
+
+    private fun setUpDataBinding() {
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
     }
 
     private fun setUpRecyclerView() {
@@ -111,6 +115,12 @@ class EventsFragment : FragmentBase() {
         viewModel.successObserver.observe(this, Observer {
             eventsAdapter.updateItems(it.data?.content ?: mutableListOf())
         })
+    }
+
+    private fun initSwipeToRefreshLayoutEvents() {
+       binding.swipeToRefreshLayoutEvents.setOnRefreshListener {
+           viewModel.getEvents()
+       }
     }
 
     override fun onDestroy() {
