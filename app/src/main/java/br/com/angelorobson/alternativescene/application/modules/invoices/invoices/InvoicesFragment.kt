@@ -100,7 +100,7 @@ class InvoicesFragment : FragmentBase() {
 
     private fun initObserverError() {
         viewModel.errorObserver.observe(this, Observer {
-            showAlert(it)
+            showAlertError(it)
         })
     }
 

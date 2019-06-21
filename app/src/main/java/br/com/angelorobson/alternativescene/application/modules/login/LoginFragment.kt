@@ -115,7 +115,7 @@ class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
 
     private fun initOserveOnError() {
         viewModel.errorObserver.observe(this, Observer {
-            showAlert(it)
+            showAlertError(it)
         })
     }
 
@@ -126,7 +126,7 @@ class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
 
     override fun fbCallbackOnError(localizedMessage: String) {
         binding.progressBar.visibility = GONE
-        showAlert(localizedMessage)
+        showAlertError(localizedMessage)
     }
 
     override fun fbCallbackOnCancel() {

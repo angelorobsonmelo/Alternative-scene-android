@@ -13,8 +13,8 @@ import java.net.UnknownHostException
 class CustomInterceptorRequest : Interceptor {
 
     private val noInternetConnectionErrorCodeEnum = 600
-    private val unProcessableEntityStatusCode     = 422
-    private val socketTimoutStatusCode            = 1000
+    private val unProcessableEntityStatusCode = 422
+    private val socketTimoutStatusCode = 1000
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -23,7 +23,7 @@ class CustomInterceptorRequest : Interceptor {
         val requestBuilder: Request.Builder
 
         requestBuilder = getRequestbuilder(original)
-        response       = getResponse(response, chain, requestBuilder)
+        response = getResponse(response, chain, requestBuilder)
         validateStatusCode(response!!)
 
         return response
@@ -54,16 +54,7 @@ class CustomInterceptorRequest : Interceptor {
     }
 
     private fun getRequestbuilder(original: Request): Request.Builder {
-        val isLogged = AlternativeSceneApplication.mSessionUseCase.isLogged()
-
-        return if (isLogged) {
-            val session = AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()
-
-            original.newBuilder()
-                .addHeader("Authorization", "Bearer ${session?.token}")
-        } else {
-            original.newBuilder()
-        }
+        return original.newBuilder()
     }
 
     private fun validateStatusCode(response: Response) {

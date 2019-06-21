@@ -105,7 +105,7 @@ class CollectFragment : FragmentBase(), CollectHandler {
 
     private fun initObserverError() {
         viewModel.errorObserver.observe(this, Observer {
-            showAlert(it)
+            showAlertError(it)
         })
     }
 

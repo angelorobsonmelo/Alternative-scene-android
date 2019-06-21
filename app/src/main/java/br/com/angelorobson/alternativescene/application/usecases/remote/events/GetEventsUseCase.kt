@@ -20,8 +20,8 @@ class GetEventsUseCase(private val eventsApiDataSource: EventsApiDataSource) {
         callback: UseCaseBaseCallback.UseCaseCallback<ResponseListBase<Event>>
     ) {
         val disposable = eventsApiDataSource.getEvent(eventFilter, page)
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { callback.isLoading(true) }
             .doAfterTerminate { callback.isLoading(false) }
             .subscribe(

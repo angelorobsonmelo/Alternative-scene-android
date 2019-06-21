@@ -46,7 +46,7 @@ android {
         }
 
         local {
-            buildConfigField("String", "BASE_URL", "\"http://10.0.0.100:8080/api/rest/\"")
+            buildConfigField("String", "BASE_URL", "\"http://10.0.0.101:8080/api/rest/\"")
         }
 
         prod {

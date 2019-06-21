@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 
 open class FragmentBase: Fragment() {
 
-    fun showAlert(message: String) {
+    fun showAlertError(message: String) {
         val builder = AlertDialog.Builder(context!!)
 
         builder
