@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
-import br.com.angelorobson.alternativescene.application.commom.viewholder.GenericViewHolder
 import br.com.angelorobson.alternativescene.databinding.EventItemBinding
 import br.com.angelorobson.alternativescene.domain.Event
+import br.com.soluevo.genericviewholderlibrary.GenericViewHolder
 
 class EventsAdapter(private var mEvents: MutableList<Event>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
