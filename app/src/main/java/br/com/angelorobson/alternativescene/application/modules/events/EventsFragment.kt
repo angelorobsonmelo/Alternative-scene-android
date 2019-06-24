@@ -113,12 +113,15 @@ class EventsFragment : FragmentBase() {
 
     private fun initSuccessOberserver() {
         viewModel.successObserver.observe(this, Observer {
-            eventsAdapter.updateItems(it.data?.content ?: mutableListOf())
+            events.addAll(it.data?.content ?: mutableListOf())
+            eventsAdapter.notifyDataSetChanged()
         })
     }
 
     private fun initSwipeToRefreshLayoutEvents() {
        binding.swipeToRefreshLayoutEvents.setOnRefreshListener {
+           events.clear()
+           eventsAdapter.notifyDataSetChanged()
            viewModel.getEvents()
        }
     }

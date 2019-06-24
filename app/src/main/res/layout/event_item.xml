@@ -38,8 +38,9 @@
                     android:id="@+id/textViewDataTime"
                     android:text="@{event.title}"
                     tools:text="22 JUN, 23:00"
-                    android:textColor="@color/cyan" android:textStyle="italic"
-                    android:textSize="12sp"
+                    android:textColor="@color/cyan"
+                    android:textStyle="italic"
+                    android:textSize="16sp"
                     app:layout_constraintTop_toTopOf="@+id/eventImageView"
                     app:layout_constraintStart_toEndOf="@+id/eventImageView"
                     android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"/>

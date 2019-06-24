@@ -26,10 +26,5 @@ class EventsAdapter(private var mEvents: MutableList<Event>) : RecyclerView.Adap
         biding.event = mEvents[position]
     }
 
-    fun updateItems(events: List<Event>) {
-        mEvents.addAll(events)
-        notifyDataSetChanged()
-    }
-
 
 }
