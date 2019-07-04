@@ -1,91 +1,31 @@
 {
   "data": {
-    "content": [
-      {
-        "id": 2,
-        "title": "Noite do terromoto metal",
-        "description": "Evento que vai acontecer neste dia para fazer a terra tremer!",
-        "photoUrl": "https://70000tons.com/wp-content/uploads/2017/05/70kt2018_originalstamp.jpg",
-        "locality": {
-          "id": 1,
-          "name": "Rex Bar",
-          "city": {
-            "id": 47,
-            "name": "Maceió",
-            "state": {
-              "id": 1,
-              "name": "ALagoas",
-              "uf": "AL"
-            }
-          }
-        },
-        "eventDates": [
-          {
-            "id": 2,
-            "date": "2018-03-01",
-            "hour": "20:00",
-            "price": 25,
-            "eventDateAndHourToString": "1 MAR, 20:00"
-          }
-        ],
-        "musicalGenres": [
-          {
-            "id": 1,
-            "name": "Heavy Metal"
-          },
-          {
-            "id": 2,
-            "name": "Trash Metal"
-          },
-          {
-            "id": 3,
-            "name": "Power Metal"
-          },
-          {
-            "id": 4,
-            "name": "Black Metal"
-          }
-        ],
-        "category": {
-          "id": 1,
-          "name": "Show"
-        },
-        "status": true,
-        "registrationDate": "2019-05-23",
-        "userApp": {
-          "id": 1,
-          "name": "admin da Silva",
-          "imageUrl": "https://cdn0.iconfinder.com/data/icons/PRACTIKA/256/user.png",
-          "email": "admin@gmail.com",
-          "registrationDate": "2019-05-23"
-        }
-      }
-    ],
+    "content": [],
     "pageable": {
       "sort": {
         "sorted": true,
         "unsorted": false,
         "empty": false
       },
-      "offset": 0,
+      "offset": 25,
       "pageSize": 25,
-      "pageNumber": 0,
+      "pageNumber": 1,
       "unpaged": false,
       "paged": true
     },
-    "totalElements": 1,
     "totalPages": 1,
+    "totalElements": 1,
     "last": true,
     "size": 25,
-    "number": 0,
+    "number": 1,
     "sort": {
       "sorted": true,
       "unsorted": false,
       "empty": false
     },
-    "numberOfElements": 1,
-    "first": true,
-    "empty": false
+    "numberOfElements": 0,
+    "first": false,
+    "empty": true
   },
   "errors": []
 }

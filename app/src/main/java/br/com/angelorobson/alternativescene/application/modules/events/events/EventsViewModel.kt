@@ -1,4 +1,4 @@
-package br.com.angelorobson.alternativescene.application.modules.events
+package br.com.angelorobson.alternativescene.application.modules.events.events
 
 import br.com.angelorobson.alternativescene.application.commom.utils.BaseViewModel
 import br.com.angelorobson.alternativescene.application.usecases.UseCaseBaseCallback

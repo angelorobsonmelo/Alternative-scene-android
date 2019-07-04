@@ -1,4 +1,4 @@
-package br.com.angelorobson.alternativescene.application.modules.events.adapter
+package br.com.angelorobson.alternativescene.application.modules.events.events.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

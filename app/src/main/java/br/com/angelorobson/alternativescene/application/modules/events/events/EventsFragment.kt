@@ -1,4 +1,4 @@
-package br.com.angelorobson.alternativescene.application.modules.events
+package br.com.angelorobson.alternativescene.application.modules.events.events
 
 
 import android.os.Bundle
@@ -19,7 +19,7 @@ import br.com.angelorobson.alternativescene.application.commom.di.modules.applic
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
 import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
 import br.com.angelorobson.alternativescene.application.commom.utils.RecyclerItemClickListener
-import br.com.angelorobson.alternativescene.application.modules.events.adapter.EventsAdapter
+import br.com.angelorobson.alternativescene.application.modules.events.events.adapter.EventsAdapter
 import br.com.angelorobson.alternativescene.application.modules.events.di.component.DaggerEventsComponent
 import br.com.angelorobson.alternativescene.databinding.EventsFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
@@ -43,7 +43,8 @@ class EventsFragment : FragmentBase() {
     private lateinit var mRecyclerView: RecyclerView
 
     private val mEvents = mutableListOf<Event>()
-    private var mEventsAdapter = EventsAdapter(mEvents)
+    private var mEventsAdapter =
+        EventsAdapter(mEvents)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

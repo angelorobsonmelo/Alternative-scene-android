@@ -1,4 +1,4 @@
-package br.com.angelorobson.alternativescene.application.modules.events.di.modules
+package br.com.angelorobson.alternativescene.application.modules.events.events.di.modules
 
 import br.com.angelorobson.alternativescene.application.commom.di.modules.network.NetWorkModule
 import br.com.angelorobson.alternativescene.application.usecases.remote.events.GetEventsUseCase

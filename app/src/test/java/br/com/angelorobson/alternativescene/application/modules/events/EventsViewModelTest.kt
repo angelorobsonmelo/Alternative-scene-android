@@ -1,6 +1,7 @@
 package br.com.angelorobson.alternativescene.application.modules.events
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import br.com.angelorobson.alternativescene.application.modules.events.events.EventsViewModel
 import br.com.angelorobson.alternativescene.application.usecases.UseCaseBaseCallback
 import br.com.angelorobson.alternativescene.application.usecases.remote.events.GetEventsUseCase
 import br.com.angelorobson.alternativescene.domain.Event
