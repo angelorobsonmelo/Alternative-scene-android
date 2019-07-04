@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
+import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +18,7 @@ import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
 import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
+import br.com.angelorobson.alternativescene.application.commom.utils.RecyclerItemClickListener
 import br.com.angelorobson.alternativescene.application.modules.events.adapter.EventsAdapter
 import br.com.angelorobson.alternativescene.application.modules.events.di.component.DaggerEventsComponent
 import br.com.angelorobson.alternativescene.databinding.EventsFragmentBinding
@@ -28,33 +30,33 @@ import javax.inject.Inject
 
 class EventsFragment : FragmentBase() {
 
-    private lateinit var binding: EventsFragmentBinding
+    private lateinit var mBinding: EventsFragmentBinding
 
     @Inject
-    lateinit var factory: ViewModelProvider.Factory
+    lateinit var mFactory: ViewModelProvider.Factory
 
-    private val viewModel: EventsViewModel by lazy {
-        ViewModelProviders.of(this, factory)[EventsViewModel::class.java]
+    private val mViewModel: EventsViewModel by lazy {
+        ViewModelProviders.of(this, mFactory)[EventsViewModel::class.java]
     }
 
-    private lateinit var layoutManager: LinearLayoutManager
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var mLayoutManager: LinearLayoutManager
+    private lateinit var mRecyclerView: RecyclerView
 
-    private val events = mutableListOf<Event>()
-    private var eventsAdapter = EventsAdapter(events)
+    private val mEvents = mutableListOf<Event>()
+    private var mEventsAdapter = EventsAdapter(mEvents)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.events_fragment, container, false)
-        return binding.root
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.events_fragment, container, false)
+        return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpElements()
-        viewModel.getEvents()
+        mViewModel.getEvents()
     }
 
     private fun setUpElements() {
@@ -62,6 +64,7 @@ class EventsFragment : FragmentBase() {
         setUpDataBinding()
         setUpRecyclerView()
         setUpEndlessScrollListener()
+        initRecyclerViewClickListener()
         initSuccessOberserver()
         initErrorOberserver()
         initSwipeToRefreshLayoutEvents()
@@ -75,21 +78,21 @@ class EventsFragment : FragmentBase() {
     }
 
     private fun setUpDataBinding() {
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        mBinding.lifecycleOwner = this
+        mBinding.viewModel = mViewModel
     }
 
     private fun setUpRecyclerView() {
-        recyclerView = binding.recyclerViewEvents
-        layoutManager = LinearLayoutManager(context)
+        mRecyclerView = mBinding.recyclerViewEvents
+        mLayoutManager = LinearLayoutManager(context)
         val divider = DividerItemDecoration(
-            recyclerView.context,
-            layoutManager.orientation
+            mRecyclerView.context,
+            mLayoutManager.orientation
         )
 
-        recyclerView.layoutManager = layoutManager
-        recyclerView.addItemDecoration(divider)
-        recyclerView.adapter = ScaleInAnimationAdapter(eventsAdapter).apply {
+        mRecyclerView.layoutManager = mLayoutManager
+        mRecyclerView.addItemDecoration(divider)
+        mRecyclerView.adapter = ScaleInAnimationAdapter(mEventsAdapter).apply {
             setFirstOnly(true)
             setDuration(500)
             setInterpolator(OvershootInterpolator(.5f))
@@ -97,38 +100,61 @@ class EventsFragment : FragmentBase() {
     }
 
     private fun setUpEndlessScrollListener() {
-        binding.recyclerViewEvents.addOnScrollListener(object :
-            EndlessRecyclerOnScrollListener(layoutManager) {
+        mRecyclerView.addOnScrollListener(object :
+            EndlessRecyclerOnScrollListener(mLayoutManager) {
             override fun onLoadMore(currentPage: Int) {
-                viewModel.getEvents(EventFilter(true), currentPage)
+                mViewModel.getEvents(EventFilter(true), currentPage)
             }
         })
     }
 
+    private fun initRecyclerViewClickListener() {
+        mRecyclerView.addOnItemTouchListener(
+            RecyclerItemClickListener(
+                context!!,
+                mRecyclerView,
+                object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        val event = mEvents[position]
+                    }
+
+                    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                    }
+
+                    override fun onLongItemClick(view: View?, position: Int) {
+
+                    }
+
+                }
+            )
+        )
+    }
+
     private fun initErrorOberserver() {
-        viewModel.errorObserver.observe(this, Observer {
+        mViewModel.errorObserver.observe(this, Observer {
             showAlertError(it)
         })
     }
 
     private fun initSuccessOberserver() {
-        viewModel.successObserver.observe(this, Observer {
-            events.addAll(it.data?.content ?: mutableListOf())
-            eventsAdapter.notifyDataSetChanged()
+        mViewModel.successObserver.observe(this, Observer {
+            mEvents.addAll(it.data?.content ?: mutableListOf())
+            mEventsAdapter.notifyDataSetChanged()
         })
     }
 
     private fun initSwipeToRefreshLayoutEvents() {
-       binding.swipeToRefreshLayoutEvents.setOnRefreshListener {
-           events.clear()
-           eventsAdapter.notifyDataSetChanged()
-           viewModel.getEvents()
-       }
+        mBinding.swipeToRefreshLayoutEvents.setOnRefreshListener {
+            mEvents.clear()
+            mEventsAdapter.notifyDataSetChanged()
+            mViewModel.getEvents()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.clearDisposable()
+        mViewModel.clearDisposable()
     }
 
 
