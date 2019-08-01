@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import br.com.ilhasoft.support.validation.Validator
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
+import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
 import br.com.angelorobson.alternativescene.application.modules.collect.di.component.DaggerCollectComponent
@@ -88,7 +89,7 @@ class CollectFragment : FragmentBase(), CollectHandler {
     }
 
     private fun initObserverSuccess() {
-        viewModel.successObserver.observe(this, Observer {
+        viewModel.successObserver.observe(this, EventObserver {
             clients = it
             setUpClientsDialog()
         })
@@ -104,7 +105,7 @@ class CollectFragment : FragmentBase(), CollectHandler {
     }
 
     private fun initObserverError() {
-        viewModel.errorObserver.observe(this, Observer {
+        viewModel.errorObserver.observe(this, EventObserver {
             showAlertError(it)
         })
     }

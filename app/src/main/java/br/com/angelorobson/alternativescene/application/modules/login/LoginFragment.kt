@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import br.com.ilhasoft.support.validation.Validator
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.modules.login.di.component.DaggerUsersComponent
 import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
@@ -114,7 +115,7 @@ class LoginFragment : FragmentBase(), LoginHandler, FacebookCallBack {
     }
 
     private fun initOserveOnError() {
-        viewModel.errorObserver.observe(this, Observer {
+        viewModel.errorObserver.observe(this, EventObserver {
             showAlertError(it)
         })
     }

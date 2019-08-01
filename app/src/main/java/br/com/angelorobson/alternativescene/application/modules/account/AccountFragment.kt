@@ -38,10 +38,6 @@ class AccountFragment : FragmentBase() {
         activity?.toolbar?.title = getString(R.string.settings)
     }
 
-    private fun showBottomNavigation() {
-        activity?.bottomNavigation?.visibility = VISIBLE
-    }
-
     private fun setupBinding() {
         binding.lifecycleOwner = this
         binding.user = getUserLogged()

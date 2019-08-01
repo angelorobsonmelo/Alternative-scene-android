@@ -11,11 +11,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.ARG_EVENT
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
 import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
 import br.com.angelorobson.alternativescene.application.commom.utils.RecyclerItemClickListener
@@ -69,6 +72,7 @@ class EventsFragment : FragmentBase() {
         initSuccessOberserver()
         initErrorOberserver()
         initSwipeToRefreshLayoutEvents()
+        showToolbarWithoutDisplayArrowBack(getString(R.string.events))
     }
 
     private fun setUpDagger() {
@@ -117,6 +121,9 @@ class EventsFragment : FragmentBase() {
                 object : RecyclerItemClickListener.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
                         val event = mEvents[position]
+                        val args = Bundle()
+                        args.putParcelable(ARG_EVENT, event)
+                        findNavController().navigate(R.id.action_eventsFragment_to_eventFragment, args)
                     }
 
                     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -133,13 +140,13 @@ class EventsFragment : FragmentBase() {
     }
 
     private fun initErrorOberserver() {
-        mViewModel.errorObserver.observe(this, Observer {
+        mViewModel.errorObserver.observe(this, EventObserver {
             showAlertError(it)
         })
     }
 
     private fun initSuccessOberserver() {
-        mViewModel.successObserver.observe(this, Observer {
+        mViewModel.successObserver.observe(this, EventObserver {
             mEvents.addAll(it.data?.content ?: mutableListOf())
             mEventsAdapter.notifyDataSetChanged()
         })

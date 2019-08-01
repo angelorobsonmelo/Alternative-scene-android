@@ -1,6 +1,6 @@
 package br.com.angelorobson.alternativescene.service
 
-import br.com.angelorobson.alternativescene.application.commom.utils.handlerstatuscode.HandlerErrorStatusCode
+import br.com.angelorobson.alternativescene.application.commom.utils.handlers.handlerstatuscode.HandlerErrorStatusCode
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

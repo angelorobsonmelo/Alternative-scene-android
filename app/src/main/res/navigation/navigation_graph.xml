@@ -3,6 +3,13 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation_graph"
             app:startDestination="@id/eventsFragment">
-    <fragment android:id="@+id/eventsFragment" android:name="br.com.angelorobson.alternativescene.application.modules.events.events.EventsFragment"
-              android:label="events_fragment" tools:layout="@layout/events_fragment"/>
+    <fragment android:id="@+id/eventsFragment"
+              android:name="br.com.angelorobson.alternativescene.application.modules.events.events.EventsFragment"
+              android:label="events_fragment" tools:layout="@layout/events_fragment">
+        <action android:id="@+id/action_eventsFragment_to_eventFragment" app:destination="@id/eventFragment"/>
+        <argument android:name="ARG_EVENT_ID" app:argType="br.com.angelorobson.alternativescene.domain.Event"/>
+    </fragment>
+    <fragment android:id="@+id/eventFragment"
+              android:name="br.com.angelorobson.alternativescene.application.modules.events.event.EventFragment"
+              android:label="event_fragment" tools:layout="@layout/event_fragment"/>
 </navigation>

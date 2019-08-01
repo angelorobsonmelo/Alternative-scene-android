@@ -1,4 +1,4 @@
-package br.com.angelorobson.alternativescene.application.commom.utils.handlerstatuscode
+package br.com.angelorobson.alternativescene.application.commom.utils.handlers.handlerstatuscode
 
 import br.com.angelorobson.alternativescene.R
 

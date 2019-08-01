@@ -1,5 +1,6 @@
 package br.com.angelorobson.alternativescene.application.modules.invoices.invoices
 
+import br.com.angelorobson.alternativescene.application.Event
 import br.com.angelorobson.alternativescene.application.commom.utils.BaseViewModel
 import br.com.angelorobson.alternativescene.application.usecases.UseCaseBaseCallback
 import br.com.angelorobson.alternativescene.application.usecases.remote.invoices.GetInvoicesUseCase
@@ -17,11 +18,11 @@ class InvoicesViewModel @Inject constructor(
     fun getInvoices() {
         getInvoicesUseCase.getInvoices(object : UseCaseBaseCallback.UseCaseCallback<MutableList<InvoiceResponse>> {
             override fun onSuccess(response: MutableList<InvoiceResponse>) {
-                successObserver.value = response
+                successObserver.value = Event(response)
             }
 
             override fun onEmptyData() {
-                emptyObserver.value = true
+                emptyObserver.value = Event(true)
             }
 
             override fun isLoading(isLoading: Boolean) {
@@ -29,10 +30,8 @@ class InvoicesViewModel @Inject constructor(
             }
 
             override fun onError(errorDescription: String) {
-                errorObserver.value = errorDescription
+                errorObserver.value = Event(errorDescription)
             }
-
-
         })
     }
 

@@ -19,11 +19,11 @@ class EventsViewModel @Inject constructor(
             page,
             object : UseCaseBaseCallback.UseCaseCallback<ResponseListBase<Event>> {
                 override fun onSuccess(response: ResponseListBase<Event>) {
-                    successObserver.value = response
+                    successObserver.value = br.com.angelorobson.alternativescene.application.Event(response)
                 }
 
                 override fun onEmptyData() {
-                    emptyObserver.value = true
+                    emptyObserver.value = br.com.angelorobson.alternativescene.application.Event(true)
                 }
 
                 override fun isLoading(isLoading: Boolean) {
@@ -31,7 +31,7 @@ class EventsViewModel @Inject constructor(
                 }
 
                 override fun onError(errorDescription: String) {
-                    errorObserver.value = errorDescription
+                    errorObserver.value = br.com.angelorobson.alternativescene.application.Event(errorDescription)
                 }
 
             })

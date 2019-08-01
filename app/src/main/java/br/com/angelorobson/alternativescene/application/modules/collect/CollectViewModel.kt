@@ -1,6 +1,7 @@
 package br.com.angelorobson.alternativescene.application.modules.collect
 
 import androidx.lifecycle.MutableLiveData
+import br.com.angelorobson.alternativescene.application.Event
 import br.com.angelorobson.alternativescene.application.commom.utils.BaseViewModel
 import br.com.angelorobson.alternativescene.application.usecases.UseCaseBaseCallback
 import br.com.angelorobson.alternativescene.application.usecases.remote.client.GetClientsUseCase
@@ -23,11 +24,11 @@ class CollectViewModel @Inject constructor(
     private fun getClients() {
         getClientsUseCase.getClients(object : UseCaseBaseCallback.UseCaseCallback<MutableList<Client>> {
             override fun onSuccess(response: MutableList<Client>) {
-                successObserver.value = response
+                successObserver.value = Event(response)
             }
 
             override fun onEmptyData() {
-                emptyObserver.value = true
+                emptyObserver.value = Event(true)
             }
 
             override fun isLoading(isLoading: Boolean) {
@@ -35,7 +36,7 @@ class CollectViewModel @Inject constructor(
             }
 
             override fun onError(errorDescription: String) {
-                errorObserver.value = errorDescription
+                errorObserver.value = Event(errorDescription)
             }
 
         })
@@ -48,7 +49,7 @@ class CollectViewModel @Inject constructor(
             }
 
             override fun onEmptyData() {
-                emptyObserver.value = true
+                emptyObserver.value = Event(true)
             }
 
             override fun isLoading(isLoading: Boolean) {
@@ -56,7 +57,7 @@ class CollectViewModel @Inject constructor(
             }
 
             override fun onError(errorDescription: String) {
-                errorObserver.value = errorDescription
+                errorObserver.value = Event(errorDescription)
             }
 
         })

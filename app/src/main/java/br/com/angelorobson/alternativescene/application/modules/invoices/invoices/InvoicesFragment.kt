@@ -12,12 +12,12 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
 import br.com.angelorobson.alternativescene.application.modules.invoices.invoices.adapter.InvoicesAdapter
 import br.com.angelorobson.alternativescene.application.modules.invoices.invoices.di.component.DaggerInvoicesComponent
 import br.com.angelorobson.alternativescene.databinding.InvoicesFragmentBinding
-import kotlinx.android.synthetic.main.host_navigation_activity.*
 import javax.inject.Inject
 
 class InvoicesFragment : FragmentBase() {
@@ -45,19 +45,10 @@ class InvoicesFragment : FragmentBase() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showToolbar()
-        showBottomNavigation()
+        showToolbarWithoutDisplayArrowBack(getString(R.string.events))
         setUpElements()
     }
 
-    private fun showToolbar() {
-        activity?.toolbar?.visibility = View.VISIBLE
-        activity?.toolbar?.title = getString(R.string.collects)
-    }
-
-    private fun showBottomNavigation() {
-        activity?.bottomNavigation?.visibility = View.VISIBLE
-    }
 
     private fun setUpElements() {
         injectDependency()
@@ -93,13 +84,13 @@ class InvoicesFragment : FragmentBase() {
     }
 
     private fun initObserverSuccess() {
-        viewModel.successObserver.observe(this, Observer {
+        viewModel.successObserver.observe(this, EventObserver {
             invoicesAdapter.updateItems(it)
         })
     }
 
     private fun initObserverError() {
-        viewModel.errorObserver.observe(this, Observer {
+        viewModel.errorObserver.observe(this, EventObserver {
             showAlertError(it)
         })
     }
