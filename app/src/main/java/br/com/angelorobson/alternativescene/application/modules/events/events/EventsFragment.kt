@@ -20,7 +20,7 @@ import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecy
 import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
 import br.com.angelorobson.alternativescene.application.commom.utils.RecyclerItemClickListener
 import br.com.angelorobson.alternativescene.application.modules.events.events.adapter.EventsAdapter
-import br.com.angelorobson.alternativescene.application.modules.events.di.component.DaggerEventsComponent
+import br.com.angelorobson.alternativescene.application.modules.events.events.di.component.DaggerEventsComponent
 import br.com.angelorobson.alternativescene.databinding.EventsFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.filter.EventFilter
