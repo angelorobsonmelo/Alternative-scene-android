@@ -29,4 +29,7 @@
     <string name="collects">Collects</string>
     <string name="clients">Clients</string>
 
+    <string name="close">Close</string>
+    <string name="events">Events</string>
+
 </resources>

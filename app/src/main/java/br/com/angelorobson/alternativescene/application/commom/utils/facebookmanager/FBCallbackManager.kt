@@ -1,6 +1,6 @@
 package br.com.angelorobson.alternativescene.application.commom.utils.facebookmanager
 
-import br.com.angelorobson.alternativescene.application.commom.utils.handlerstatuscode.HandlerErrorStatusCode
+import br.com.angelorobson.alternativescene.application.commom.utils.handlers.handlerstatuscode.HandlerErrorStatusCode
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
