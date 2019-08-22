@@ -7,7 +7,7 @@
 
         <variable
                 name="viewModel"
-                type="br.com.angelorobson.alternativescene.application.modules.events.events.EventsViewModel"/>
+                type="br.com.angelorobson.alternativescene.application.partials.events.events.EventsViewModel"/>
 
     </data>
 
