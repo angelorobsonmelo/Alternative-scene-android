@@ -163,7 +163,7 @@ class EventsFragment : FragmentBase() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mViewModel.clearDisposable()
+        mViewModel.disposables.clear()
     }
 
 

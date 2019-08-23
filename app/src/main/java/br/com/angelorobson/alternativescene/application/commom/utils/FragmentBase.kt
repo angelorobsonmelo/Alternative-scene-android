@@ -1,9 +1,11 @@
 package br.com.angelorobson.alternativescene.application.commom.utils
 
+import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.commom.utils.listeners.dialog.ListenerConfirmDialog
@@ -11,6 +13,17 @@ import kotlinx.android.synthetic.main.host_navigation_activity.*
 
 
 open class FragmentBase : Fragment() {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpBehavorBottomNavigation()
+    }
+
+    private fun setUpBehavorBottomNavigation() {
+        val bottomNavigationView = activity?.bottomNavigation
+        val layoutParams = bottomNavigationView?.layoutParams as CoordinatorLayout.LayoutParams
+        layoutParams.behavior = BottomNavigationBehavior()
+    }
 
     fun showAlertError(message: String) {
         val builder = AlertDialog.Builder(context!!)
