@@ -5,18 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.OvershootInterpolator
 import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
+import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.RecyclerViewAnimatedWithDividerModule
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.ARG_EVENT
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
 import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
@@ -26,7 +25,6 @@ import br.com.angelorobson.alternativescene.application.partials.events.events.d
 import br.com.angelorobson.alternativescene.databinding.EventsFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.filter.EventFilter
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import javax.inject.Inject
 
 
@@ -41,8 +39,11 @@ class EventsFragment : FragmentBase() {
         ViewModelProviders.of(this, mFactory)[EventsViewModel::class.java]
     }
 
-    private lateinit var mLayoutManager: LinearLayoutManager
-    private lateinit var mRecyclerView: RecyclerView
+    @Inject
+    lateinit var mLayoutManager: LinearLayoutManager
+
+    @Inject
+    lateinit var mRecyclerView: RecyclerView
 
     private val mEvents = mutableListOf<Event>()
     private var mEventsAdapter =
@@ -59,17 +60,21 @@ class EventsFragment : FragmentBase() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpElements()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mEvents.clear()
         mViewModel.getEvents()
     }
 
     private fun setUpElements() {
         setUpDagger()
         setUpDataBinding()
-        setUpRecyclerView()
         setUpEndlessScrollListener()
         initRecyclerViewClickListener()
         initSuccessOberserver()
-        initErrorOberserver()
+        initErrorObserver()
         initSwipeToRefreshLayoutEvents()
         showToolbarWithoutDisplayArrowBack(getString(R.string.events))
     }
@@ -77,6 +82,12 @@ class EventsFragment : FragmentBase() {
     private fun setUpDagger() {
         DaggerEventsComponent.builder()
             .contextModule(ContextModule(context!!))
+            .recyclerViewAnimatedWithDividerModule(
+                RecyclerViewAnimatedWithDividerModule(
+                    mBinding.recyclerViewEvents,
+                    mEventsAdapter
+                )
+            )
             .build()
             .inject(this)
     }
@@ -84,23 +95,6 @@ class EventsFragment : FragmentBase() {
     private fun setUpDataBinding() {
         mBinding.lifecycleOwner = this
         mBinding.viewModel = mViewModel
-    }
-
-    private fun setUpRecyclerView() {
-        mRecyclerView = mBinding.recyclerViewEvents
-        mLayoutManager = LinearLayoutManager(context)
-        val divider = DividerItemDecoration(
-            mRecyclerView.context,
-            mLayoutManager.orientation
-        )
-
-        mRecyclerView.layoutManager = mLayoutManager
-        mRecyclerView.addItemDecoration(divider)
-        mRecyclerView.adapter = ScaleInAnimationAdapter(mEventsAdapter).apply {
-            setFirstOnly(true)
-            setDuration(500)
-            setInterpolator(OvershootInterpolator(.5f))
-        }
     }
 
     private fun setUpEndlessScrollListener() {
@@ -122,10 +116,18 @@ class EventsFragment : FragmentBase() {
                         val event = mEvents[position]
                         val args = Bundle()
                         args.putParcelable(ARG_EVENT, event)
-                        findNavController().navigate(R.id.action_eventsFragment_to_eventFragment, args)
+                        findNavController().navigate(
+                            R.id.action_eventsFragment_to_eventFragment,
+                            args
+                        )
                     }
 
-                    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    override fun onItemClick(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
 
                     }
 
@@ -138,16 +140,16 @@ class EventsFragment : FragmentBase() {
         )
     }
 
-    private fun initErrorOberserver() {
-        mViewModel.errorObserver.observe(this, EventObserver {
-            showAlertError(it)
+    private fun initSuccessOberserver() {
+        mViewModel.successObserver.observe(this, EventObserver {
+            it.data?.content?.let { it1 -> mEvents.addAll(it1) }
+            mEventsAdapter.notifyDataSetChanged()
         })
     }
 
-    private fun initSuccessOberserver() {
-        mViewModel.successObserver.observe(this, EventObserver {
-            mEvents.addAll(it.data?.content ?: mutableListOf())
-            mEventsAdapter.notifyDataSetChanged()
+    private fun initErrorObserver() {
+        mViewModel.errorObserver.observe(this, EventObserver {
+            showAlertError(it)
         })
     }
 
