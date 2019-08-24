@@ -66,6 +66,8 @@ class EventsFragment : FragmentBase() {
         super.onResume()
         mEvents.clear()
         mViewModel.getEvents()
+        hideToolbar()
+        showBottomNavigation()
     }
 
     private fun setUpElements() {

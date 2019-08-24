@@ -139,6 +139,9 @@ dependencies {
     // Generic view holder
     implementation 'com.github.angelorobsonmelo:generic-viewholder:1.0.1'
 
+    // Circular image
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
     testImplementation 'junit:junit:4.12'
 
     // Robolectric environment
