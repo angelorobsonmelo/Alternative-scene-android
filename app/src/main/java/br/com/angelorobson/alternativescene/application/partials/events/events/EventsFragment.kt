@@ -16,6 +16,7 @@ import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.RecyclerViewAnimatedWithDividerModule
+import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.ARG_EVENT
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
 import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
@@ -28,9 +29,9 @@ import br.com.angelorobson.alternativescene.domain.filter.EventFilter
 import javax.inject.Inject
 
 
-class EventsFragment : FragmentBase() {
+class EventsFragment : BindingFragment<EventsFragmentBinding>() {
 
-    private lateinit var mBinding: EventsFragmentBinding
+    override fun getLayoutResId(): Int =  R.layout.events_fragment
 
     @Inject
     lateinit var mFactory: ViewModelProvider.Factory
@@ -48,14 +49,6 @@ class EventsFragment : FragmentBase() {
     private val mEvents = mutableListOf<Event>()
     private var mEventsAdapter =
         EventsAdapter(mEvents)
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.events_fragment, container, false)
-        return mBinding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -86,8 +79,8 @@ class EventsFragment : FragmentBase() {
             .contextModule(ContextModule(context!!))
             .recyclerViewAnimatedWithDividerModule(
                 RecyclerViewAnimatedWithDividerModule(
-                    mBinding.recyclerViewEvents,
-                    mEventsAdapter
+                    binding.recyclerViewEvents,
+                    mEventsAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>
                 )
             )
             .build()
@@ -95,8 +88,8 @@ class EventsFragment : FragmentBase() {
     }
 
     private fun setUpDataBinding() {
-        mBinding.lifecycleOwner = this
-        mBinding.viewModel = mViewModel
+        binding.lifecycleOwner = this
+        binding.viewModel = mViewModel
     }
 
     private fun setUpEndlessScrollListener() {
@@ -156,7 +149,7 @@ class EventsFragment : FragmentBase() {
     }
 
     private fun initSwipeToRefreshLayoutEvents() {
-        mBinding.swipeToRefreshLayoutEvents.setOnRefreshListener {
+        binding.swipeToRefreshLayoutEvents.setOnRefreshListener {
             mEvents.clear()
             mEventsAdapter.notifyDataSetChanged()
             mViewModel.getEvents()

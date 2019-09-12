@@ -1,30 +1,24 @@
 package br.com.angelorobson.alternativescene.application.partials.events.events.adapter
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.commom.utils.BindingAdapter
 import br.com.angelorobson.alternativescene.databinding.EventItemBinding
 import br.com.angelorobson.alternativescene.domain.Event
-import br.com.soluevo.genericviewholderlibrary.GenericViewHolder
 
-class EventsAdapter(private var mEvents: MutableList<Event>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EventsAdapter(private var mEvents: MutableList<Event>) : BindingAdapter<EventItemBinding>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return GenericViewHolder(
-            LayoutInflater
-                .from(parent.context)
-                .inflate(R.layout.event_item, parent, false)
-        )
+    override fun getLayoutResId(): Int = R.layout.event_item
+
+    override fun onBindViewHolder(binding: EventItemBinding, position: Int) {
+        binding.run {
+            this.event = mEvents[position]
+            executePendingBindings()
+        }
+
     }
 
     override fun getItemCount() = mEvents.size
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val biding = (holder as GenericViewHolder).binding as EventItemBinding
-        biding.event = mEvents[position]
-    }
 
 
 }
