@@ -24,5 +24,6 @@
     <string name="clients">Clientes</string>
     <string name="close">Fechar</string>
     <string name="events">Eventos</string>
+    <string name="signup">Inscrever-se</string>
 
 </resources>

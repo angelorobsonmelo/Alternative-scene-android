@@ -15,4 +15,10 @@
             android:id="@+id/accountFragment"
             android:icon="@drawable/ic_settings_24dp"
             android:title="Configuração"/>
+
+    <item
+            android:id="@+id/signUpFragment"
+            android:icon="@drawable/ic_settings_24dp"
+            android:title="@string/signup"/>
+
 </menu>

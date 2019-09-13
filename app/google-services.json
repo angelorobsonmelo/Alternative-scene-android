@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "765200465953",
+    "firebase_url": "https://alternative-scene.firebaseio.com",
+    "project_id": "alternative-scene",
+    "storage_bucket": "alternative-scene.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765200465953:android:6c1d7da98b3f3c66226360",
+        "android_client_info": {
+          "package_name": "br.com.angelorobson.alternativescene"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "765200465953-9ud7jqkhhb7jds5kvmmm7mhtc8kjlnep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFs6YwxvwWNFX3o1sZ1AG59lcSZl6y8Pk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "765200465953-9ud7jqkhhb7jds5kvmmm7mhtc8kjlnep.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
