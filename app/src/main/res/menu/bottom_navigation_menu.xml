@@ -2,10 +2,10 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:id="@+id/invoicesFragment"
+            android:id="@+id/eventsFragment"
             android:icon="@drawable/ic_home_24dp"
             android:enabled="true"
-            android:title="@string/invoices"/>
+            android:title="@string/events"/>
     <item
             android:id="@+id/collectFragment"
             android:icon="@drawable/ic_pan_tool_24dp"

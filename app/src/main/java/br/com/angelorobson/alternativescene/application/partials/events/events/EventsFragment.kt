@@ -2,11 +2,8 @@ package br.com.angelorobson.alternativescene.application.partials.events.events
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -19,10 +16,9 @@ import br.com.angelorobson.alternativescene.application.commom.di.modules.recycl
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.ARG_EVENT
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
-import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
 import br.com.angelorobson.alternativescene.application.commom.utils.RecyclerItemClickListener
 import br.com.angelorobson.alternativescene.application.partials.events.events.adapter.EventsAdapter
-import br.com.angelorobson.alternativescene.application.partials.events.events.di.component.DaggerEventsComponent
+import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventsComponent
 import br.com.angelorobson.alternativescene.databinding.EventsFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.filter.EventFilter

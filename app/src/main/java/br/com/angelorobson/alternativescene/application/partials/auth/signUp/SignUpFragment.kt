@@ -23,6 +23,10 @@ import com.google.firebase.auth.GoogleAuthProvider
 class SignUpFragment : BindingFragment<SignUpFragmentBinding>() {
 
 
+    companion object {
+        const val GOOGLE_AUTH_REQUEST_CODE = 23
+    }
+
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private lateinit var auth: FirebaseAuth
 
@@ -58,14 +62,14 @@ class SignUpFragment : BindingFragment<SignUpFragmentBinding>() {
     private fun signUpListener() {
         binding.signInButton.setOnClickListener {
             val signInIntent = mGoogleSignInClient?.signInIntent
-            startActivityForResult(signInIntent, 23)
+            startActivityForResult(signInIntent, GOOGLE_AUTH_REQUEST_CODE)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 23) {
+        if (requestCode == GOOGLE_AUTH_REQUEST_CODE) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)

@@ -11,4 +11,12 @@ open class BaseViewModel<T> : ViewModel() {
     val errorObserver = MutableLiveData<Event<String>>()
     val isLoadingObserver = MutableLiveData<Boolean>()
 
+    fun loadingStarted() {
+        isLoadingObserver.value = true
+    }
+
+    fun loadingFinished() {
+        isLoadingObserver.value = false
+    }
+
 }
