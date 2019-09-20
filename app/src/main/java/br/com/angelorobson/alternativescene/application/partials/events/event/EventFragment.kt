@@ -50,14 +50,14 @@ class EventFragment : BindingFragment<EventFragmentBinding>() {
         setUpBinding()
         setUpDagger()
         hideBottomNavigation()
-        showToolbarWithDisplayArrowBack(mEvent?.title ?: "")
+        showToolbarWithDisplayArrowBack("")
         getEvent()
         initObservers()
     }
 
     private fun initObservers() {
         mViewModel.successObserver.observe(this, EventObserver {
-
+          binding.event = it.data
         })
     }
 
