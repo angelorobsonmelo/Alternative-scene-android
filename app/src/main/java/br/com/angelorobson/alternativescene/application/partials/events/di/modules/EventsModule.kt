@@ -9,13 +9,5 @@ import dagger.Provides
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@Module(includes = [NetWorkModule::class, ViewModelModule::class, RecyclerViewAnimatedWithDividerModule::class])
-class EventsModule {
-
-    @Provides
-    @Singleton
-    fun provideEventsApiDataSource(retrofit: Retrofit): EventsApiDataSource {
-        return retrofit.create(EventsApiDataSource::class.java)
-    }
-
-}
+@Module(includes = [NetWorkModule::class, ViewModelModule::class, EventsApiModule::class, RecyclerViewAnimatedWithDividerModule::class])
+class EventsModule

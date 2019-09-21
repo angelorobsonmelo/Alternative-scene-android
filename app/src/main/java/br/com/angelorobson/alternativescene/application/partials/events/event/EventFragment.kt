@@ -2,25 +2,21 @@ package br.com.angelorobson.alternativescene.application.partials.events.event
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
-import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.RecyclerViewAnimatedWithDividerModule
+import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.SimpleRecyclerView
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.ARG_EVENT
-import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
 import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventComponent
-import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventsComponent
-import br.com.angelorobson.alternativescene.application.partials.events.events.EventsViewModel
+import br.com.angelorobson.alternativescene.application.partials.events.event.dapter.EventDateAdapter
 import br.com.angelorobson.alternativescene.databinding.EventFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
+import br.com.angelorobson.alternativescene.domain.EventDate
 import javax.inject.Inject
 
 
@@ -28,7 +24,18 @@ class EventFragment : BindingFragment<EventFragmentBinding>() {
 
     override fun getLayoutResId(): Int = R.layout.event_fragment
 
+    @Inject
+    lateinit var mLayoutManager: LinearLayoutManager
+
+    @Inject
+    lateinit var mRecyclerView: RecyclerView
+
     private var mEvent: Event? = null
+
+    private val mEventDates = ArrayList<EventDate>()
+
+    private var mEventDateAdapter =
+        EventDateAdapter(mEventDates)
 
     @Inject
     lateinit var mFactory: ViewModelProvider.Factory
@@ -55,17 +62,21 @@ class EventFragment : BindingFragment<EventFragmentBinding>() {
         initObservers()
     }
 
-    private fun initObservers() {
-        mViewModel.successObserver.observe(this, EventObserver {
-          binding.event = it.data
-        })
-    }
-
     private fun getEvent() {
         mEvent?.id?.let {
             mViewModel.getEvent(it)
         }
     }
+
+    private fun initObservers() {
+        mViewModel.successObserver.observe(this, EventObserver {
+            binding.event = it.data
+            it.data?.eventDates?.apply {
+                mEventDateAdapter.updateItems(this)
+            }
+        })
+    }
+
 
     private fun setUpBinding() {
         binding.lifecycleOwner = this
@@ -74,6 +85,12 @@ class EventFragment : BindingFragment<EventFragmentBinding>() {
     private fun setUpDagger() {
         DaggerEventComponent.builder()
             .contextModule(ContextModule(context!!))
+            .simpleRecyclerView(
+                SimpleRecyclerView(
+                    binding.recyclerViewDates,
+                    mEventDateAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>
+                )
+            )
             .build()
             .inject(this)
     }
