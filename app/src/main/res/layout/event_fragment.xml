@@ -49,7 +49,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="8dp"
                     android:text="@{event.eventLocation}"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -59,17 +59,31 @@
                     app:layout_constraintTop_toTopOf="@+id/imageView2"
                     tools:text="Maceió, AL" />
 
+            <TextView
+                    android:id="@+id/textViewDataTime2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@{event.locality.name}"
+                    android:textColor="#808080"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
+                    tools:text="Rua São Francisco de Assis, 190 A, fundos, Maceió, AL, 58754-00" />
+
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_dates"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewDataTime2"
                     app:srcCompat="@drawable/ic_event_black_24dp"
                     tools:itemCount="1"
                     tools:listitem="@layout/event_date_item" />
