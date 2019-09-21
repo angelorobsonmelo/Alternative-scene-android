@@ -16,11 +16,26 @@ class EventsAdapter(
 
     override fun onBindViewHolder(binding: EventItemBinding, position: Int) {
         binding.run {
-            this.event = mEvents[position]
+            val event = mEvents[position]
+            this.event = event
             this.handler = eventsHandler
             executePendingBindings()
+            initImageViewClickListener(event)
         }
 
+    }
+
+    private fun EventItemBinding.initImageViewClickListener(
+        event: Event
+    ) {
+        eventImageView.setOnLongClickListener {
+            eventsHandler.onLongPressImage(event)
+            true
+        }
+
+        eventImageView.setOnClickListener {
+            eventsHandler.onPressItem(event)
+        }
     }
 
     override fun getItemCount() = mEvents.size

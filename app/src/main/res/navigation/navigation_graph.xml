@@ -15,6 +15,9 @@
         <argument
                 android:name="ARG_EVENT"
                 app:argType="br.com.angelorobson.alternativescene.domain.Event" />
+        <action
+                android:id="@+id/action_eventsFragment_to_eventImageFragment"
+                app:destination="@id/eventImageFragment" />
     </fragment>
     <fragment
             android:id="@+id/eventFragment"

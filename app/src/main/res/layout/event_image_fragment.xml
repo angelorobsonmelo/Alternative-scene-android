@@ -22,6 +22,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
                 android:scaleType="fitXY"
+                tools:src="@drawable/heavy_metal_default"
                 android:src="@drawable/ic_close_black_24dp" />
 
     </LinearLayout>
@@ -30,7 +31,7 @@
             android:id="@+id/photo_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:layout_marginBottom="8dp"
             />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

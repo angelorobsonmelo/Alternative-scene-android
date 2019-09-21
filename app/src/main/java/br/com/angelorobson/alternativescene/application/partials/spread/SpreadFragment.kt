@@ -33,6 +33,7 @@ class SpreadFragment : BindingFragment<SpreadFragmentBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showToolbarWithoutDisplayArrowBack(getString(R.string.spread_event))
         setUpFragment()
     }
 

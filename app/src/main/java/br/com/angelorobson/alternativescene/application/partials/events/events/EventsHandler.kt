@@ -7,4 +7,5 @@ interface EventsHandler {
     fun onPressShare(event: Event)
     fun onPressFavorite(event: Event)
     fun onPressItem(event: Event)
+    fun onLongPressImage(event: Event)
 }

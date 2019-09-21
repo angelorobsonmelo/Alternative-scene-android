@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -20,9 +19,8 @@ import br.com.angelorobson.alternativescene.application.commom.di.modules.recycl
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.ARG_EVENT
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
-import br.com.angelorobson.alternativescene.application.commom.utils.RecyclerItemClickListener
-import br.com.angelorobson.alternativescene.application.partials.events.events.adapter.EventsAdapter
 import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventsComponent
+import br.com.angelorobson.alternativescene.application.partials.events.events.adapter.EventsAdapter
 import br.com.angelorobson.alternativescene.databinding.EventsFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.filter.EventFilter
@@ -157,6 +155,15 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         }
         return super.onOptionsItemSelected(item)
 
+    }
+
+    override fun onLongPressImage(event: Event) {
+        val args = Bundle()
+        args.putParcelable(ARG_EVENT, event)
+        findNavController().navigate(
+            R.id.action_eventsFragment_to_eventImageFragment,
+            args
+        )
     }
 
     override fun onDestroy() {
