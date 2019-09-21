@@ -7,18 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
 
-/**
- * A simple [Fragment] subclass.
- */
-class AboutFragment : Fragment() {
+
+class AboutFragment : FragmentBase() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.about_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        hideToolbar()
     }
 
 

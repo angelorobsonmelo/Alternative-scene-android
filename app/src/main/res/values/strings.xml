@@ -39,9 +39,9 @@
     <string name="about">About</string>
     <string name="favorites">Favorites</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="account">Account</string>
     <string name="spread">Spread</string>
+    <string name="about_first_paragraph">E aí! Meu nome é Ângelo Robson, trabalho como Engenheiro de Software, formado em Sistemas de Informação e pós-graduado em Engenharia de Software. Tento contribuir para a cena da forma que posso e uma delas foi desponibilizando este App gratuito.</string>
+    <string name="about_second_paragraph">Como vocês, sou fã de Heavy Metal \,,/ também sou fã de games e animes.</string>
 
 </resources>
