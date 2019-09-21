@@ -1,4 +1,4 @@
-package br.com.angelorobson.alternativescene.application.partials.auth.signUp
+package br.com.angelorobson.alternativescene.application.partials.spread
 
 
 import android.content.ContentValues.TAG
@@ -8,7 +8,7 @@ import android.util.Log
 import android.view.View
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
-import br.com.angelorobson.alternativescene.databinding.SignUpFragmentBinding
+import br.com.angelorobson.alternativescene.databinding.SpreadFragmentBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -20,8 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
 
-class SignUpFragment : BindingFragment<SignUpFragmentBinding>() {
-
+class SpreadFragment : BindingFragment<SpreadFragmentBinding>() {
 
     companion object {
         const val GOOGLE_AUTH_REQUEST_CODE = 23
@@ -30,7 +29,7 @@ class SignUpFragment : BindingFragment<SignUpFragmentBinding>() {
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private lateinit var auth: FirebaseAuth
 
-    override fun getLayoutResId(): Int = R.layout.sign_up_fragment
+    override fun getLayoutResId(): Int = R.layout.spread_fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
