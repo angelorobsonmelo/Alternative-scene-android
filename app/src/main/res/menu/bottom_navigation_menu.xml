@@ -3,22 +3,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
             android:id="@+id/eventsFragment"
-            android:icon="@drawable/ic_event_black_24dp"
             android:enabled="true"
-            android:title="@string/events"/>
-    <item
-            android:id="@+id/collectFragment"
-            android:icon="@drawable/ic_pan_tool_24dp"
-            android:title="Cobrar"/>
+            android:icon="@drawable/ic_event_black_24dp"
+            android:title="@string/events" />
 
     <item
-            android:id="@+id/accountFragment"
-            android:icon="@drawable/ic_settings_24dp"
-            android:title="Configuração"/>
+            android:id="@+id/favoriteFragment"
+            android:icon="@drawable/ic_favorite_fiiled_red_24dp"
+            android:title="@string/favorites" />
 
     <item
-            android:id="@+id/signUpFragment"
-            android:icon="@drawable/ic_settings_24dp"
-            android:title="@string/signup"/>
+            android:id="@+id/spreadFragment"
+            android:icon="@drawable/ic_speaker_outline"
+            android:title="@string/spread" />
+
+    <item
+            android:id="@+id/aboutFragment"
+            android:icon="@drawable/ic_rock"
+            android:title="@string/about" />
 
 </menu>

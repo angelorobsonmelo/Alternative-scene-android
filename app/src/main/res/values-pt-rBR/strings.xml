@@ -24,8 +24,12 @@
     <string name="clients">Clientes</string>
     <string name="close">Fechar</string>
     <string name="events">Eventos</string>
-    <string name="signup">Inscrever-se</string>
+    <string name="signup">Entrar</string>
     <string name="share">Compartilhar</string>
     <string name="favorite">Favorito</string>
+    <string name="favorites">Favoritos</string>
+    <string name="about">Sobre</string>
+    <string name="account">Conta</string>
+    <string name="spread">Divulgar</string>
 
 </resources>

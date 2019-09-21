@@ -38,4 +38,9 @@
             android:name="br.com.angelorobson.alternativescene.application.partials.events.eventimage.EventImageFragment"
             android:label="fragment_event_image"
             tools:layout="@layout/event_image_fragment" />
+    <fragment
+            android:id="@+id/aboutFragment"
+            android:name="br.com.angelorobson.alternativescene.application.partials.abount.AboutFragment"
+            android:label="about_fragment"
+            tools:layout="@layout/about_fragment" />
 </navigation>
