@@ -2,6 +2,9 @@ package br.com.angelorobson.alternativescene.application.partials.events.events
 
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
@@ -50,6 +53,8 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showToolbarWithoutDisplayArrowBack("")
+        setHasOptionsMenu(true)
         setUpElements()
     }
 
@@ -57,7 +62,6 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         super.onResume()
         mEvents.clear()
         mViewModel.getEvents()
-        hideToolbar()
         showBottomNavigation()
     }
 
@@ -119,11 +123,6 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mViewModel.disposables.clear()
-    }
-
     override fun onPressShare(event: Event) {
         Toast.makeText(requireContext(), "clicou no share", Toast.LENGTH_SHORT).show()
     }
@@ -143,6 +142,26 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
             R.id.action_eventsFragment_to_eventFragment,
             args
         )
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_events, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_share_event -> {
+                Toast.makeText(requireContext(), "Share", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mViewModel.disposables.clear()
     }
 
 

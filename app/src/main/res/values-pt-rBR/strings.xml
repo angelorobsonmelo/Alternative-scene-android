@@ -25,5 +25,7 @@
     <string name="close">Fechar</string>
     <string name="events">Eventos</string>
     <string name="signup">Inscrever-se</string>
+    <string name="share">Compartilhar</string>
+    <string name="favorite">Favorito</string>
 
 </resources>

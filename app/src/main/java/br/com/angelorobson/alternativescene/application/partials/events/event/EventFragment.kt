@@ -2,6 +2,10 @@ package br.com.angelorobson.alternativescene.application.partials.events.event
 
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,12 +50,15 @@ class EventFragment : BindingFragment<EventFragmentBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+
         arguments?.let {
             mEvent = it.getParcelable(ARG_EVENT)
         }
 
         setUpElements()
     }
+
 
     private fun setUpElements() {
         setUpBinding()
@@ -93,6 +100,25 @@ class EventFragment : BindingFragment<EventFragmentBinding>() {
             )
             .build()
             .inject(this)
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_event, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_favorite_event -> {
+                Toast.makeText(requireContext(), "favorite", Toast.LENGTH_SHORT).show()
+            }
+            R.id.action_share_event -> {
+                Toast.makeText(requireContext(), "Share", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+
     }
 
     override fun onDestroy() {
