@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
@@ -21,6 +22,7 @@ import br.com.angelorobson.alternativescene.application.partials.events.event.da
 import br.com.angelorobson.alternativescene.databinding.EventFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.EventDate
+import kotlinx.android.synthetic.main.event_fragment.*
 import javax.inject.Inject
 
 
@@ -67,6 +69,7 @@ class EventFragment : BindingFragment<EventFragmentBinding>() {
         showToolbarWithDisplayArrowBack("")
         getEvent()
         initObservers()
+        initImageClickListener()
     }
 
     private fun getEvent() {
@@ -102,6 +105,16 @@ class EventFragment : BindingFragment<EventFragmentBinding>() {
             .inject(this)
     }
 
+    private fun initImageClickListener() {
+        imageView.setOnClickListener {
+            val args = Bundle()
+            args.putParcelable(ARG_EVENT, mEvent)
+            findNavController().navigate(
+                R.id.action_eventFragment_to_eventImageFragment,
+                args
+            )
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_event, menu)
