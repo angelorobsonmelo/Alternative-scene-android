@@ -35,7 +35,11 @@
             android:id="@+id/spreadFragment"
             android:name="br.com.angelorobson.alternativescene.application.partials.spread.SpreadFragment"
             android:label="Spread_fragment"
-            tools:layout="@layout/spread_fragment" />
+            tools:layout="@layout/spread_fragment" >
+        <action
+                android:id="@+id/action_spreadFragment_to_eventFormFragment"
+                app:destination="@id/eventFormFragment" />
+    </fragment>
     <fragment
             android:id="@+id/eventImageFragment"
             android:name="br.com.angelorobson.alternativescene.application.partials.events.eventimage.EventImageFragment"
@@ -46,4 +50,9 @@
             android:name="br.com.angelorobson.alternativescene.application.partials.abount.AboutFragment"
             android:label="about_fragment"
             tools:layout="@layout/about_fragment" />
+    <fragment
+            android:id="@+id/eventFormFragment"
+            android:name="br.com.angelorobson.alternativescene.application.partials.events.create.EventFormFragment"
+            android:label="fragment_event_form"
+            tools:layout="@layout/event_form_fragment" />
 </navigation>

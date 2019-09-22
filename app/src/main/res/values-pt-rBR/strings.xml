@@ -34,5 +34,11 @@
     <string name="about_first_paragraph">E aí! Meu nome é Ângelo Robson, trabalho como Engenheiro de Software, formado em Sistemas de Informação e pós-graduado em Engenharia de Software. Tento contribuir para a cena da forma que posso e uma delas foi desponibilizando este App gratuito.</string>
     <string name="about_second_paragraph">Como vocês, sou fã de Heavy Metal \,,/ também sou fã de games e animes</string>
     <string name="spread_event">Divulgar Evento</string>
+    <string name="select_city">Selecione a cidade</string>
+    <string name="search">Pesquisar</string>
+    <string name="date_event">Data do Evento</string>
+    <string name="send">Enviar</string>
+    <string name="event_place">Local do Evento</string>
+
 
 </resources>

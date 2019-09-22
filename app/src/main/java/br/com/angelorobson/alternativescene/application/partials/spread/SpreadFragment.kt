@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.databinding.SpreadFragmentBinding
@@ -89,7 +90,7 @@ class SpreadFragment : BindingFragment<SpreadFragmentBinding>() {
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
                 val user = auth.currentUser
-                // tudo certo
+                navigateToEventForm()
                 return@addOnCompleteListener
             }
 
@@ -100,7 +101,16 @@ class SpreadFragment : BindingFragment<SpreadFragmentBinding>() {
 
     override fun onStart() {
         super.onStart()
-        val currentUser = auth.currentUser
+        auth.currentUser?.apply {
+            navigateToEventForm()
+        }
+    }
+
+    private fun navigateToEventForm() {
+        findNavController().navigate(
+            R.id.action_spreadFragment_to_eventFormFragment
+        )
     }
 
 }
+
