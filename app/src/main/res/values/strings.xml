@@ -47,7 +47,7 @@
     <string name="spred_event_msg">Você precisa estar logado para poder divulgar um evento</string>
     <string name="search">Search</string>
 
-    <string name="select_city">Selecione a cidade</string>
+    <string name="select_city">Selecionar Cidade</string>
     <string name="date_event">Date Event</string>
     <string name="send">Send</string>
     <string name="event_place">event\'s place</string>
