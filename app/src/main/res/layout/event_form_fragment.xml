@@ -34,7 +34,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                    android:id="@+id/PreviewEventImageView"
+                    android:id="@+id/previewEventImageView"
                     android:layout_width="0dp"
                     android:layout_height="193dp"
                     android:layout_marginTop="8dp"

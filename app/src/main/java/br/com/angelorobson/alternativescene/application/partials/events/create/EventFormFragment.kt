@@ -1,8 +1,10 @@
 package br.com.angelorobson.alternativescene.application.partials.events.create
 
 
+import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.content.Context.LAYOUT_INFLATER_SERVICE
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
@@ -10,7 +12,9 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
+import br.com.angelorobson.alternativescene.application.commom.utils.extensions.decodeFile
 import br.com.angelorobson.alternativescene.databinding.EventFormFragmentBinding
+import net.alhazmy13.mediapicker.Image.ImagePicker
 import java.util.*
 
 
@@ -39,15 +43,22 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     }
 
     private fun handleClicks() {
+        addMoreDateField()
+        showDatePicker()
+        openGallery()
+    }
+
+    private fun addMoreDateField() {
         binding.buttonAddMoreDate.setOnClickListener {
             onAddDateEventField()
         }
+    }
 
+    private fun showDatePicker() {
         binding.editTextEventDate.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
                 DatePickerDialog.OnDateSetListener { view, yearCalendar, monthOfYearCalendar, dayOfMonthCalendar ->
-                    // Calendar.MONTH returns month which is zero based that is why it is giving 1 less than actual month Add 1 to get correct value
                     binding.editTextEventDate.setText(
                         String.format(
                             "%d/%d/%d",
@@ -64,7 +75,25 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
             datePickerDialog.show()
         }
+    }
 
+    private fun openGallery() {
+        binding.buttonUploadImage.setOnClickListener {
+            activity?.apply {
+                ImagePicker.Builder(this)
+                    .mode(ImagePicker.Mode.CAMERA_AND_GALLERY)
+                    .allowMultipleImages(true)
+                    .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
+                    .directory(ImagePicker.Directory.DEFAULT)
+                    .extension(ImagePicker.Extension.PNG)
+                    .allowOnlineImages(true)
+                    .scale(600, 600)
+                    .allowMultipleImages(false)
+                    .enableDebuggingMode(true)
+                    .build()
+            }
+
+        }
 
     }
 
@@ -75,8 +104,6 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
             getElementsAndHandleClicks(rowView)
             parentConstraint.addView(rowView, parentConstraint.childCount - 1)
         }
-
-
     }
 
     private fun getElementsAndHandleClicks(rowView: View) {
@@ -127,6 +154,20 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         }
         return super.onOptionsItemSelected(item)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
+            val mPaths = data?.getStringArrayListExtra(ImagePicker.EXTRA_IMAGE_PATH)
+            showImagePreviewEvent(mPaths)
+        }
+    }
+
+    private fun showImagePreviewEvent(mPaths: ArrayList<String>?) {
+        binding.previewEventImageView.visibility = View.VISIBLE
+        val bitmap = mPaths?.first().decodeFile()
+        binding.previewEventImageView.setImageBitmap(bitmap)
     }
 
 
