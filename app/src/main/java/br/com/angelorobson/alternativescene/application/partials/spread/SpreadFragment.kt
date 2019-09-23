@@ -6,14 +6,12 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication.Companion.mSessionUseCase
 import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
-import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.SimpleRecyclerView
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.handlers.googleauth.GoogleAuthHandler
-import br.com.angelorobson.alternativescene.application.partials.events.event.EventViewModel
 import br.com.angelorobson.alternativescene.application.partials.spread.di.component.DaggerSpreadComponent
 import br.com.angelorobson.alternativescene.databinding.SpreadFragmentBinding
 import br.com.angelorobson.alternativescene.domain.request.UserRequest
@@ -100,13 +98,13 @@ class SpreadFragment : BindingFragment<SpreadFragmentBinding>() {
         })
 
         mViewModel.successObserver.observe(this, EventObserver {
+            mSessionUseCase.saveAuthResponseInSession(it)
             navigateToEventForm()
         })
     }
 
     override fun onStart() {
         super.onStart()
-        auth.signOut()
         auth.currentUser?.apply {
             navigateToEventForm()
         }
