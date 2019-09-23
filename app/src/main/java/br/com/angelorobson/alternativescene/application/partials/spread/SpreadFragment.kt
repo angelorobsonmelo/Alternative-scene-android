@@ -90,7 +90,7 @@ class SpreadFragment : BindingFragment<SpreadFragmentBinding>() {
                 mGoogleSignInAccount?.email!!,
                 mGoogleSignInAccount?.id!!,
                 mGoogleSignInAccount?.id!!,
-                "",
+                mGoogleSignInAccount?.photoUrl.toString(),
                 mGoogleSignInAccount?.displayName!!
             )
 
