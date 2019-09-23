@@ -31,6 +31,8 @@ class EventViewModel @Inject constructor(
                         br.com.angelorobson.alternativescene.application.Event(it.localizedMessage)
                 }
             )
+
+        this.disposable.add(disposable)
     }
 
 }

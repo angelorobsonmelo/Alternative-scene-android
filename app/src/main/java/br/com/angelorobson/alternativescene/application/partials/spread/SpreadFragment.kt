@@ -1,24 +1,25 @@
 package br.com.angelorobson.alternativescene.application.partials.spread
 
 
-import android.content.ContentValues.TAG
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.EventObserver
+import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
+import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.SimpleRecyclerView
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
+import br.com.angelorobson.alternativescene.application.commom.utils.handlers.googleauth.GoogleAuthHandler
+import br.com.angelorobson.alternativescene.application.partials.events.event.EventViewModel
+import br.com.angelorobson.alternativescene.application.partials.spread.di.component.DaggerSpreadComponent
 import br.com.angelorobson.alternativescene.databinding.SpreadFragmentBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
+import br.com.angelorobson.alternativescene.domain.request.UserRequest
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.Scope
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
+import javax.inject.Inject
 
 
 class SpreadFragment : BindingFragment<SpreadFragmentBinding>() {
@@ -27,10 +28,16 @@ class SpreadFragment : BindingFragment<SpreadFragmentBinding>() {
         const val GOOGLE_AUTH_REQUEST_CODE = 23
     }
 
-    private var mGoogleSignInClient: GoogleSignInClient? = null
-    private lateinit var auth: FirebaseAuth
+    private var mGoogleSignInAccount: GoogleSignInAccount? = null
 
     override fun getLayoutResId(): Int = R.layout.spread_fragment
+
+    @Inject
+    lateinit var mFactory: ViewModelProvider.Factory
+
+    private val mViewModel: SpreadViewModel by lazy {
+        ViewModelProviders.of(this, mFactory)[SpreadViewModel::class.java]
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,68 +46,67 @@ class SpreadFragment : BindingFragment<SpreadFragmentBinding>() {
     }
 
     private fun setUpFragment() {
-        setUpAuth()
-        setUpGoogleAuth()
+        setUpDagger()
+        setUpGoogleLogin()
         signUpListener()
+        initObservers()
     }
 
-    private fun setUpAuth() {
-        auth = FirebaseAuth.getInstance()
-    }
-
-    private fun setUpGoogleAuth() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .requestScopes(
-                Scope("profile")
-            )
+    private fun setUpDagger() {
+        DaggerSpreadComponent.builder()
+            .contextModule(ContextModule(context!!))
             .build()
+            .inject(this)
+    }
 
-        mGoogleSignInClient = GoogleSignIn.getClient(binding.root.context, gso)
+    private fun setUpGoogleLogin() {
+        setUpGoogleAuth(object : GoogleAuthHandler {
+            override fun onSuccess(googleSignInAccount: GoogleSignInAccount) {
+                mGoogleSignInAccount = googleSignInAccount
+                mViewModel.getUserByEmailAndGoogleAccountId(
+                    googleSignInAccount.email!!,
+                    googleSignInAccount.id!!
+                )
+            }
+
+            override fun onApiException(apiException: ApiException) {
+
+            }
+
+            override fun onException(exception: Exception?) {
+
+            }
+
+        })
     }
 
     private fun signUpListener() {
         binding.signInButton.setOnClickListener {
-            val signInIntent = mGoogleSignInClient?.signInIntent
-            startActivityForResult(signInIntent, GOOGLE_AUTH_REQUEST_CODE)
+            openSignIntent()
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    private fun initObservers() {
+        mViewModel.userNotFoundObserver.observe(this, EventObserver {
+            val user = UserRequest(
+                mGoogleSignInAccount?.email!!,
+                mGoogleSignInAccount?.id!!,
+                mGoogleSignInAccount?.id!!,
+                "",
+                mGoogleSignInAccount?.displayName!!
+            )
 
-        if (requestCode == GOOGLE_AUTH_REQUEST_CODE) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account!!)
-            } catch (e: ApiException) {
-                Log.w(TAG, "Google sign in failed", e)
-            }
-        }
-    }
+            mViewModel.save(user)
+        })
 
-
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
-
-        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-
-        auth.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful) {
-                val user = auth.currentUser
-                navigateToEventForm()
-                return@addOnCompleteListener
-            }
-
-            Log.w(TAG, "signInWithCredential:failure", it.exception)
-            Snackbar.make(binding.root, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
-        }
+        mViewModel.successObserver.observe(this, EventObserver {
+            navigateToEventForm()
+        })
     }
 
     override fun onStart() {
         super.onStart()
+        auth.signOut()
         auth.currentUser?.apply {
             navigateToEventForm()
         }

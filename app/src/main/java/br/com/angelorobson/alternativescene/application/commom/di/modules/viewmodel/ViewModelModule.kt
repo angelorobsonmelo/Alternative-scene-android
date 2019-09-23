@@ -6,6 +6,7 @@ import br.com.angelorobson.alternativescene.application.commom.di.utils.ViewMode
 import br.com.angelorobson.alternativescene.application.commom.di.utils.ViewModelKey
 import br.com.angelorobson.alternativescene.application.partials.events.event.EventViewModel
 import br.com.angelorobson.alternativescene.application.partials.events.events.EventsViewModel
+import br.com.angelorobson.alternativescene.application.partials.spread.SpreadViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -25,5 +26,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(EventViewModel::class)
     internal abstract fun eventViewModel(eventViewModel: EventViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SpreadViewModel::class)
+    internal abstract fun spreadViewModel(spreadViewModel: SpreadViewModel): ViewModel
 
 }

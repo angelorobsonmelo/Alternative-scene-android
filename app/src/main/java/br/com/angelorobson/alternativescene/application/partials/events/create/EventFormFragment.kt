@@ -81,7 +81,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         binding.buttonUploadImage.setOnClickListener {
             activity?.apply {
                 ImagePicker.Builder(this)
-                    .mode(ImagePicker.Mode.CAMERA_AND_GALLERY)
+                    .mode(ImagePicker.Mode.GALLERY)
                     .allowMultipleImages(true)
                     .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
                     .directory(ImagePicker.Directory.DEFAULT)
