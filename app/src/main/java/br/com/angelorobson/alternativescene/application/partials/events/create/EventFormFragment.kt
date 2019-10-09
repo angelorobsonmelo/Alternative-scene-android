@@ -45,7 +45,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     private fun handleClicks() {
         addMoreDateField()
         showDatePicker()
-        openGallery()
+        uploadImageClickListener()
     }
 
     private fun addMoreDateField() {
@@ -77,7 +77,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         }
     }
 
-    private fun openGallery() {
+    private fun uploadImageClickListener() {
         binding.buttonUploadImage.setOnClickListener {
             showGallery()
         }
