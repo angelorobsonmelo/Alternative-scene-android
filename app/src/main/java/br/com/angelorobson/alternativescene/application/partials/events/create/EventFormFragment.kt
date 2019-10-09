@@ -12,11 +12,16 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.PLACE_AUTOCOMPLETE_REQUEST_CODE
+import br.com.angelorobson.alternativescene.application.commom.utils.PlacesFieldSelector
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.decodeFile
 import br.com.angelorobson.alternativescene.databinding.EventFormFragmentBinding
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import kotlinx.android.synthetic.main.event_form_fragment.*
 import net.alhazmy13.mediapicker.Image.ImagePicker
 import java.util.*
-
 
 class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
@@ -46,6 +51,19 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         addMoreDateField()
         showDatePicker()
         uploadImageClickListener()
+        eventPlaceClickListener()
+    }
+
+    private fun eventPlaceClickListener() {
+        event_place.setOnClickListener {
+            val fieldSelector = PlacesFieldSelector()
+            val autocompleteIntent = Autocomplete.IntentBuilder(
+                AutocompleteActivityMode.FULLSCREEN,
+                fieldSelector.allFields
+            )
+                .build(requireContext())
+            startActivityForResult(autocompleteIntent, PLACE_AUTOCOMPLETE_REQUEST_CODE)
+        }
     }
 
     private fun addMoreDateField() {
@@ -158,13 +176,48 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val mPaths = data?.getStringArrayListExtra(ImagePicker.EXTRA_IMAGE_PATH)
-            showImagePreviewEvent(mPaths?.first())
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                ImagePicker.IMAGE_PICKER_REQUEST_CODE -> {
+                    handleImageResult(data)
+                }
+
+                PLACE_AUTOCOMPLETE_REQUEST_CODE -> {
+                    handleLocationResult(data)
+                }
+
+                AutocompleteActivity.RESULT_ERROR -> {
+                    handleError(data)
+                }
+
+                AutocompleteActivity.RESULT_CANCELED -> {
+                    handleError(data)
+                }
+            }
         }
     }
 
-     private fun showImagePreviewEvent(imagePath: String?) {
+    private fun handleImageResult(data: Intent?) {
+        val mPaths = data?.getStringArrayListExtra(ImagePicker.EXTRA_IMAGE_PATH)
+        showImagePreviewEvent(mPaths?.first())
+    }
+
+    private fun handleError(data: Intent?) {
+        data?.apply {
+            val status = Autocomplete.getStatusFromIntent(data)
+        }
+    }
+
+    private fun handleLocationResult(data: Intent?) {
+        data?.apply {
+            val place = Autocomplete.getPlaceFromIntent(this)
+            place.latLng?.apply {
+
+            }
+        }
+    }
+
+    private fun showImagePreviewEvent(imagePath: String?) {
         binding.previewEventImageView.visibility = View.VISIBLE
         val bitmap = imagePath.decodeFile()
         binding.previewEventImageView.setImageBitmap(bitmap)
