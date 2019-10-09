@@ -1,7 +1,7 @@
 package br.com.angelorobson.alternativescene.application.partials.events.create
 
 
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.content.Intent
@@ -79,22 +79,21 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
     private fun openGallery() {
         binding.buttonUploadImage.setOnClickListener {
-            activity?.apply {
-                ImagePicker.Builder(this)
-                    .mode(ImagePicker.Mode.GALLERY)
-                    .allowMultipleImages(true)
-                    .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
-                    .directory(ImagePicker.Directory.DEFAULT)
-                    .extension(ImagePicker.Extension.PNG)
-                    .allowOnlineImages(true)
-                    .scale(600, 600)
-                    .allowMultipleImages(false)
-                    .enableDebuggingMode(true)
-                    .build()
-            }
-
+            showGallery()
         }
+    }
 
+    private fun showGallery() {
+        ImagePicker.Builder(activity as Activity)
+            .mode(ImagePicker.Mode.GALLERY)
+            .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
+            .directory(ImagePicker.Directory.DEFAULT)
+            .extension(ImagePicker.Extension.PNG)
+            .allowOnlineImages(true)
+            .scale(600, 600)
+            .allowMultipleImages(false)
+            .enableDebuggingMode(true)
+            .build()
     }
 
     private fun onAddDateEventField() {
@@ -156,17 +155,18 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val mPaths = data?.getStringArrayListExtra(ImagePicker.EXTRA_IMAGE_PATH)
-            showImagePreviewEvent(mPaths)
+            showImagePreviewEvent(mPaths?.first())
         }
     }
 
-    private fun showImagePreviewEvent(mPaths: ArrayList<String>?) {
+     private fun showImagePreviewEvent(imagePath: String?) {
         binding.previewEventImageView.visibility = View.VISIBLE
-        val bitmap = mPaths?.first().decodeFile()
+        val bitmap = imagePath.decodeFile()
         binding.previewEventImageView.setImageBitmap(bitmap)
     }
 

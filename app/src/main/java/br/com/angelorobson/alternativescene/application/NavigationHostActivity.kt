@@ -1,11 +1,11 @@
 package br.com.angelorobson.alternativescene.application
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import br.com.angelorobson.alternativescene.R
-import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
 import kotlinx.android.synthetic.main.host_navigation_activity.*
 
 
@@ -20,24 +20,19 @@ class NavigationHostActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        super.onBackPressed()
+        return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         val fragmentList = supportFragmentManager.fragments
 
-        var handled = false
         for (f in fragmentList) {
-            if (f is FragmentBase) {
-                handled = f.onBackPressed()
-
-                if (handled) {
-                    break
-                }
+            for (fragment in f.childFragmentManager.fragments) {
+                fragment.onActivityResult(requestCode, resultCode, data)
             }
         }
 
-        if (!handled) {
-            super.onBackPressed()
-        }
-
-        return handled
     }
-
 }
