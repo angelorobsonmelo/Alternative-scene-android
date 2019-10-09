@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
@@ -16,12 +17,14 @@ import br.com.angelorobson.alternativescene.application.commom.utils.Constants.E
 import br.com.angelorobson.alternativescene.application.commom.utils.PlacesFieldSelector
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.decodeFile
 import br.com.angelorobson.alternativescene.databinding.EventFormFragmentBinding
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import kotlinx.android.synthetic.main.event_form_fragment.*
 import net.alhazmy13.mediapicker.Image.ImagePicker
 import java.util.*
+
 
 class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
@@ -212,9 +215,20 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         data?.apply {
             val place = Autocomplete.getPlaceFromIntent(this)
             place.latLng?.apply {
-
+                event_place.setText(place.name)
+                val nameCity = getNameCity(this)
             }
         }
+    }
+
+    private fun getNameCity(latLng: LatLng): String {
+        val mGeocoder = Geocoder(activity, Locale.getDefault())
+
+        val addresses = mGeocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+        if (addresses.isNullOrEmpty()) {
+            return addresses[0].subAdminArea
+        }
+        return ""
     }
 
     private fun showImagePreviewEvent(imagePath: String?) {
