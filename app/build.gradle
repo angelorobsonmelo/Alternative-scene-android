@@ -115,22 +115,22 @@ dependencies {
     implementation 'net.alhazmy13.MediaPicker:libary:2.4.4@aar'
 
     // Navigation for Kotlin use navigation-fragment-ktx.
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
 
     // Navigation For Kotlin use navigation-ui-ktx
-    implementation 'androidx.navigation:navigation-ui-ktx:2.0.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-core:17.1.0'
-    implementation 'com.google.firebase:firebase-auth:19.0.0'
+    implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
 
     // Facebook SDK
-    implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
+    implementation 'com.facebook.android:facebook-android-sdk:5.5.0'
     
     // Dagger 2
-    implementation 'com.google.dagger:dagger:2.14.1'
+    implementation 'com.google.dagger:dagger:2.16'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    kapt 'com.google.dagger:dagger-compiler:2.14.1'
+    kapt 'com.google.dagger:dagger-compiler:2.16'
 
     // Image rounded
     implementation 'com.makeramen:roundedimageview:2.3.0'
@@ -145,7 +145,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
 
     // Firebase auth
-    implementation 'com.google.firebase:firebase-auth:19.0.0'
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
@@ -162,7 +162,7 @@ dependencies {
 
     // Mockito framework
     testImplementation 'org.mockito:mockito-core:2.23.0'
-    testImplementation "org.mockito:mockito-inline:2.8.47"
+    testImplementation "org.mockito:mockito-inline:2.16.0"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
 
     testImplementation 'android.arch.core:core-testing:1.1.1'
