@@ -84,7 +84,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     }
 
     private fun showGallery() {
-        ImagePicker.Builder(activity as Activity)
+        ImagePicker.Builder(activity)
             .mode(ImagePicker.Mode.GALLERY)
             .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
             .directory(ImagePicker.Directory.DEFAULT)
