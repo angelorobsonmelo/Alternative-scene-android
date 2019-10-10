@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.angelorobson.alternativescene.application.commom.di.utils.ViewModelFactory
 import br.com.angelorobson.alternativescene.application.commom.di.utils.ViewModelKey
+import br.com.angelorobson.alternativescene.application.partials.events.create.EventFormViewModel
 import br.com.angelorobson.alternativescene.application.partials.events.event.EventViewModel
 import br.com.angelorobson.alternativescene.application.partials.events.events.EventsViewModel
 import br.com.angelorobson.alternativescene.application.partials.spread.SpreadViewModel
@@ -31,5 +32,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SpreadViewModel::class)
     internal abstract fun spreadViewModel(spreadViewModel: SpreadViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EventFormViewModel::class)
+    internal abstract fun eventFormViewModel(eventFormViewModel: EventFormViewModel): ViewModel
 
 }

@@ -12,12 +12,19 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
+import br.com.angelorobson.alternativescene.application.EventObserver
+import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.PLACE_AUTOCOMPLETE_REQUEST_CODE
 import br.com.angelorobson.alternativescene.application.commom.utils.PlacesFieldSelector
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.decodeFile
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.encodeTobase64
+import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventFormComponent
+import br.com.angelorobson.alternativescene.application.partials.events.event.EventViewModel
 import br.com.angelorobson.alternativescene.databinding.EventFormFragmentBinding
 import br.com.angelorobson.alternativescene.domain.request.DateEvent
 import br.com.angelorobson.alternativescene.domain.request.EventRequest
@@ -30,6 +37,7 @@ import kotlinx.android.synthetic.main.event_form_fragment.*
 import net.alhazmy13.mediapicker.Image.ImagePicker
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 
 class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
@@ -45,6 +53,13 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
     private val eventRequest = EventRequest()
 
+    @Inject
+    lateinit var mFactory: ViewModelProvider.Factory
+
+    private val mViewModel: EventFormViewModel by lazy {
+        ViewModelProviders.of(this, mFactory)[EventFormViewModel::class.java]
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpElements()
@@ -52,10 +67,18 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
     private fun setUpElements() {
         setHasOptionsMenu(true)
+        setUpDagger()
         showToolbarWithoutDisplayArrowBack(getString(R.string.spread_event))
         parentLinearLayoutDates = binding.eventDateLinearLayout
-
+        initObservers()
         handleClicks()
+    }
+
+    private fun setUpDagger() {
+        DaggerEventFormComponent.builder()
+            .contextModule(ContextModule(requireContext()))
+            .build()
+            .inject(this)
     }
 
     private fun handleClicks() {
@@ -187,13 +210,28 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
                 if (isValidForm()) {
                     setDatesFromForm()
-                    eventRequest.imageUrl = binding.previewEventImageView.drawable.toBitmap().encodeTobase64() ?: ""
+                    val authResponse =
+                        AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()
+                    eventRequest.userAppId = 2
+                    eventRequest.imageUrl =
+                        binding.previewEventImageView.drawable.toBitmap().encodeTobase64() ?: ""
+                    mViewModel.save(eventRequest)
                 }
             }
 
         }
         return super.onOptionsItemSelected(item)
 
+    }
+
+    private fun initObservers() {
+        mViewModel.successObserver.observe(this, EventObserver {
+            showToast("Succcess!")
+        })
+
+        mViewModel.errorObserver.observe(this, EventObserver {
+            showAlertError(it)
+        })
     }
 
     private fun isValidForm(): Boolean {
@@ -328,9 +366,11 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
             binding.previewEventImageView.setImageBitmap(bitmap)
             eventRequest.imageUrl = imagePath
         }
-
-
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mViewModel.disposable.clear()
+    }
 
 }
