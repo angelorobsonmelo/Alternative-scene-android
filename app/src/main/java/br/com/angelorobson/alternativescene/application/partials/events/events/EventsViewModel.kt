@@ -17,10 +17,9 @@ class EventsViewModel @Inject constructor(
     val disposables = CompositeDisposable()
 
     fun getEvents(
-        eventFilter: EventFilter = EventFilter(true),
         page: Int = 0
     ) {
-        val disposable = eventsApiDataSource.getEvent(eventFilter, page)
+        val disposable = eventsApiDataSource.getEvent(page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { isLoadingObserver.value = true }

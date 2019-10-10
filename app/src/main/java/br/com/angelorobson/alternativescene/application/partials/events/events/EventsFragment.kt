@@ -95,7 +95,7 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         mRecyclerView.addOnScrollListener(object :
             EndlessRecyclerOnScrollListener(mLayoutManager) {
             override fun onLoadMore(currentPage: Int) {
-                mViewModel.getEvents(EventFilter(true), currentPage)
+                mViewModel.getEvents(currentPage)
             }
         })
     }
