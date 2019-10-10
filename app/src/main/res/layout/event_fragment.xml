@@ -64,7 +64,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="@{event.locality.name}"
+                    android:text="@{event.locality.address}"
                     android:textColor="#808080"
                     android:textSize="14sp"
                     android:textStyle="italic"

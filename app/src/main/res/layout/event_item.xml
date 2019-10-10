@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="@{event.locality.name}"
+                    android:text="@{event.locality.address}"
                     android:textColor="#808080"
                     android:textSize="14sp"
                     android:textStyle="italic"

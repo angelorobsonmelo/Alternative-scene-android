@@ -24,6 +24,7 @@ data class Event(
 data class Locality(
     val id: Long,
     val name: String,
+    val address: String,
     val city: City
 ) : Parcelable
 
