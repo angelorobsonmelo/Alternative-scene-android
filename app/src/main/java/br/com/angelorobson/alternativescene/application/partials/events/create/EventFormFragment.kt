@@ -10,19 +10,25 @@ import android.os.Bundle
 import android.view.*
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.graphics.drawable.toBitmap
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.PLACE_AUTOCOMPLETE_REQUEST_CODE
 import br.com.angelorobson.alternativescene.application.commom.utils.PlacesFieldSelector
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.decodeFile
+import br.com.angelorobson.alternativescene.application.commom.utils.extensions.encodeTobase64
 import br.com.angelorobson.alternativescene.databinding.EventFormFragmentBinding
+import br.com.angelorobson.alternativescene.domain.request.DateEvent
+import br.com.angelorobson.alternativescene.domain.request.EventRequest
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.event_form_fragment.*
 import net.alhazmy13.mediapicker.Image.ImagePicker
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -35,7 +41,9 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     private val mMonth = mCalendar.get(Calendar.MONTH)
     private val dDay = mCalendar.get(Calendar.DAY_OF_MONTH)
 
-    private lateinit var parentConstraint: LinearLayout
+    private lateinit var parentLinearLayoutDates: LinearLayout
+
+    private val eventRequest = EventRequest()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,7 +53,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     private fun setUpElements() {
         setHasOptionsMenu(true)
         showToolbarWithoutDisplayArrowBack(getString(R.string.spread_event))
-        parentConstraint = binding.eventDateLinearLayout
+        parentLinearLayoutDates = binding.eventDateLinearLayout
 
         handleClicks()
     }
@@ -122,7 +130,8 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
             val inflater = it.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val rowView = inflater.inflate(R.layout.row_date_field, null)
             getElementsAndHandleClicks(rowView)
-            parentConstraint.addView(rowView, parentConstraint.childCount - 1)
+            parentLinearLayoutDates.addView(rowView, parentLinearLayoutDates.childCount - 1)
+
         }
     }
 
@@ -156,7 +165,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     }
 
     fun onDeleteEventDateField(view: View) {
-        parentConstraint.removeView(view.parent as View)
+        parentLinearLayoutDates.removeView(view.parent as View)
     }
 
 
@@ -168,12 +177,88 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_send_event -> {
-                Toast.makeText(requireContext(), "save event", Toast.LENGTH_SHORT).show()
+                // Todo está aqui temporariamente até ajeitar a questão do Google places
+                binding.eventPlace.setText("Rex Jazz Bar")
+                eventRequest.cityName = "Maceió"
+                eventRequest.latitude = 5445.0
+                eventRequest.longitude = 9865.54
+                eventRequest.address = "Rua do nada"
+                eventRequest.locality = "Kfofo"
+
+                if (isValidForm()) {
+                    setDatesFromForm()
+                    eventRequest.imageUrl = binding.previewEventImageView.drawable.toBitmap().encodeTobase64() ?: ""
+                }
             }
 
         }
         return super.onOptionsItemSelected(item)
 
+    }
+
+    private fun isValidForm(): Boolean {
+        return when {
+            eventRequest.imageUrl.isEmpty() -> {
+                showToast("A imagem do evento deve ser selecionada")
+                false
+            }
+            binding.eventPlace.text.toString().isEmpty() -> {
+                locationEventTextInputLayout.error = "Este campo deve ser preenchido"
+                false
+            }
+            binding.editTextEventDate.text.toString().isEmpty() -> {
+                textInputLayoutEventDate.error = "Este campo deve ser preenchido"
+                false
+            }
+            else -> true
+        }
+
+    }
+
+    private fun setDatesFromForm() {
+        eventRequest.eventDates.clear()
+        val formatter = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
+
+        for (i in 0 until parentLinearLayoutDates.childCount) {
+            if (i == 0) {
+                getFirstChild(i, formatter)
+            } else {
+                setDateEditValueFromConstraintLayoutChild(i, formatter)
+            }
+        }
+    }
+
+    private fun getFirstChild(i: Int, formatter: SimpleDateFormat) {
+        if (parentLinearLayoutDates.getChildAt(i) is TextInputLayout) {
+
+            val editText = parentLinearLayoutDates.getChildAt(i) as TextInputLayout
+            val date = editText.editText?.text.toString()
+            if (date.isNotEmpty()) {
+                val parsedDate = formatter.parse(date)
+                eventRequest.eventDates.add(DateEvent(parsedDate))
+            }
+        }
+    }
+
+    private fun setDateEditValueFromConstraintLayoutChild(
+        i: Int,
+        formatter: SimpleDateFormat
+    ) {
+        if (parentLinearLayoutDates.getChildAt(i) is ConstraintLayout) {
+            val constraintLayout = parentLinearLayoutDates.getChildAt(i) as ConstraintLayout
+            for (j in 0 until constraintLayout.childCount) {
+                if (constraintLayout.getChildAt(j) is TextInputLayout) {
+                    val editText = constraintLayout.getChildAt(j) as TextInputLayout
+                    val date = editText.editText?.text.toString()
+                    if (date.isNotEmpty()) {
+                        val parsedDate = formatter.parse(date)
+                        eventRequest.eventDates.add(DateEvent(parsedDate))
+                    } else {
+                        editText.error = "Este campo não pode ficar vazio"
+                    }
+                }
+            }
+        }
     }
 
 
@@ -217,6 +302,11 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
             place.latLng?.apply {
                 event_place.setText(place.name)
                 val nameCity = getNameCity(this)
+                eventRequest.cityName = nameCity
+                eventRequest.latitude = this.latitude
+                eventRequest.longitude = this.longitude
+                eventRequest.address = place.address ?: ""
+                eventRequest.locality = place.name ?: ""
             }
         }
     }
@@ -232,9 +322,14 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     }
 
     private fun showImagePreviewEvent(imagePath: String?) {
-        binding.previewEventImageView.visibility = View.VISIBLE
-        val bitmap = imagePath.decodeFile()
-        binding.previewEventImageView.setImageBitmap(bitmap)
+        imagePath?.let {
+            binding.previewEventImageView.visibility = View.VISIBLE
+            val bitmap = imagePath.decodeFile()
+            binding.previewEventImageView.setImageBitmap(bitmap)
+            eventRequest.imageUrl = imagePath
+        }
+
+
     }
 
 
