@@ -52,6 +52,6 @@
     <string name="send">Send</string>
     <string name="event_place">event\'s place</string>
 
-    <string name="google_places_api_key" translatable="false">AIzaSyBLhFRS3-Lnpheqq705965Fjpd-d9UX17A</string>
+    <string name="google_places_api_key" translatable="false">AIzaSyCrZjnV-wKHNKI5zBtOf4j2L9xYWTBkrYI</string>
 
 </resources>
