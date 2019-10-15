@@ -27,7 +27,7 @@
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
-                    app:loadImageUrlOrBase64="@{event.photoUrl}"
+                    app:loadImageUrlOrBase64="@{event.imageUrl}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

@@ -31,14 +31,13 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="8dp"
-                    android:scaleType="center"
-                    app:loadImageUrlOrBase64="@{event.photoUrl}"
+                    android:scaleType="fitXY"
+                    app:loadImageUrlOrBase64="@{event.imageThumbUrl}"
                     app:layout_constraintEnd_toStartOf="@+id/textViewDataTime"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:riv_corner_radius="5dp"
                     app:riv_mutate_background="true"
-                    app:riv_tile_mode="clamp"
                     tools:src="@drawable/heavy_metal_default" />
 
             <TextView

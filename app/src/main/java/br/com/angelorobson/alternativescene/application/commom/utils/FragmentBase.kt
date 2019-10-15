@@ -142,6 +142,13 @@ open class FragmentBase : Fragment() {
         startActivityForResult(signInIntent, SpreadFragment.GOOGLE_AUTH_REQUEST_CODE)
     }
 
+    fun signOutGoogle() {
+        mGoogleSignInClient?.signOut()
+    }
+
+    fun signOutFireBase() {
+        auth.signOut()
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -42,14 +42,14 @@ class EventImageFragment : FragmentBase() {
         arguments?.let {
             mEvent = it.getParcelable(Constants.EventsContants.ARG_EVENT)
 
-            if (mEvent?.photoUrl?.contains("http")!!) {
+            if (mEvent?.imageUrl?.startsWith("http")!!) {
                 Picasso.get()
-                    .load(mEvent?.photoUrl)
+                    .load(mEvent?.imageUrl)
                     .into(photo_view)
                 return
             }
 
-            val imageBase64 = mEvent?.photoUrl?.convertBase64ToBitmap()
+            val imageBase64 = mEvent?.imageUrl?.convertBase64ToBitmap()
             photo_view.setImageBitmap(imageBase64)
 
         }

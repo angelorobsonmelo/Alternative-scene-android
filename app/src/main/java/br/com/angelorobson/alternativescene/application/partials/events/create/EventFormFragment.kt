@@ -209,9 +209,9 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
                 if (isValidForm()) {
                     setDatesFromForm()
-                    val authResponse =
-                        AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()
-                    eventRequest.userAppId = 2
+//                    val authResponse =
+//                        AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()
+                    eventRequest.userAppId = 3
                     eventRequest.imageUrl =
                         binding.previewEventImageView.drawable.toBitmap().encodeTobase64() ?: ""
                     mViewModel.save(eventRequest)
