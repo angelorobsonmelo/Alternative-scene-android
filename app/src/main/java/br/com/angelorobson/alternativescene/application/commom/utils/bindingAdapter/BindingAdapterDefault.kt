@@ -8,10 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import br.com.angelorobson.alternativescene.R
-import br.com.angelorobson.alternativescene.application.commom.utils.extensions.convertDateToString
-import br.com.angelorobson.alternativescene.application.commom.utils.extensions.convertDateToStringDDMMM
-import br.com.angelorobson.alternativescene.application.commom.utils.extensions.formatToServerDateTimeDefaults
-import br.com.angelorobson.alternativescene.application.commom.utils.extensions.formatToViewDateTimeDefaults
+import br.com.angelorobson.alternativescene.application.commom.utils.extensions.*
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -42,24 +39,48 @@ fun convertFinalDateToString(textView: TextView, finalDate: Date) {
     textView.text = finalDate.convertDateToStringDDMMM()
 }
 
-@BindingAdapter( "imageUrl")
+@BindingAdapter("imageUrl")
 fun loadImage(view: ImageView, imageUrl: String?) {
     Picasso.get()
         .load(imageUrl)
         .into(view)
 }
 
-@BindingAdapter( "loadImageFromPath")
+@BindingAdapter("loadImageUrlOrBase64")
+fun loadImageUrlOrBase64(view: ImageView, base64: String?) {
+    if (base64 != null && base64.isNotEmpty()) {
+        if (base64.startsWith("http")) {
+            Picasso.get()
+                .load(base64)
+                .into(view)
+            return
+        }
+
+        view.setImageBitmap(base64.convertBase64ToBitmap())
+    }
+}
+
+@BindingAdapter("loadImageFromPath")
 fun loadImageFromPath(view: ImageView, path: String) {
     view.setImageBitmap(BitmapFactory.decodeFile(path))
 }
 
-@BindingAdapter( "status")
+@BindingAdapter("status")
 fun status(imageView: ImageView, status: Boolean) {
     if (status) {
-        imageView.setImageDrawable(ContextCompat.getDrawable(imageView.context, R.drawable.ic_check))
+        imageView.setImageDrawable(
+            ContextCompat.getDrawable(
+                imageView.context,
+                R.drawable.ic_check
+            )
+        )
     } else {
-        imageView.setImageDrawable(ContextCompat.getDrawable(imageView.context, R.drawable.ic_error))
+        imageView.setImageDrawable(
+            ContextCompat.getDrawable(
+                imageView.context,
+                R.drawable.ic_error
+            )
+        )
     }
 }
 

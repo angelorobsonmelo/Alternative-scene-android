@@ -2,6 +2,7 @@ package br.com.angelorobson.alternativescene.application.commom.utils.extensions
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Base64
 import java.math.BigInteger
 
 fun String.extractNumbers(): BigInteger {
@@ -18,5 +19,10 @@ fun String?.getFileExntesion(): String? {
 
 fun String?.decodeFile(): Bitmap {
     return BitmapFactory.decodeFile(this)
+}
+
+fun String.convertBase64ToBitmap(): Bitmap {
+    val imagesBytes = Base64.decode(this, Base64.DEFAULT)
+    return BitmapFactory.decodeByteArray(imagesBytes, 0, imagesBytes.size)
 }
 

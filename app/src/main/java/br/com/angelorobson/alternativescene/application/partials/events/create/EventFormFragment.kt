@@ -24,7 +24,6 @@ import br.com.angelorobson.alternativescene.application.commom.utils.PlacesField
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.decodeFile
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.encodeTobase64
 import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventFormComponent
-import br.com.angelorobson.alternativescene.application.partials.events.event.EventViewModel
 import br.com.angelorobson.alternativescene.databinding.EventFormFragmentBinding
 import br.com.angelorobson.alternativescene.domain.request.DateEvent
 import br.com.angelorobson.alternativescene.domain.request.EventRequest

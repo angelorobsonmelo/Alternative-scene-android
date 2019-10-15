@@ -1,8 +1,6 @@
 package br.com.angelorobson.alternativescene.application.partials.events.eventimage
 
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +9,9 @@ import androidx.navigation.fragment.findNavController
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants
 import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
+import br.com.angelorobson.alternativescene.application.commom.utils.extensions.convertBase64ToBitmap
 import br.com.angelorobson.alternativescene.domain.Event
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.event_image_fragment.*
 
 
@@ -30,29 +28,41 @@ class EventImageFragment : FragmentBase() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let {
-            mEvent = it.getParcelable(Constants.EventsContants.ARG_EVENT)
-            convertImageUrlToBitMapAndShowOnScreen()
-        }
+        setUpElements()
+    }
 
+    private fun setUpElements() {
+        setImagePreviewFromArguments()
         hideToolbar()
         hideBottomNavigation()
+        handleClickListener()
+    }
+
+    private fun setImagePreviewFromArguments() {
+        arguments?.let {
+            mEvent = it.getParcelable(Constants.EventsContants.ARG_EVENT)
+
+            if (mEvent?.photoUrl?.contains("http")!!) {
+                Picasso.get()
+                    .load(mEvent?.photoUrl)
+                    .into(photo_view)
+                return
+            }
+
+            val imageBase64 = mEvent?.photoUrl?.convertBase64ToBitmap()
+            photo_view.setImageBitmap(imageBase64)
+
+        }
+    }
+
+    private fun handleClickListener() {
+        linearLayoutClose.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         linearLayoutClose.setOnClickListener {
             findNavController().popBackStack()
         }
-    }
-
-    private fun convertImageUrlToBitMapAndShowOnScreen() {
-        Picasso.get().load(mEvent?.photoUrl).into(object : Target {
-            override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                photo_view.setImageBitmap(bitmap)
-            }
-
-            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
-
-            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {}
-        })
     }
 
 

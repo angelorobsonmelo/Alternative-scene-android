@@ -32,7 +32,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="8dp"
                     android:scaleType="center"
-                    app:imageUrl="@{event.photoUrl}"
+                    app:loadImageUrlOrBase64="@{event.photoUrl}"
                     app:layout_constraintEnd_toStartOf="@+id/textViewDataTime"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

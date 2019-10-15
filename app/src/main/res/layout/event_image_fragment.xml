@@ -28,7 +28,7 @@
 
     <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/photo_view"
-            android:src="@drawable/heavy_metal_default"
+            tools:src="@drawable/heavy_metal_default"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
