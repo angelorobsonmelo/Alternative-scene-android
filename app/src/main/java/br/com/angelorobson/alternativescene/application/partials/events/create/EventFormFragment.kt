@@ -15,7 +15,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import br.com.angelorobson.alternativescene.R
-import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
+import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication.Companion.mSessionUseCase
 import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
@@ -209,12 +209,18 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
                 if (isValidForm()) {
                     setDatesFromForm()
-//                    val authResponse =
-//                        AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()
-                    eventRequest.userAppId = 3
-                    eventRequest.imageUrl =
-                        binding.previewEventImageView.drawable.toBitmap().encodeTobase64() ?: ""
-                    mViewModel.save(eventRequest)
+                    val authResponse =
+                        mSessionUseCase.getAuthResponseInSession()
+
+                    authResponse?.userAppDto?.let {
+                        eventRequest.userAppId = it.id
+                        eventRequest.imageUrl =
+                            binding.previewEventImageView.drawable.toBitmap().encodeTobase64() ?: ""
+
+                        mViewModel.save(eventRequest)
+                    } ?: run {
+                        showToast("Usuário não encontrado")
+                    }
                 }
             }
 

@@ -50,8 +50,10 @@ fun loadImage(view: ImageView, imageUrl: String?) {
 fun loadImageUrlOrBase64(view: ImageView, base64: String?) {
     if (base64 != null && base64.isNotEmpty()) {
         if (base64.startsWith("http")) {
-            Picasso.get()
+            Picasso
+                .get()
                 .load(base64)
+                .placeholder(R.drawable.heavy_metal_default)
                 .into(view)
             return
         }

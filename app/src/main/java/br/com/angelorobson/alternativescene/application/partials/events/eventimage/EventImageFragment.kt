@@ -45,6 +45,7 @@ class EventImageFragment : FragmentBase() {
             if (mEvent?.imageUrl?.startsWith("http")!!) {
                 Picasso.get()
                     .load(mEvent?.imageUrl)
+                    .placeholder(R.drawable.heavy_metal_default)
                     .into(photo_view)
                 return
             }
