@@ -2,6 +2,7 @@ package br.com.angelorobson.alternativescene.application.commom.di.modules.appli
 
 import android.content.Context
 import br.com.angelorobson.alternativescene.application.usecases.local.SessionUseCase
+import br.com.angelorobson.alternativescene.service.local.event.EventLocalDataSource
 import br.com.angelorobson.alternativescene.service.local.session.SessionLocalDataSource
 import br.com.angelorobson.alternativescene.service.local.session.SessionLocalDataSourceImpl
 import dagger.Module
@@ -21,7 +22,13 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun provideSessionUseCase(sessionLocalDataSource: SessionLocalDataSource): SessionUseCase {
-       return SessionUseCase(sessionLocalDataSource)
+        return SessionUseCase(sessionLocalDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEventStateDataSource(@Named("ApplicationContext") context: Context): EventLocalDataSource {
+        return EventLocalDataSource(context)
     }
 
 
