@@ -1,6 +1,7 @@
 package br.com.angelorobson.alternativescene.application.partials.events.events
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -19,8 +20,12 @@ import br.com.angelorobson.alternativescene.application.commom.di.modules.applic
 import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.RecyclerViewAnimatedWithDividerModule
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.ARG_EVENT
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.DETAIL_EVENT_REQUEST_CODE
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.EVENT_ID_EXTRA
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.EVENT_IS_FAVORITE_EXTRA
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
 import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventsComponent
+import br.com.angelorobson.alternativescene.application.partials.events.event.EventActivity
 import br.com.angelorobson.alternativescene.application.partials.events.events.adapter.EventsAdapter
 import br.com.angelorobson.alternativescene.databinding.EventsFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
@@ -179,17 +184,17 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         }
     }
 
-    override fun onPressItem(event: Event) {
+    override fun onPressItem(event: Event, position: Int) {
+        mEventPosition = position
         goToDetailScreen(event)
     }
 
     private fun goToDetailScreen(event: Event) {
-        val args = Bundle()
-        args.putParcelable(ARG_EVENT, event)
-        findNavController().navigate(
-            R.id.action_eventsFragment_to_eventFragment,
-            args
-        )
+        val intent = Intent(requireActivity(), EventActivity::class.java)
+        intent.putExtra(EVENT_ID_EXTRA, event.id)
+        intent.putExtra(EVENT_IS_FAVORITE_EXTRA, event.favorite)
+
+        startActivityForResult(intent, DETAIL_EVENT_REQUEST_CODE)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

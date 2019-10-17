@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.angelorobson.alternativescene.R
 import kotlinx.android.synthetic.main.host_navigation_activity.*
@@ -19,10 +20,7 @@ class NavigationHostActivity : AppCompatActivity() {
         bottomNavigation?.setupWithNavController(navController)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        super.onBackPressed()
-        return true
-    }
+    override fun onSupportNavigateUp(): Boolean = findNavController(R.id.my_nav_fragment).navigateUp()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

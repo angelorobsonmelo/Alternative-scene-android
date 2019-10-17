@@ -21,13 +21,14 @@ class EventsAdapter(
             this.event = event
             this.handler = eventsHandler
             executePendingBindings()
-            initImageViewClickListener(event)
+            initImageViewClickListener(event, position)
         }
 
     }
 
     private fun EventItemBinding.initImageViewClickListener(
-        event: Event
+        event: Event,
+        position: Int
     ) {
         eventImageView.setOnLongClickListener {
             eventsHandler.onLongPressImage(event)
@@ -35,7 +36,7 @@ class EventsAdapter(
         }
 
         eventImageView.setOnClickListener {
-            eventsHandler.onPressItem(event)
+            eventsHandler.onPressItem(event, position)
         }
     }
 
