@@ -18,7 +18,8 @@ data class Event(
     val status: Boolean,
     val userApp: UserApp,
     val eventDate: String,
-    val eventLocation: String
+    val eventLocation: String,
+    var isFavorite: Boolean
 ) : Parcelable
 
 @Parcelize

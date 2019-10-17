@@ -5,7 +5,7 @@ import br.com.angelorobson.alternativescene.domain.Event
 interface EventsHandler {
 
     fun onPressShare(event: Event)
-    fun onPressFavorite(event: Event)
+    fun onPressFavorite(event: Event, position: Int)
     fun onPressItem(event: Event)
     fun onLongPressImage(event: Event)
 }

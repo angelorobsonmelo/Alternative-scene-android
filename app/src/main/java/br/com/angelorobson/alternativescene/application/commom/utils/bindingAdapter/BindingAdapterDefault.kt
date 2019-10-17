@@ -46,6 +46,18 @@ fun loadImage(view: ImageView, imageUrl: String?) {
         .into(view)
 }
 
+@BindingAdapter("isFavorite")
+fun isFavorite(view: ImageView, isFavorite: Boolean) {
+    var imageResourceFavorite = R.drawable.ic_favorite_border_24dp
+
+    if (isFavorite) {
+        imageResourceFavorite = R.drawable.ic_favorite_fiiled_red_24dp
+    }
+
+    view.setImageResource(imageResourceFavorite)
+
+}
+
 @BindingAdapter("loadImageUrlOrBase64")
 fun loadImageUrlOrBase64(view: ImageView, base64: String?) {
     if (base64 != null && base64.isNotEmpty()) {

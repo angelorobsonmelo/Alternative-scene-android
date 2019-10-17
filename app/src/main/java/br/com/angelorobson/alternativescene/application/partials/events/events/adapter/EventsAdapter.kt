@@ -17,6 +17,7 @@ class EventsAdapter(
     override fun onBindViewHolder(binding: EventItemBinding, position: Int) {
         binding.run {
             val event = mEvents[position]
+            this.position = position
             this.event = event
             this.handler = eventsHandler
             executePendingBindings()

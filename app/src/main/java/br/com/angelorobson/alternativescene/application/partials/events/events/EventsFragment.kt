@@ -50,6 +50,8 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
     private var mEventsAdapter =
         EventsAdapter(mEvents, this)
 
+    private var mEventPosition: Int? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showToolbarWithoutDisplayArrowBack("")
@@ -108,11 +110,23 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         })
 
         mViewModel.successFavoriteObserver.observe(this, EventObserver {
-            showToast("Evento favoritado")
+            mEventPosition?.apply {
+                val eventsUpdated = mEvents[this]
+                eventsUpdated.isFavorite = true
+
+                mEvents[this] = eventsUpdated
+                mEventsAdapter.notifyItemChanged(this)
+            }
         })
 
         mViewModel.successdisfavourObserver.observe(this, EventObserver {
-            showToast("Evento desfavoritado")
+            mEventPosition?.apply {
+                val eventsUpdated = mEvents[this]
+                eventsUpdated.isFavorite = false
+
+                mEvents[this] = eventsUpdated
+                mEventsAdapter.notifyItemChanged(this)
+            }
         })
     }
 
@@ -134,9 +148,11 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         Toast.makeText(requireContext(), "clicou no share", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onPressFavorite(event: Event) {
+    override fun onPressFavorite(event: Event, position: Int) {
         val authResponse =
             AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()
+
+        mEventPosition = position
 
         authResponse?.apply {
             val favoriteRequest = FavoriteRequest(this.userAppDto.id, event.id)
