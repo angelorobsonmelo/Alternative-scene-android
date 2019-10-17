@@ -50,7 +50,7 @@
     <string name="select_city">Selecionar Cidade</string>
     <string name="date_event">Date Event</string>
     <string name="send">Send</string>
-    <string name="event_place">event\'s place</string>
+    <string name="event_place">eventLiveData\'s place</string>
 
     <string name="google_places_api_key" translatable="false">AIzaSyCrZjnV-wKHNKI5zBtOf4j2L9xYWTBkrYI</string>
 

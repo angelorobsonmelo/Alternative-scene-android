@@ -4,7 +4,7 @@
 //import br.com.angelorobson.alternativescene.application.partials.events.events.EventsViewModel
 //import br.com.angelorobson.alternativescene.application.usecases.UseCaseBaseCallback
 //import br.com.angelorobson.alternativescene.application.usecases.remote.events.GetEventsUseCase
-//import br.com.angelorobson.alternativescene.domain.Event
+//import br.com.angelorobson.alternativescene.domain.EventLiveData
 //import br.com.angelorobson.alternativescene.domain.filter.EventFilter
 //import br.com.angelorobson.alternativescene.service.commom.ResponseListBase
 //import com.jraska.livedata.test
@@ -52,7 +52,7 @@
 //        @Before
 //        override fun setUp() {
 //            super.setUp()
-//            argumentCaptor<UseCaseBaseCallback.UseCaseCallback<ResponseListBase<Event>>>().apply {
+//            argumentCaptor<UseCaseBaseCallback.UseCaseCallback<ResponseListBase<EventLiveData>>>().apply {
 //                verify(getEventsUseCase, times(1)).getAll(eq(eventFilter), eq(page), capture())
 //                firstValue.onSuccess(ResponseListBase())
 //            }
@@ -73,7 +73,7 @@
 //       override fun setUp() {
 //            super.setUp()
 //
-//            argumentCaptor<UseCaseBaseCallback.UseCaseCallback<ResponseListBase<Event>>>().apply {
+//            argumentCaptor<UseCaseBaseCallback.UseCaseCallback<ResponseListBase<EventLiveData>>>().apply {
 //                verify(getEventsUseCase, times(1)).getAll(eq(eventFilter), eq(page), capture())
 //                firstValue.isLoading(true)
 //            }
@@ -93,7 +93,7 @@
 //        override fun setUp() {
 //            super.setUp()
 //
-//            argumentCaptor<UseCaseBaseCallback.UseCaseCallback<ResponseListBase<Event>>>().apply {
+//            argumentCaptor<UseCaseBaseCallback.UseCaseCallback<ResponseListBase<EventLiveData>>>().apply {
 //                verify(getEventsUseCase, times(1)).getAll(eq(eventFilter), eq(page), capture())
 //                firstValue.onEmptyData()
 //            }

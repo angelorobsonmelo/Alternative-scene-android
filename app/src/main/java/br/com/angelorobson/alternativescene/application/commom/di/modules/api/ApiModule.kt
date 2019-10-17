@@ -1,6 +1,7 @@
 package br.com.angelorobson.alternativescene.application.commom.di.modules.api
 
 import br.com.angelorobson.alternativescene.service.remote.events.EventsApiDataSource
+import br.com.angelorobson.alternativescene.service.remote.favorite.FavoriteApiRemoteDataSource
 import br.com.angelorobson.alternativescene.service.remote.user.UserApiDataSource
 import dagger.Module
 import dagger.Provides
@@ -20,5 +21,11 @@ class ApiModule {
     @Singleton
     fun provideEventsApiDataSource(retrofit: Retrofit): EventsApiDataSource {
         return retrofit.create(EventsApiDataSource::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteApiRemoteDataSource(retrofit: Retrofit): FavoriteApiRemoteDataSource {
+        return retrofit.create(FavoriteApiRemoteDataSource::class.java)
     }
 }

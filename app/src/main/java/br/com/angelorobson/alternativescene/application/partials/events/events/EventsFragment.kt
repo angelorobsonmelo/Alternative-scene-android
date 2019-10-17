@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
 import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.RecyclerViewAnimatedWithDividerModule
@@ -23,7 +24,7 @@ import br.com.angelorobson.alternativescene.application.partials.events.di.compo
 import br.com.angelorobson.alternativescene.application.partials.events.events.adapter.EventsAdapter
 import br.com.angelorobson.alternativescene.databinding.EventsFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
-import br.com.angelorobson.alternativescene.domain.filter.EventFilter
+import br.com.angelorobson.alternativescene.domain.request.FavoriteRequest
 import javax.inject.Inject
 
 
@@ -105,6 +106,14 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
             it.data?.content?.let { it1 -> mEvents.addAll(it1) }
             mEventsAdapter.notifyDataSetChanged()
         })
+
+        mViewModel.successFavoriteObserver.observe(this, EventObserver {
+            showToast("Evento favoritado")
+        })
+
+        mViewModel.successdisfavourObserver.observe(this, EventObserver {
+            showToast("Evento desfavoritado")
+        })
     }
 
     private fun initErrorObserver() {
@@ -126,7 +135,15 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
     }
 
     override fun onPressFavorite(event: Event) {
-        Toast.makeText(requireContext(), "clicou no favorite", Toast.LENGTH_SHORT).show()
+        val authResponse =
+            AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()
+
+        authResponse?.apply {
+            val favoriteRequest = FavoriteRequest(this.userAppDto.id, event.id)
+            mViewModel.favor(favoriteRequest)
+        } ?: run {
+            showToast("Você precisa está logado para favoritar um evento")
+        }
     }
 
     override fun onPressItem(event: Event) {

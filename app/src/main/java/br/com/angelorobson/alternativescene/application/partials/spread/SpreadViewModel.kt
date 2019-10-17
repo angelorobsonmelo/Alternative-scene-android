@@ -1,7 +1,7 @@
 package br.com.angelorobson.alternativescene.application.partials.spread
 
 import androidx.lifecycle.MutableLiveData
-import br.com.angelorobson.alternativescene.application.Event
+import br.com.angelorobson.alternativescene.application.EventLiveData
 import br.com.angelorobson.alternativescene.application.commom.utils.BaseViewModel
 import br.com.angelorobson.alternativescene.domain.request.UserRequest
 import br.com.angelorobson.alternativescene.domain.response.AuthResponse
@@ -18,7 +18,7 @@ class SpreadViewModel @Inject constructor(
     BaseViewModel<AuthResponse>() {
 
     val compositeDisposable = CompositeDisposable()
-    val userNotFoundObserver = MutableLiveData<Event<String>>()
+    val userNotFoundObserver = MutableLiveData<EventLiveData<String>>()
 
     fun getUserByEmailAndGoogleAccountId(email: String, googleAccountId: String) {
         val disposable = apiDataSource.findByEmailAndGoogleAccountId(email, googleAccountId)
@@ -31,16 +31,16 @@ class SpreadViewModel @Inject constructor(
                     it?.apply {
                         this.data?.token?.apply {
                             successObserver.value =
-                                Event(it.data!!)
+                                EventLiveData(it.data!!)
                             return@subscribe
                         }
 
-                        userNotFoundObserver.value = Event("")
+                        userNotFoundObserver.value = EventLiveData("")
                     }
                 },
                 {
                     errorObserver.value =
-                        Event(it.localizedMessage)
+                        EventLiveData(it.localizedMessage)
                 }
             )
 
@@ -57,12 +57,12 @@ class SpreadViewModel @Inject constructor(
                 {
                     it.data?.apply {
                         successObserver.value =
-                            Event(this)
+                            EventLiveData(this)
                     }
                 },
                 {
                     errorObserver.value =
-                        Event(it.localizedMessage)
+                        EventLiveData(it.localizedMessage)
                 }
             )
 

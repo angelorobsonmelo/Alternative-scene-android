@@ -2,13 +2,13 @@ package br.com.angelorobson.alternativescene.application.commom.utils
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.angelorobson.alternativescene.application.Event
+import br.com.angelorobson.alternativescene.application.EventLiveData
 
 open class BaseViewModel<T> : ViewModel() {
 
-    val successObserver = MutableLiveData<Event<T>>()
-    var emptyObserver = MutableLiveData<Event<Boolean>>()
-    val errorObserver = MutableLiveData<Event<String>>()
+    val successObserver = MutableLiveData<EventLiveData<T>>()
+    var emptyObserver = MutableLiveData<EventLiveData<Boolean>>()
+    val errorObserver = MutableLiveData<EventLiveData<String>>()
     val isLoadingObserver = MutableLiveData<Boolean>()
 
     fun loadingStarted() {

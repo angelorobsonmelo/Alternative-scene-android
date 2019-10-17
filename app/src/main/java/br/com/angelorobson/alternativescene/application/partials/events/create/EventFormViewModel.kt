@@ -1,5 +1,6 @@
 package br.com.angelorobson.alternativescene.application.partials.events.create
 
+import br.com.angelorobson.alternativescene.application.EventLiveData
 import br.com.angelorobson.alternativescene.application.commom.utils.BaseViewModel
 import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.request.EventRequest
@@ -25,10 +26,10 @@ class EventFormViewModel @Inject constructor(
             .subscribe(
                 {
                     successObserver.value =
-                        br.com.angelorobson.alternativescene.application.Event(it)
+                        EventLiveData(it)
                 },
                 {
-                    br.com.angelorobson.alternativescene.application.Event(it.localizedMessage)
+                    EventLiveData(it.localizedMessage)
                 }
             )
 
