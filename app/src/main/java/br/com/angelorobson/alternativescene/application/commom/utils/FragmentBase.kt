@@ -115,14 +115,6 @@ open class FragmentBase : Fragment() {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
 
-    /**
-     * Could handle back press.
-     * @return true if back press was handled
-     */
-    open fun onBackPressed(): Boolean {
-        return false
-    }
-
     fun setUpGoogleAuth(googleAuthHandler: GoogleAuthHandler) {
         this.googleAuthHandler = googleAuthHandler
 
