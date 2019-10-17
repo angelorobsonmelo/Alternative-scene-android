@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
 import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.SimpleRecyclerView
@@ -22,6 +23,7 @@ import br.com.angelorobson.alternativescene.application.partials.events.event.da
 import br.com.angelorobson.alternativescene.databinding.EventFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.EventDate
+import br.com.angelorobson.alternativescene.domain.request.FavoriteRequest
 import kotlinx.android.synthetic.main.event_fragment.*
 import javax.inject.Inject
 
@@ -49,6 +51,11 @@ class EventFragment : BindingFragment<EventFragmentBinding>() {
     private val mViewModel: EventViewModel by lazy {
         ViewModelProviders.of(this, mFactory)[EventViewModel::class.java]
     }
+
+    private var mMenuItemFavorite: MenuItem? = null
+
+    private val userLooged =
+        AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()?.userAppDto
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -84,6 +91,16 @@ class EventFragment : BindingFragment<EventFragmentBinding>() {
             it.data?.eventDates?.apply {
                 mEventDateAdapter.updateItems(this)
             }
+        })
+
+        mViewModel.successFavoriteObserver.observe(this, EventObserver {
+            binding.event?.favorite = true
+            mMenuItemFavorite?.setIcon(R.drawable.ic_favorite_fiiled_red_24dp)
+        })
+
+        mViewModel.successDisfavourObserver.observe(this, EventObserver {
+            binding.event?.favorite = false
+            mMenuItemFavorite?.setIcon(R.drawable.ic_favorite_border_24dp)
         })
     }
 
@@ -124,8 +141,14 @@ class EventFragment : BindingFragment<EventFragmentBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_favorite_event -> {
-                Toast.makeText(requireContext(), "favorite", Toast.LENGTH_SHORT).show()
+                userLooged?.apply {
+                    mMenuItemFavorite = item
+                    favorEvent()
+                } ?: run {
+                    showToast("Você precisa estar logado para favoritar um evento")
+                }
             }
+
             R.id.action_share_event -> {
                 Toast.makeText(requireContext(), "Share", Toast.LENGTH_SHORT).show()
             }
@@ -134,9 +157,29 @@ class EventFragment : BindingFragment<EventFragmentBinding>() {
 
     }
 
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        mEvent?.apply {
+            if (this.favorite) {
+                menu.getItem(0).setIcon(R.drawable.ic_favorite_fiiled_red_24dp)
+            }
+        }
+    }
+
+    private fun favorEvent() {
+        val user = AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()
+            ?.userAppDto
+        user?.apply {
+            mViewModel.favor(FavoriteRequest(this.id, mEvent?.id!!))
+        } ?: run {
+            showToast("Ocorreu um erro")
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        mViewModel.disposable.clear()
+        mViewModel.disposables.clear()
     }
 
 

@@ -52,6 +52,9 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
 
     private var mEventPosition: Int? = null
 
+    private val userLogeed =
+        AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()?.userAppDto
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showToolbarWithoutDisplayArrowBack("")
@@ -62,7 +65,12 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
     override fun onResume() {
         super.onResume()
         mEvents.clear()
-        mViewModel.getEvents()
+        userLogeed?.apply {
+            mViewModel.getEventsByUser(userId = this.id)
+        } ?: run {
+            mViewModel.getEvents()
+        }
+
         showBottomNavigation()
     }
 
@@ -98,7 +106,11 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         mRecyclerView.addOnScrollListener(object :
             EndlessRecyclerOnScrollListener(mLayoutManager) {
             override fun onLoadMore(currentPage: Int) {
-                mViewModel.getEvents(currentPage)
+                userLogeed?.apply {
+                    mViewModel.getEventsByUser(currentPage, this.id)
+                } ?: run {
+                    mViewModel.getEvents(currentPage)
+                }
             }
         })
     }
@@ -112,7 +124,7 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         mViewModel.successFavoriteObserver.observe(this, EventObserver {
             mEventPosition?.apply {
                 val eventsUpdated = mEvents[this]
-                eventsUpdated.isFavorite = true
+                eventsUpdated.favorite = true
 
                 mEvents[this] = eventsUpdated
                 mEventsAdapter.notifyItemChanged(this)
@@ -122,7 +134,7 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         mViewModel.successdisfavourObserver.observe(this, EventObserver {
             mEventPosition?.apply {
                 val eventsUpdated = mEvents[this]
-                eventsUpdated.isFavorite = false
+                eventsUpdated.favorite = false
 
                 mEvents[this] = eventsUpdated
                 mEventsAdapter.notifyItemChanged(this)
@@ -140,7 +152,12 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         binding.swipeToRefreshLayoutEvents.setOnRefreshListener {
             mEvents.clear()
             mEventsAdapter.notifyDataSetChanged()
-            mViewModel.getEvents()
+
+            userLogeed?.apply {
+                mViewModel.getEventsByUser(userId = this.id)
+            } ?: run {
+                mViewModel.getEvents()
+            }
         }
     }
 
@@ -150,12 +167,12 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
 
     override fun onPressFavorite(event: Event, position: Int) {
         val authResponse =
-            AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()
+            AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()?.userAppDto
 
         mEventPosition = position
 
         authResponse?.apply {
-            val favoriteRequest = FavoriteRequest(this.userAppDto.id, event.id)
+            val favoriteRequest = FavoriteRequest(this.id, event.id)
             mViewModel.favor(favoriteRequest)
         } ?: run {
             showToast("Você precisa está logado para favoritar um evento")

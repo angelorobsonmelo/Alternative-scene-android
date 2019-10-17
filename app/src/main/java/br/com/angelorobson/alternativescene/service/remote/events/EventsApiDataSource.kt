@@ -19,4 +19,7 @@ interface EventsApiDataSource {
 
     @POST("v1/events")
     fun save(@Body eventRequest: EventRequest): Observable<ResponseBase<Event>>
+
+    @POST("v1/events/findAllByUserId")
+    fun getEventByUserId(@Query("pag") page: Int, @Query("userId") userId: Long): Observable<ResponseListBase<Event>>
 }

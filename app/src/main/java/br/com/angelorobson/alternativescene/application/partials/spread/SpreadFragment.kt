@@ -61,6 +61,10 @@ class SpreadFragment : BindingFragment<SpreadFragmentBinding>() {
         setUpGoogleAuth(object : GoogleAuthHandler {
             override fun onSuccess(googleSignInAccount: GoogleSignInAccount) {
                 mGoogleSignInAccount = googleSignInAccount
+                mGoogleSignInAccount?.apply {
+
+                }
+
                 mViewModel.getUserByEmailAndGoogleAccountId(
                     googleSignInAccount.email!!,
                     googleSignInAccount.id!!
@@ -105,7 +109,9 @@ class SpreadFragment : BindingFragment<SpreadFragmentBinding>() {
 
     override fun onStart() {
         super.onStart()
-        auth.currentUser?.apply {
+        val userLogged = mSessionUseCase.getAuthResponseInSession()?.userAppDto
+
+        userLogged?.let {
             navigateToEventForm()
         }
     }
