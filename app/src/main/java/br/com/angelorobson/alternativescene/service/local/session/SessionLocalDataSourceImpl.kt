@@ -7,7 +7,7 @@ import br.com.angelorobson.alternativescene.domain.response.AuthResponse
 import com.google.gson.Gson
 
 
-class SessionLocalDataSourceImpl(private val mContext: Context): SessionLocalDataSource {
+class SessionLocalDataSourceImpl(private val mContext: Context) : SessionLocalDataSource {
 
     private val preferenceShareNameIdentifier = "authResponse"
 
@@ -25,7 +25,8 @@ class SessionLocalDataSourceImpl(private val mContext: Context): SessionLocalDat
     }
 
     override fun saveAuthInSession(authResponse: AuthResponse) {
-        val sharedPreferences = this.mContext.getSharedPreferences(preferenceShareNameIdentifier, MODE_PRIVATE)
+        val sharedPreferences =
+            this.mContext.getSharedPreferences(preferenceShareNameIdentifier, MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
         val gson = Gson()
@@ -37,28 +38,39 @@ class SessionLocalDataSourceImpl(private val mContext: Context): SessionLocalDat
 
     override fun getAuthResponseInSession(): AuthResponse {
         val gson = Gson()
-        val sharedPreferences = this.mContext.getSharedPreferences(preferenceShareNameIdentifier, MODE_PRIVATE)
+        val sharedPreferences =
+            this.mContext.getSharedPreferences(preferenceShareNameIdentifier, MODE_PRIVATE)
 
         val authResponseToJson = sharedPreferences.getString(preferenceShareNameIdentifier, "")
         return gson.fromJson<AuthResponse>(authResponseToJson, AuthResponse::class.java)
     }
 
     override fun destroySession(): Boolean {
-        val sharedPreferences = this.mContext.getSharedPreferences(preferenceShareNameIdentifier, MODE_PRIVATE)
+        val sharedPreferences =
+            this.mContext.getSharedPreferences(preferenceShareNameIdentifier, MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
         editor.clear()
         editor.apply()
 
-       val hasValue = sharedPreferences.getString(preferenceShareNameIdentifier, "")
-       return hasValue.isNullOrEmpty()
+        val hasValue = sharedPreferences.getString(preferenceShareNameIdentifier, "")
+        return hasValue.isNullOrEmpty()
     }
 
     override fun isLogged(): Boolean {
-        val sharedPreferences = this.mContext.getSharedPreferences(preferenceShareNameIdentifier, MODE_PRIVATE)
+        var isUserLogged = false
+        val sharedPreferences =
+            this.mContext.getSharedPreferences(preferenceShareNameIdentifier, MODE_PRIVATE)
 
         val hasValue = sharedPreferences.getString(preferenceShareNameIdentifier, "")
-        return hasValue.isNullOrEmpty()
+
+        hasValue?.apply {
+            when {
+                isNotEmpty() -> isUserLogged = true
+            }
+        }
+
+        return isUserLogged
     }
 
 }
