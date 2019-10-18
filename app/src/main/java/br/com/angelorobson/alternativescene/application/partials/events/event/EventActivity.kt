@@ -23,7 +23,7 @@ import br.com.angelorobson.alternativescene.databinding.EventActivityBinding
 import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.EventDate
 import br.com.angelorobson.alternativescene.domain.request.FavoriteRequest
-import kotlinx.android.synthetic.main.event_fragment.*
+import kotlinx.android.synthetic.main.event_activity.*
 import javax.inject.Inject
 
 
