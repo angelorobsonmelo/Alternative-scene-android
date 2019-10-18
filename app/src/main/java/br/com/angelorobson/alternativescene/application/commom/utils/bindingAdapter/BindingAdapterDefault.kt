@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventImageConstants.HTTP
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.*
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -61,7 +62,7 @@ fun isFavorite(view: ImageView, isFavorite: Boolean) {
 @BindingAdapter("loadImageUrlOrBase64")
 fun loadImageUrlOrBase64(view: ImageView, base64: String?) {
     if (base64 != null && base64.isNotEmpty()) {
-        if (base64.startsWith("http")) {
+        if (base64.startsWith(HTTP)) {
             Picasso
                 .get()
                 .load(base64)

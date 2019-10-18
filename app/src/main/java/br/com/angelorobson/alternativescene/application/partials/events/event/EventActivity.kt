@@ -15,10 +15,12 @@ import br.com.angelorobson.alternativescene.application.AlternativeSceneApplicat
 import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.SimpleRecyclerView
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants
 import br.com.angelorobson.alternativescene.application.commom.utils.listeners.BindingActivity
 import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventComponent
 import br.com.angelorobson.alternativescene.application.partials.events.event.dapter.EventDateAdapter
+import br.com.angelorobson.alternativescene.application.partials.events.eventimage.EventImageActivity
 import br.com.angelorobson.alternativescene.databinding.EventActivityBinding
 import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.EventDate
@@ -71,6 +73,7 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = getString(R.string.event_detail)
 
         setUpElements()
     }
@@ -135,12 +138,9 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
 
     private fun initImageClickListener() {
         imageView.setOnClickListener {
-            /*val args = Bundle()
-            args.putParcelable(EventsContants.ARG_EVENT, mEvent)
-            findNavController().navigate(
-                R.id.action_eventFragment_to_eventImageFragment,
-                args
-            )*/
+            val intent = Intent(this, EventImageActivity::class.java)
+            intent.putExtra(Constants.EventImageConstants.EVENT_IMAGE_URL_EXTRA, mEvent?.imageUrl)
+            startActivity(intent)
         }
     }
 

@@ -39,6 +39,7 @@
     <string name="date_event">Data do Evento</string>
     <string name="send">Enviar</string>
     <string name="event_place">Local do Evento</string>
+    <string name="event_detail" >Detalhes</string>
 
 
 </resources>
