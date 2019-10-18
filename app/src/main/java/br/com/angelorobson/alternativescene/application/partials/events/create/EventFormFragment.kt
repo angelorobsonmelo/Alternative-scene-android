@@ -109,7 +109,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         binding.editTextEventDate.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
-                DatePickerDialog.OnDateSetListener { view, yearCalendar, monthOfYearCalendar, dayOfMonthCalendar ->
+                DatePickerDialog.OnDateSetListener { _, yearCalendar, monthOfYearCalendar, dayOfMonthCalendar ->
                     binding.editTextEventDate.setText(
                         String.format(
                             "%d/%d/%d",
@@ -162,7 +162,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         dateEditText.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
-                DatePickerDialog.OnDateSetListener { view, yearCalendar, monthOfYearCalendar, dayOfMonthCalendar ->
+                DatePickerDialog.OnDateSetListener { _, yearCalendar, monthOfYearCalendar, dayOfMonthCalendar ->
                     // Calendar.MONTH returns month which is zero based that is why it is giving 1 less than actual month Add 1 to get correct value
                     dateEditText.setText(
                         String.format(
@@ -335,7 +335,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
     private fun handleError(data: Intent?) {
         data?.apply {
-            val status = Autocomplete.getStatusFromIntent(data)
+            Autocomplete.getStatusFromIntent(data)
         }
     }
 
@@ -375,7 +375,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mViewModel.disposable.clear()
+        mViewModel.disposables.clear()
     }
 
 }

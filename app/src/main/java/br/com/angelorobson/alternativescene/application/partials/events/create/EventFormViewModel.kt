@@ -15,7 +15,7 @@ class EventFormViewModel @Inject constructor(
     private val apiDataSource: EventsApiDataSource
 ) : BaseViewModel<ResponseBase<Event>>() {
 
-    val disposable = CompositeDisposable()
+    val disposables = CompositeDisposable()
 
     fun save(eventRequest: EventRequest) {
         val disposable = apiDataSource.save(eventRequest)
@@ -33,5 +33,6 @@ class EventFormViewModel @Inject constructor(
                 }
             )
 
+        disposables.add(disposable)
     }
 }

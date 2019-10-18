@@ -215,10 +215,7 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
     override fun onLongPressImage(event: Event) {
         val args = Bundle()
         args.putParcelable(ARG_EVENT, event)
-        findNavController().navigate(
-            R.id.action_eventsFragment_to_eventImageFragment,
-            args
-        )
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -51,14 +51,14 @@ class SessionLocalDataSourceImpl(private val mContext: Context): SessionLocalDat
         editor.apply()
 
        val hasValue = sharedPreferences.getString(preferenceShareNameIdentifier, "")
-       return hasValue.isEmpty()
+       return hasValue.isNullOrEmpty()
     }
 
     override fun isLogged(): Boolean {
         val sharedPreferences = this.mContext.getSharedPreferences(preferenceShareNameIdentifier, MODE_PRIVATE)
 
         val hasValue = sharedPreferences.getString(preferenceShareNameIdentifier, "")
-        return hasValue.isNotEmpty()
+        return hasValue.isNullOrEmpty()
     }
 
 }

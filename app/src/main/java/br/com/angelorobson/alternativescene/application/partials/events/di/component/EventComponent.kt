@@ -3,7 +3,6 @@ package br.com.angelorobson.alternativescene.application.partials.events.di.comp
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.partials.events.di.modules.EventModule
 import br.com.angelorobson.alternativescene.application.partials.events.event.EventActivity
-import br.com.angelorobson.alternativescene.application.partials.events.event.EventFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -11,6 +10,5 @@ import javax.inject.Singleton
 @Component(modules = [EventModule::class, ContextModule::class])
 interface EventComponent {
 
-    fun inject(eventFragment: EventFragment)
     fun inject(eventActivity: EventActivity)
 }

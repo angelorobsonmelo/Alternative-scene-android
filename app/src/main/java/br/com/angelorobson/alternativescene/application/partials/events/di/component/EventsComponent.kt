@@ -3,7 +3,6 @@ package br.com.angelorobson.alternativescene.application.partials.events.di.comp
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.partials.events.events.EventsFragment
 import br.com.angelorobson.alternativescene.application.partials.events.di.modules.EventsModule
-import br.com.angelorobson.alternativescene.application.partials.events.event.EventFragment
 import dagger.Component
 import javax.inject.Singleton
 

@@ -91,9 +91,11 @@ class EventsViewModel @Inject constructor(
             .subscribe(
                 {
                     it.data?.event?.apply {
-                        successFavoriteObserver.value = EventLiveData(it.data!!)
+                        successFavoriteObserver.value = EventLiveData(it.data)
                     } ?: run {
-                        successdisfavourObserver.value = EventLiveData(it.data!!)
+                        it.data?.apply {
+                            successdisfavourObserver.value = EventLiveData(this)
+                        }
                     }
 
                 },
