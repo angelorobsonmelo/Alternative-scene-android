@@ -25,6 +25,7 @@ import br.com.angelorobson.alternativescene.application.commom.utils.Constants.E
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.EVENT_IS_FAVORITE_EXTRA
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.FAVORITE_ICON_IS_CLICKED
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
+import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isEqual
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isNotTrue
 import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventsComponent
 import br.com.angelorobson.alternativescene.application.partials.events.event.EventActivity
@@ -222,7 +223,7 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == DETAIL_EVENT_REQUEST_CODE) {
+        if (resultCode.isEqual(DETAIL_EVENT_REQUEST_CODE)) {
             data?.apply {
                 handleFavoriteIcon(this)
             }

@@ -7,8 +7,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.angelorobson.alternativescene.R
-import br.com.angelorobson.alternativescene.application.commom.utils.Constants
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.DETAIL_EVENT_REQUEST_CODE
+import br.com.angelorobson.alternativescene.application.commom.utils.extensions.notEqual
 import kotlinx.android.synthetic.main.host_navigation_activity.*
 
 
@@ -27,7 +27,7 @@ class NavigationHostActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != DETAIL_EVENT_REQUEST_CODE) {
+        if (resultCode.notEqual(DETAIL_EVENT_REQUEST_CODE)) {
             callActivityForResultMethodInAllFragments(requestCode, resultCode, data)
         }
     }
