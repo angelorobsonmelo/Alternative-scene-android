@@ -1,5 +1,7 @@
 package br.com.angelorobson.alternativescene.application.partials.events.event
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -23,6 +25,7 @@ import br.com.angelorobson.alternativescene.domain.EventDate
 import br.com.angelorobson.alternativescene.domain.request.FavoriteRequest
 import kotlinx.android.synthetic.main.event_fragment.*
 import javax.inject.Inject
+
 
 class EventActivity : BindingActivity<EventActivityBinding>() {
 
@@ -55,6 +58,7 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
 
     private var mEventId = 0L
     private var mIsFavoriteEvent = false
+    private var isFavoriteIconClicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +69,8 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
 
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         setUpElements()
     }
@@ -108,11 +114,15 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
 
         mViewModel.successFavoriteObserver.observe(this, EventObserver {
             binding.event?.favorite = true
+            mEvent = binding.event
+            isFavoriteIconClicked = true
             mMenuItemFavorite?.setIcon(R.drawable.ic_favorite_fiiled_red_24dp)
         })
 
         mViewModel.successDisfavourObserver.observe(this, EventObserver {
             binding.event?.favorite = false
+            mEvent = binding.event
+            isFavoriteIconClicked = true
             mMenuItemFavorite?.setIcon(R.drawable.ic_favorite_border_24dp)
         })
     }
@@ -136,6 +146,7 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         mMenuItemFavorite = menu.getItem(0)
+        mEvent?.favorite = mIsFavoriteEvent
         if (mIsFavoriteEvent) {
             menu.getItem(0).setIcon(R.drawable.ic_favorite_fiiled_red_24dp)
         }
@@ -175,6 +186,21 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
         } ?: run {
             //            showToast("Ocorreu um erro")
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val intent = Intent()
+
+        mEvent?.apply {
+            intent.putExtra(EventsContants.EVENT_IS_FAVORITE_EXTRA, this.favorite)
+            intent.putExtra(EventsContants.FAVORITE_ICON_IS_CLICKED, isFavoriteIconClicked)
+            setResult(EventsContants.DETAIL_EVENT_REQUEST_CODE, intent)
+        } ?: run {
+            setResult(EventsContants.DETAIL_EVENT_REQUEST_CODE)
+        }
+
+        finish()
+        return false
     }
 
     override fun onDestroy() {

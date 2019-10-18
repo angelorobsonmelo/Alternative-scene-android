@@ -7,6 +7,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.DETAIL_EVENT_REQUEST_CODE
 import kotlinx.android.synthetic.main.host_navigation_activity.*
 
 
@@ -20,17 +22,26 @@ class NavigationHostActivity : AppCompatActivity() {
         bottomNavigation?.setupWithNavController(navController)
     }
 
-    override fun onSupportNavigateUp(): Boolean = findNavController(R.id.my_nav_fragment).navigateUp()
+    override fun onSupportNavigateUp(): Boolean =
+        findNavController(R.id.my_nav_fragment).navigateUp()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val fragmentList = supportFragmentManager.fragments
+        if (resultCode != DETAIL_EVENT_REQUEST_CODE) {
+            callActivityForResultMethodInAllFragments(requestCode, resultCode, data)
+        }
+    }
 
+    private fun callActivityForResultMethodInAllFragments(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        val fragmentList = supportFragmentManager.fragments
         for (f in fragmentList) {
             for (fragment in f.childFragmentManager.fragments) {
                 fragment.onActivityResult(requestCode, resultCode, data)
             }
         }
-
     }
 }

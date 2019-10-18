@@ -23,7 +23,9 @@ import br.com.angelorobson.alternativescene.application.commom.utils.Constants.E
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.DETAIL_EVENT_REQUEST_CODE
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.EVENT_ID_EXTRA
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.EVENT_IS_FAVORITE_EXTRA
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.FAVORITE_ICON_IS_CLICKED
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
+import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isNotTrue
 import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventsComponent
 import br.com.angelorobson.alternativescene.application.partials.events.event.EventActivity
 import br.com.angelorobson.alternativescene.application.partials.events.events.adapter.EventsAdapter
@@ -69,12 +71,7 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
 
     override fun onResume() {
         super.onResume()
-        mEvents.clear()
-        userLogeed?.apply {
-            mViewModel.getEventsByUser(userId = this.id)
-        } ?: run {
-            mViewModel.getEvents()
-        }
+
 
         showBottomNavigation()
     }
@@ -87,6 +84,16 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         initErrorObserver()
         initSwipeToRefreshLayoutEvents()
         showToolbarWithoutDisplayArrowBack(getString(R.string.events))
+        getEvents()
+    }
+
+    private fun getEvents() {
+        mEvents.clear()
+        userLogeed?.apply {
+            mViewModel.getEventsByUser(userId = this.id)
+        } ?: run {
+            mViewModel.getEvents()
+        }
     }
 
     private fun setUpDagger() {
@@ -128,21 +135,13 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
 
         mViewModel.successFavoriteObserver.observe(this, EventObserver {
             mEventPosition?.apply {
-                val eventsUpdated = mEvents[this]
-                eventsUpdated.favorite = true
-
-                mEvents[this] = eventsUpdated
-                mEventsAdapter.notifyItemChanged(this)
+                setIconFavoriteOnEventPosition()
             }
         })
 
         mViewModel.successdisfavourObserver.observe(this, EventObserver {
             mEventPosition?.apply {
-                val eventsUpdated = mEvents[this]
-                eventsUpdated.favorite = false
-
-                mEvents[this] = eventsUpdated
-                mEventsAdapter.notifyItemChanged(this)
+                setIconDisfavorOnEventPosition()
             }
         })
     }
@@ -219,6 +218,48 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
             R.id.action_eventsFragment_to_eventImageFragment,
             args
         )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == DETAIL_EVENT_REQUEST_CODE) {
+            data?.apply {
+                handleFavoriteIcon(this)
+            }
+        }
+    }
+
+    private fun handleFavoriteIcon(intent: Intent) {
+        val isEventFavorite = intent.getBooleanExtra(EVENT_IS_FAVORITE_EXTRA, false)
+        val isFavoriteIconClicked = intent.getBooleanExtra(FAVORITE_ICON_IS_CLICKED, false)
+
+        if (isFavoriteIconClicked) {
+            if (isEventFavorite.isNotTrue()) {
+                setIconDisfavorOnEventPosition()
+                return
+            }
+            mEventPosition?.apply { setIconFavoriteOnEventPosition() }
+        }
+    }
+
+    private fun setIconFavoriteOnEventPosition() {
+        mEventPosition?.apply {
+            val eventsUpdated = mEvents[this]
+            eventsUpdated.favorite = true
+
+            mEvents[this] = eventsUpdated
+            mEventsAdapter.notifyItemChanged(this)
+        }
+    }
+
+    private fun setIconDisfavorOnEventPosition() {
+        mEventPosition?.apply {
+            val eventsUpdated = mEvents[this]
+            eventsUpdated.favorite = false
+
+            mEvents[this] = eventsUpdated
+            mEventsAdapter.notifyItemChanged(this)
+        }
     }
 
     override fun onDestroy() {
