@@ -12,7 +12,6 @@ object Constants {
     }
 
     object EventImageConstants {
-        const val EVENT_IMAGE_REQUEST_CODE = 15879
         const val EVENT_IMAGE_URL_EXTRA = "EVENT_IMAGE_URL_EXTRA"
         const val HTTP = "http"
     }

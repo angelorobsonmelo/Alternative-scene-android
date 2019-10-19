@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import br.com.angelorobson.alternativescene.R
-import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventImageConstants.EVENT_IMAGE_REQUEST_CODE
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventImageConstants.EVENT_IMAGE_URL_EXTRA
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventImageConstants.HTTP
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.convertBase64ToBitmap

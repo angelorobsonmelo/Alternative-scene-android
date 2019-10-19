@@ -21,11 +21,6 @@
                 app:destination="@id/eventFormFragment" />
     </fragment>
     <fragment
-            android:id="@+id/eventImageFragment"
-            android:name="br.com.angelorobson.alternativescene.application.partials.events.eventimage.EventImageFragment"
-            android:label="fragment_event_image"
-            tools:layout="@layout/event_image_fragment" />
-    <fragment
             android:id="@+id/aboutFragment"
             android:name="br.com.angelorobson.alternativescene.application.partials.abount.AboutFragment"
             android:label="about_fragment"
