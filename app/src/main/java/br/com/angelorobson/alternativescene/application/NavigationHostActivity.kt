@@ -1,11 +1,14 @@
 package br.com.angelorobson.alternativescene.application
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.angelorobson.alternativescene.R
-import br.com.angelorobson.alternativescene.application.commom.utils.FragmentBase
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.DETAIL_EVENT_REQUEST_CODE
+import br.com.angelorobson.alternativescene.application.commom.utils.extensions.notEqual
 import kotlinx.android.synthetic.main.host_navigation_activity.*
 
 
@@ -19,25 +22,26 @@ class NavigationHostActivity : AppCompatActivity() {
         bottomNavigation?.setupWithNavController(navController)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val fragmentList = supportFragmentManager.fragments
+    override fun onSupportNavigateUp(): Boolean =
+        findNavController(R.id.my_nav_fragment).navigateUp()
 
-        var handled = false
-        for (f in fragmentList) {
-            if (f is FragmentBase) {
-                handled = f.onBackPressed()
-
-                if (handled) {
-                    break
-                }
-            }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode.notEqual(DETAIL_EVENT_REQUEST_CODE)) {
+            callActivityForResultMethodInAllFragments(requestCode, resultCode, data)
         }
-
-        if (!handled) {
-            super.onBackPressed()
-        }
-
-        return handled
     }
 
+    private fun callActivityForResultMethodInAllFragments(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        val fragmentList = supportFragmentManager.fragments
+        for (f in fragmentList) {
+            for (fragment in f.childFragmentManager.fragments) {
+                fragment.onActivityResult(requestCode, resultCode, data)
+            }
+        }
+    }
 }

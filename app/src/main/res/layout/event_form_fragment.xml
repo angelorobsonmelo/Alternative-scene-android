@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="?attr/actionBarSize"
+            android:fillViewport="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/eventFormContraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".application.partials.events.create.EventFormFragment">
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonUploadImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="@color/white"
+                    android:padding="10dp"
+                    android:text="Adicionar a imagem do evento"
+                    android:textColor="@color/black"
+                    app:icon="@drawable/upload_to_cloud"
+                    app:iconSize="25dp"
+                    app:iconTint="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                    android:id="@+id/previewEventImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="193dp"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="fitXY"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/buttonUploadImage"
+                    app:layout_constraintStart_toStartOf="@+id/buttonUploadImage"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonUploadImage"
+                    tools:src="@drawable/heavy_metal_default"
+                    tools:visibility="visible" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/locationEventTextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="@string/event_place"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/previewEventImageView">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/event_place"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:drawableEnd="@drawable/ic_location_on_black_24dp"
+                        android:focusable="false"
+                        app:validateEmpty="@{true}"
+                        app:validateTypeAutoDismiss="@{true}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <LinearLayout
+                    android:id="@+id/eventDateLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/locationEventTextInputLayout">
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutEventDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/date_event"
+                        android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextEventDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:drawableEnd="@drawable/ic_event_black_24dp"
+                            android:focusable="false"
+                            app:validateEmpty="@{true}"
+                            app:validateTypeAutoDismiss="@{true}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonAddMoreDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="16dp"
+                        android:backgroundTint="@color/colorDarkGray"
+                        android:text="Adicionar outra data"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

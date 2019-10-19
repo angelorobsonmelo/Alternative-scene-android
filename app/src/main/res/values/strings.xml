@@ -32,4 +32,27 @@
     <string name="close">Close</string>
     <string name="events">Events</string>
 
+
+    <string name="signup">Sign up</string>
+    <string name="share">Share</string>
+    <string name="favorite">Favorite</string>
+    <string name="about">About</string>
+    <string name="favorites">Favorites</string>
+
+    <string name="account">Account</string>
+    <string name="spread">Spread</string>
+    <string name="about_first_paragraph">E aí! Meu nome é Ângelo Robson, trabalho como Engenheiro de Software, formado em Sistemas de Informação e pós-graduado em Engenharia de Software. Tento contribuir para a cena da forma que posso e uma delas foi desponibilizando este App gratuito.</string>
+    <string name="about_second_paragraph">Como vocês, sou fã de Heavy Metal \,,/ também sou fã de games e animes.</string>
+    <string name="spread_event">Spread Event</string>
+    <string name="spred_event_msg">Você precisa estar logado para poder divulgar um evento</string>
+    <string name="search">Search</string>
+
+    <string name="select_city">Selecionar Cidade</string>
+    <string name="date_event">Date Event</string>
+    <string name="send">Send</string>
+    <string name="event_place">eventLiveData\'s place</string>
+
+    <string name="google_places_api_key" translatable="false">AIzaSyCrZjnV-wKHNKI5zBtOf4j2L9xYWTBkrYI</string>
+    <string name="event_detail" >Details</string>
+
 </resources>

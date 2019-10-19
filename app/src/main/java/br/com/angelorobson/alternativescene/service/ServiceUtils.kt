@@ -8,6 +8,6 @@ object ServiceUtils {
     @JvmStatic
     fun saveUserAndTokenInSession(authResponse: AuthResponse) {
 
-        AlternativeSceneApplication.mSessionUseCase?.saveAuthResponseInSession(authResponse)
+        AlternativeSceneApplication.mSessionUseCase.saveAuthResponseInSession(authResponse)
     }
 }
