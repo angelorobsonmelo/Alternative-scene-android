@@ -90,6 +90,7 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
         binding.lifecycleOwner = this
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun setUpDagger() {
         DaggerEventComponent.builder()
             .contextModule(ContextModule(this))
