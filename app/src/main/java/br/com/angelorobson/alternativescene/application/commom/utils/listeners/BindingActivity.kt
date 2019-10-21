@@ -2,11 +2,11 @@ package br.com.angelorobson.alternativescene.application.commom.utils.listeners
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import br.com.angelorobson.alternativescene.application.commom.utils.ActivityBase
 
-abstract class BindingActivity<T : ViewDataBinding> : AppCompatActivity() {
+abstract class BindingActivity<T : ViewDataBinding> : ActivityBase() {
 
     @LayoutRes
     abstract fun getLayoutResId(): Int

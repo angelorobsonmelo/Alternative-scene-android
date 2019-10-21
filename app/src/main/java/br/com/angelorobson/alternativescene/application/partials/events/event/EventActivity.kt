@@ -1,6 +1,5 @@
 package br.com.angelorobson.alternativescene.application.partials.events.event
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -79,6 +78,7 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
     }
 
     private fun setUpElements() {
+        showProgressBarWithFragNotTouchable(progressBar)
         setUpBinding()
         setUpDagger()
         getEvent()
@@ -113,6 +113,7 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
             mEvent = it.data
             binding.event = mEvent
             populateDates()
+            hideProgressBarWithFragNotTouchable(progressBar)
         })
 
         mViewModel.successFavoriteObserver.observe(this, EventObserver {
