@@ -7,7 +7,9 @@ import br.com.angelorobson.alternativescene.application.commom.di.modules.applic
 import br.com.angelorobson.alternativescene.application.usecases.local.SessionUseCase
 import br.com.angelorobson.alternativescene.service.local.event.EventLocalDataSource
 import br.com.angelorobson.alternativescene.service.local.session.SessionLocalDataSource
+import br.com.angelorobson.alternativescene.service.remote.auth.AuthApiDataSource
 import com.google.android.libraries.places.api.Places
+import javax.inject.Inject
 
 class AlternativeSceneApplication : Application() {
 
@@ -15,8 +17,10 @@ class AlternativeSceneApplication : Application() {
 
         lateinit var mSessionUseCase: SessionUseCase
         lateinit var mEventLocalDataSource: EventLocalDataSource
+        lateinit var mAuthApiDataSource: AuthApiDataSource
         lateinit var instance: AlternativeSceneApplication
     }
+
 
     override fun onCreate() {
         super.onCreate()
@@ -36,6 +40,7 @@ class AlternativeSceneApplication : Application() {
 
         mSessionUseCase = applicationComponent.getSessionUseCase()
         mEventLocalDataSource = applicationComponent.getEventLocalDataSource()
+        mAuthApiDataSource = applicationComponent.getAuthApiDataSource()
     }
 
 }

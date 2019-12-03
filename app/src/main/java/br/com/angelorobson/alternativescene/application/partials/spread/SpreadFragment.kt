@@ -9,10 +9,10 @@ import androidx.navigation.fragment.findNavController
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication.Companion.mSessionUseCase
 import br.com.angelorobson.alternativescene.application.EventObserver
+import br.com.angelorobson.alternativescene.application.commom.di.components.fragments.DaggerFragmentComponentGeneric
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.handlers.googleauth.GoogleAuthHandler
-import br.com.angelorobson.alternativescene.application.partials.spread.di.component.DaggerSpreadComponent
 import br.com.angelorobson.alternativescene.databinding.SpreadFragmentBinding
 import br.com.angelorobson.alternativescene.domain.request.UserRequest
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -51,7 +51,7 @@ class SpreadFragment : BindingFragment<SpreadFragmentBinding>() {
     }
 
     private fun setUpDagger() {
-        DaggerSpreadComponent.builder()
+        DaggerFragmentComponentGeneric.builder()
             .contextModule(ContextModule(context!!))
             .build()
             .inject(this)

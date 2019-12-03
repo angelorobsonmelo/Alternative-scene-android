@@ -17,13 +17,13 @@ import androidx.lifecycle.ViewModelProviders
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication.Companion.mSessionUseCase
 import br.com.angelorobson.alternativescene.application.EventObserver
+import br.com.angelorobson.alternativescene.application.commom.di.components.fragments.DaggerFragmentComponentGeneric
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.PLACE_AUTOCOMPLETE_REQUEST_CODE
 import br.com.angelorobson.alternativescene.application.commom.utils.PlacesFieldSelector
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.decodeFile
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.encodeTobase64
-import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventFormComponent
 import br.com.angelorobson.alternativescene.databinding.EventFormFragmentBinding
 import br.com.angelorobson.alternativescene.domain.request.DateEvent
 import br.com.angelorobson.alternativescene.domain.request.EventRequest
@@ -74,7 +74,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     }
 
     private fun setUpDagger() {
-        DaggerEventFormComponent.builder()
+        DaggerFragmentComponentGeneric.builder()
             .contextModule(ContextModule(requireContext()))
             .build()
             .inject(this)

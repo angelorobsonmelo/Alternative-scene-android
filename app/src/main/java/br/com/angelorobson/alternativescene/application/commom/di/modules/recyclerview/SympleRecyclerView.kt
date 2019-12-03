@@ -9,7 +9,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-class SimpleRecyclerView(
+class SimpleRecyclerViewModule(
     private val recyclerView: RecyclerView,
     private val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
 ) {

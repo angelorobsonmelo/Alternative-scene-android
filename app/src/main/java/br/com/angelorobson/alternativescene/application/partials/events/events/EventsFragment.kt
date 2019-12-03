@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
 import br.com.angelorobson.alternativescene.application.EventObserver
+import br.com.angelorobson.alternativescene.application.commom.di.components.fragments.DaggerFragmentGenericWithRecyclerViewComponent
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.RecyclerViewAnimatedWithDividerModule
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
@@ -26,7 +27,6 @@ import br.com.angelorobson.alternativescene.application.commom.utils.Constants.E
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isEqual
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isNotTrue
-import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventsComponent
 import br.com.angelorobson.alternativescene.application.partials.events.event.EventActivity
 import br.com.angelorobson.alternativescene.application.partials.events.eventimage.EventImageActivity
 import br.com.angelorobson.alternativescene.application.partials.events.events.adapter.EventsAdapter
@@ -98,7 +98,7 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
     }
 
     private fun setUpDagger() {
-        DaggerEventsComponent.builder()
+        DaggerFragmentGenericWithRecyclerViewComponent.builder()
             .contextModule(ContextModule(context!!))
             .recyclerViewAnimatedWithDividerModule(
                 RecyclerViewAnimatedWithDividerModule(

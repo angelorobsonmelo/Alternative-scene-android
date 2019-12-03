@@ -1,5 +1,6 @@
 package br.com.angelorobson.alternativescene.application.commom.di.modules.api
 
+import br.com.angelorobson.alternativescene.service.remote.auth.AuthApiDataSource
 import br.com.angelorobson.alternativescene.service.remote.events.EventsApiDataSource
 import br.com.angelorobson.alternativescene.service.remote.favorite.FavoriteApiRemoteDataSource
 import br.com.angelorobson.alternativescene.service.remote.user.UserApiDataSource
@@ -28,4 +29,5 @@ class ApiModule {
     fun provideFavoriteApiRemoteDataSource(retrofit: Retrofit): FavoriteApiRemoteDataSource {
         return retrofit.create(FavoriteApiRemoteDataSource::class.java)
     }
+
 }

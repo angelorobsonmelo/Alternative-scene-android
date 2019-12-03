@@ -8,6 +8,9 @@ import retrofit2.http.POST
 
 interface AuthApiDataSource {
 
-    @POST("auth/login")
+    @POST("v1/auth/login")
     fun auth(@Body authRequest: AuthRequest): Observable<AuthResponse>
+
+    @POST("v1/auth/refresh")
+    fun refreshToken(): Observable<AuthResponse>
 }

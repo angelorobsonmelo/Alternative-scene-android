@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
 import br.com.angelorobson.alternativescene.application.EventObserver
+import br.com.angelorobson.alternativescene.application.commom.di.components.fragments.DaggerFragmentWithSimpleRecyclerViewComponentGeneric
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
-import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.SimpleRecyclerView
+import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.SimpleRecyclerViewModule
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants
 import br.com.angelorobson.alternativescene.application.commom.utils.listeners.BindingActivity
-import br.com.angelorobson.alternativescene.application.partials.events.di.component.DaggerEventComponent
 import br.com.angelorobson.alternativescene.application.partials.events.event.dapter.EventDateAdapter
 import br.com.angelorobson.alternativescene.application.partials.events.eventimage.EventImageActivity
 import br.com.angelorobson.alternativescene.databinding.EventActivityBinding
@@ -92,10 +92,10 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
 
     @Suppress("UNCHECKED_CAST")
     private fun setUpDagger() {
-        DaggerEventComponent.builder()
+        DaggerFragmentWithSimpleRecyclerViewComponentGeneric.builder()
             .contextModule(ContextModule(this))
-            .simpleRecyclerView(
-                SimpleRecyclerView(
+            .simpleRecyclerViewModule(
+                SimpleRecyclerViewModule(
                     binding.recyclerViewDates,
                     mEventDateAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>
                 )
