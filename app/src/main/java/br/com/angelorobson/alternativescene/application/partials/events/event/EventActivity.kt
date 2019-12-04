@@ -69,10 +69,7 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
         }
 
         val toolbar = binding.toolbar
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.title = getString(R.string.event_detail)
+        showToolbarWithArrowBack(toolbar, getString(R.string.event_detail))
 
         setUpElements()
     }

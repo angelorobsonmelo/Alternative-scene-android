@@ -24,6 +24,9 @@ import br.com.angelorobson.alternativescene.application.commom.utils.Constants.E
 import br.com.angelorobson.alternativescene.application.commom.utils.PlacesFieldSelector
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.decodeFile
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.encodeTobase64
+import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isEqual
+import br.com.angelorobson.alternativescene.application.partials.signin.SignInActivity
+import br.com.angelorobson.alternativescene.application.partials.signin.SignInActivity.Companion.GOOGLE_AUTH_REQUEST_CODE
 import br.com.angelorobson.alternativescene.databinding.EventFormFragmentBinding
 import br.com.angelorobson.alternativescene.domain.request.DateEvent
 import br.com.angelorobson.alternativescene.domain.request.EventRequest
@@ -62,6 +65,11 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpElements()
+
+        startActivityForResult(
+            Intent(requireContext(), SignInActivity::class.java),
+            GOOGLE_AUTH_REQUEST_CODE
+        )
     }
 
     private fun setUpElements() {
@@ -317,6 +325,10 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
                     handleLocationResult(data)
                 }
 
+                GOOGLE_AUTH_REQUEST_CODE -> {
+                  
+                }
+
                 AutocompleteActivity.RESULT_ERROR -> {
                     handleError(data)
                 }
@@ -376,6 +388,13 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     override fun onDestroy() {
         super.onDestroy()
         mViewModel.disposables.clear()
+    }
+
+
+    private fun isSuccess(requestCode: Int, resultCode: Int): Boolean {
+        return requestCode.isEqual(GOOGLE_AUTH_REQUEST_CODE) && resultCode.isEqual(
+            Activity.RESULT_OK
+        )
     }
 
 }

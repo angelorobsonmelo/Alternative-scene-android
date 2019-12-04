@@ -1,7 +1,6 @@
 package br.com.angelorobson.alternativescene.application.commom.utils
 
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,11 +10,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.commom.utils.handlers.googleauth.GoogleAuthHandler
 import br.com.angelorobson.alternativescene.application.commom.utils.listeners.dialog.ListenerConfirmDialog
-import br.com.angelorobson.alternativescene.application.partials.spread.SpreadFragment
+import br.com.angelorobson.alternativescene.application.partials.signin.SignInActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -25,7 +23,6 @@ import com.google.android.gms.common.api.Scope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.host_navigation_activity.*
-import java.lang.ref.WeakReference
 
 
 open class FragmentBase : Fragment() {
@@ -131,7 +128,7 @@ open class FragmentBase : Fragment() {
 
     fun openSignIntent() {
         val signInIntent = mGoogleSignInClient?.signInIntent
-        startActivityForResult(signInIntent, SpreadFragment.GOOGLE_AUTH_REQUEST_CODE)
+        startActivityForResult(signInIntent, SignInActivity.GOOGLE_AUTH_REQUEST_CODE)
     }
 
     fun signOutGoogle() {
@@ -145,7 +142,7 @@ open class FragmentBase : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == SpreadFragment.GOOGLE_AUTH_REQUEST_CODE) {
+        if (requestCode == SignInActivity.GOOGLE_AUTH_REQUEST_CODE) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)

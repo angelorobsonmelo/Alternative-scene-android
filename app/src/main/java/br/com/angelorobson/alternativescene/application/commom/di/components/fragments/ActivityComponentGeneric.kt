@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [GenericModule::class])
-interface FragmentComponentGeneric {
+interface ActivityComponentGeneric {
 
-    fun inject(eventFormFragment: EventFormFragment)
+    fun inject(signInActivity: SignInActivity)
 }

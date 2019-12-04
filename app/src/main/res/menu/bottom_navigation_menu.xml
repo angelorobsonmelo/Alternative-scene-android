@@ -13,7 +13,7 @@
             android:title="@string/favorites" />
 
     <item
-            android:id="@+id/spreadFragment"
+            android:id="@+id/eventFormFragment"
             android:icon="@drawable/ic_megaphone"
             android:title="@string/spread" />
 

@@ -1,4 +1,4 @@
-package br.com.angelorobson.alternativescene.application.partials.spread
+package br.com.angelorobson.alternativescene.application.partials.signin
 
 import androidx.lifecycle.MutableLiveData
 import br.com.angelorobson.alternativescene.application.EventLiveData
@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class SpreadViewModel @Inject constructor(
+class SignInViewModel @Inject constructor(
     private val apiDataSource: UserApiDataSource
 ) :
     BaseViewModel<AuthResponse>() {
