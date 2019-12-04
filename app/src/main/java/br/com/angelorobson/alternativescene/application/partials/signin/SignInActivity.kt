@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication.Companion.mSessionUseCase
 import br.com.angelorobson.alternativescene.application.EventObserver
+import br.com.angelorobson.alternativescene.application.NavigationHostActivity
 import br.com.angelorobson.alternativescene.application.commom.di.components.fragments.DaggerActivityComponentGeneric
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.utils.googlemanager.GoogleManager
@@ -47,6 +48,7 @@ class SignInActivity : BindingActivity<SiginActivityBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        showToolbarWithArrowBack(toolbar, getString(R.string.signup))
         setUp()
     }
 
@@ -139,6 +141,13 @@ class SignInActivity : BindingActivity<SiginActivityBinding>() {
                 Log.w(ContentValues.TAG, "Google sign in failed", e)
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val intent = Intent(this, NavigationHostActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+        return super.onSupportNavigateUp()
     }
 
 }

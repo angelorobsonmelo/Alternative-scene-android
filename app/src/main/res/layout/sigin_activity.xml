@@ -11,6 +11,25 @@
             tools:context=".application.partials.signin.SignInActivity">
 
 
+        <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
         <com.google.android.gms.common.SignInButton
                 android:id="@+id/sign_in_button"
                 android:layout_width="wrap_content"
@@ -40,7 +59,7 @@
                 android:id="@+id/group_need_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="textView2,sign_in_button" >
+                app:constraint_referenced_ids="textView2,sign_in_button">
 
 
         </androidx.constraintlayout.widget.Group>

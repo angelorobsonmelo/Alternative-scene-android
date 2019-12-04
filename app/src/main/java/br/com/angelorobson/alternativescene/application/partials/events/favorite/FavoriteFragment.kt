@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isEqual
 import br.com.angelorobson.alternativescene.application.commom.utils.googlemanager.GoogleManager
@@ -32,6 +33,21 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        checkIfUserIsLogged()
+    }
+
+    private fun checkIfUserIsLogged() {
+        val isUserLogged =
+            AlternativeSceneApplication.mSessionUseCase.isLogged()
+
+        if (isUserLogged) {
+            return
+        }
+
+        goToSignInActivity()
+    }
+
+    private fun goToSignInActivity() {
         startActivityForResult(
             Intent(requireContext(), SignInActivity::class.java),
             GOOGLE_AUTH_REQUEST_CODE

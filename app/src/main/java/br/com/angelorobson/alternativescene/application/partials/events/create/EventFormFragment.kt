@@ -65,7 +65,21 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpElements()
+        checkIfUserIsLogged()
+    }
 
+    private fun checkIfUserIsLogged() {
+        val isUserLogged =
+            mSessionUseCase.isLogged()
+
+        if (isUserLogged) {
+            return
+        }
+
+        goToSignInActivity()
+    }
+
+    private fun goToSignInActivity() {
         startActivityForResult(
             Intent(requireContext(), SignInActivity::class.java),
             GOOGLE_AUTH_REQUEST_CODE
@@ -326,7 +340,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
                 }
 
                 GOOGLE_AUTH_REQUEST_CODE -> {
-                  
+
                 }
 
                 AutocompleteActivity.RESULT_ERROR -> {
