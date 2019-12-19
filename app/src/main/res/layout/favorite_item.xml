@@ -118,6 +118,29 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                    android:id="@+id/linearLayoutFavor"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_shape_white"
+                    android:gravity="center"
+                    android:onClick="@{() -> handler.onPressFavorite(event, position)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+                    app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout2">
+
+                <ImageView
+                        android:id="@+id/shareImageViewFavor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:scaleType="fitXY"
+                        app:isFavorite="@{event.favorite}"
+                        tools:src="@drawable/ic_favorite_border_24dp" />
+
+            </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
