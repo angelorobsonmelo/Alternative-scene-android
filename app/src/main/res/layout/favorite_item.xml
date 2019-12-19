@@ -36,7 +36,7 @@
                     android:layout_height="200dp"
                     android:scaleType="fitXY"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:loadImageUrlOrBase64="@{event.imageThumbUrl}"
@@ -53,7 +53,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@{event.eventDate}"
-                    android:textColor="@color/cyan"
+                    android:textColor="@color/red"
                     android:textSize="16sp"
                     android:textStyle="italic"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -95,49 +95,29 @@
                     app:layout_constraintTop_toBottomOf="@+id/textViewDataTime"
                     tools:text="Rua São Francisco de Assis, 190 A, fundos, Maceió, AL, 58754-00" />
 
-            <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginBottom="32dp"
-                    android:background="@drawable/rounded_shape"
-                    android:gravity="center"
-                    android:onClick="@{() -> handler.onPressFavorite(event, position)}"
-                    app:layout_constraintBottom_toBottomOf="@+id/eventImageView"
-                    app:layout_constraintEnd_toEndOf="@+id/eventImageView">
-
-                <ImageView
-                        android:id="@+id/FavoriteImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:scaleType="fitXY"
-                        tools:src="@drawable/ic_favorite_border_24dp" />
-
-            </LinearLayout>
 
             <LinearLayout
                     android:id="@+id/linearLayout2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/rounded_shape"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/rounded_shape_white"
                     android:gravity="center"
                     android:onClick="@{() -> handler.onPressShare(event)}"
-                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-                    app:layout_constraintEnd_toStartOf="@+id/linearLayout"
-                    app:layout_constraintTop_toTopOf="@+id/linearLayout">
+                    app:layout_constraintBottom_toBottomOf="@+id/eventImageView"
+                    app:layout_constraintEnd_toEndOf="parent">
 
                 <ImageView
                         android:id="@+id/shareImageView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_margin="10dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_share_24dp" />
 
             </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
