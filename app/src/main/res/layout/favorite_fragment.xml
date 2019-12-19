@@ -7,28 +7,35 @@
 
         <variable
                 name="viewModel"
-                type="br.com.angelorobson.alternativescene.application.partials.events.events.EventsViewModel" />
+                type="br.com.angelorobson.alternativescene.application.partials.events.favorite.FavoriteViewModel" />
 
     </data>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_to_refresh_layout_events"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:refreshing="@{safeUnbox(viewModel.isLoadingObserver)}">
 
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_events"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:horizontalSpacing="10dp"
-                android:verticalSpacing="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/event_item" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_events"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:horizontalSpacing="10dp"
+                    android:verticalSpacing="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/favorite_item" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </layout>

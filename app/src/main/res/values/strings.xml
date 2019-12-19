@@ -55,7 +55,5 @@
     <string name="google_places_api_key" translatable="false">AIzaSyCrZjnV-wKHNKI5zBtOf4j2L9xYWTBkrYI</string>
     <string name="event_detail">Details</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

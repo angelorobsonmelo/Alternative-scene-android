@@ -7,6 +7,7 @@ import br.com.angelorobson.alternativescene.application.commom.di.utils.ViewMode
 import br.com.angelorobson.alternativescene.application.partials.events.create.EventFormViewModel
 import br.com.angelorobson.alternativescene.application.partials.events.event.EventViewModel
 import br.com.angelorobson.alternativescene.application.partials.events.events.EventsViewModel
+import br.com.angelorobson.alternativescene.application.partials.events.favorite.FavoriteViewModel
 import br.com.angelorobson.alternativescene.application.partials.signin.SignInViewModel
 import dagger.Binds
 import dagger.Module
@@ -37,5 +38,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(EventFormViewModel::class)
     internal abstract fun eventFormViewModel(eventFormViewModel: EventFormViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteViewModel::class)
+    internal abstract fun favoriteViewModel(eventFormViewModel: FavoriteViewModel): ViewModel
 
 }
