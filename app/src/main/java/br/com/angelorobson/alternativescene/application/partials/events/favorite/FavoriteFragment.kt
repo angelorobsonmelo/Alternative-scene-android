@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.View.*
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,19 +15,20 @@ import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication
 import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.commom.di.components.fragments.DaggerFragmentGenericWithRecyclerViewAnimatedWithoutDividerComponent
-import br.com.angelorobson.alternativescene.application.commom.di.components.fragments.DaggerFragmentGenericWithRecyclerViewComponent
-import br.com.angelorobson.alternativescene.application.commom.di.components.fragments.FragmentGenericWithRecyclerViewAnimatedWithoutDividerComponent
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.RecyclerViewAnimatedModule
-import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.RecyclerViewAnimatedWithDividerModule
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isEqual
+import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isNotTrue
+import br.com.angelorobson.alternativescene.application.partials.events.event.EventActivity
 import br.com.angelorobson.alternativescene.application.partials.events.events.EventsHandler
 import br.com.angelorobson.alternativescene.application.partials.signin.SignInActivity
 import br.com.angelorobson.alternativescene.application.partials.signin.SignInActivity.Companion.GOOGLE_AUTH_REQUEST_CODE
 import br.com.angelorobson.alternativescene.databinding.FavoriteFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
+import br.com.angelorobson.alternativescene.domain.request.FavoriteRequest
 import javax.inject.Inject
 
 
@@ -123,15 +126,24 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
             mEventsAdapter.notifyDataSetChanged()
         })
 
-        mViewModel.successFavoriteObserver.observe(this, EventObserver {
-            mEventPosition?.apply {
-                setIconFavoriteOnEventPosition()
+
+        mViewModel.emptyObserver.observe(this, EventObserver {
+            if (mEvents.isEmpty()) {
+                binding.noEventTextView.visibility = VISIBLE
             }
         })
 
         mViewModel.successdisfavourObserver.observe(this, EventObserver {
             mEventPosition?.apply {
-                setIconDisfavorOnEventPosition()
+                val eventsToRemove = mEvents[this]
+
+                mEvents.remove(eventsToRemove)
+                mEventsAdapter.notifyItemRemoved(this)
+                mEventsAdapter.notifyDataSetChanged()
+
+                if (mEvents.isEmpty()) {
+                    binding.noEventTextView.visibility = VISIBLE
+                }
             }
         })
     }
@@ -171,6 +183,35 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
             print("ffff")
         }
 
+        if (resultCode.isEqual(Constants.EventsContants.DETAIL_EVENT_REQUEST_CODE)) {
+            data?.apply {
+                handleFavoriteIcon(this)
+            }
+        }
+    }
+
+    private fun handleFavoriteIcon(intent: Intent) {
+        val isEventFavorite =
+            intent.getBooleanExtra(Constants.EventsContants.EVENT_IS_FAVORITE_EXTRA, false)
+        val isFavoriteIconClicked =
+            intent.getBooleanExtra(Constants.EventsContants.FAVORITE_ICON_IS_CLICKED, false)
+
+        if (isFavoriteIconClicked) {
+            if (isEventFavorite.isNotTrue()) {
+                mEventPosition?.let {
+                    val eventsToRemove = mEvents[it]
+
+                    mEvents.remove(eventsToRemove)
+                    mEventsAdapter.notifyItemRemoved(it)
+                    mEventsAdapter.notifyDataSetChanged()
+                }
+
+                if (mEvents.isEmpty()) {
+                    binding.noEventTextView.visibility = VISIBLE
+                }
+                return
+            }
+        }
     }
 
     private fun isSuccess(requestCode: Int, resultCode: Int): Boolean {
@@ -179,36 +220,27 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
         )
     }
 
-    private fun setIconFavoriteOnEventPosition() {
-        mEventPosition?.apply {
-            val eventsUpdated = mEvents[this]
-            eventsUpdated.favorite = true
-
-            mEvents[this] = eventsUpdated
-            mEventsAdapter.notifyItemChanged(this)
-        }
-    }
-
-    private fun setIconDisfavorOnEventPosition() {
-        mEventPosition?.apply {
-            val eventsUpdated = mEvents[this]
-            eventsUpdated.favorite = false
-
-            mEvents[this] = eventsUpdated
-            mEventsAdapter.notifyItemChanged(this)
-        }
-    }
-
     override fun onPressShare(event: Event) {
-
+        Toast.makeText(requireContext(), "clicou no share", Toast.LENGTH_SHORT).show()
     }
 
     override fun onPressFavorite(event: Event, position: Int) {
-
+        mEventPosition = position
+        val favoriteRequest = FavoriteRequest(4, event.id)
+        mViewModel.favor(favoriteRequest)
     }
 
     override fun onPressItem(event: Event, position: Int) {
+        mEventPosition = position
+        goToDetailScreen(event)
+    }
 
+    private fun goToDetailScreen(event: Event) {
+        val intent = Intent(requireActivity(), EventActivity::class.java)
+        intent.putExtra(Constants.EventsContants.EVENT_ID_EXTRA, event.id)
+        intent.putExtra(Constants.EventsContants.EVENT_IS_FAVORITE_EXTRA, event.favorite)
+
+        startActivityForResult(intent, Constants.EventsContants.DETAIL_EVENT_REQUEST_CODE)
     }
 
     override fun onLongPressImage(event: Event) {

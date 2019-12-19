@@ -21,7 +21,6 @@ class FavoriteViewModel @Inject constructor(
 
 
     val disposables = CompositeDisposable()
-    val successFavoriteObserver = MutableLiveData<EventLiveData<Favorite>>()
     val successdisfavourObserver = MutableLiveData<EventLiveData<Favorite>>()
 
 
@@ -63,14 +62,9 @@ class FavoriteViewModel @Inject constructor(
             .doAfterTerminate { isLoadingObserver.value = false }
             .subscribe(
                 {
-                    it.data?.event?.apply {
-                        successFavoriteObserver.value = EventLiveData(it.data)
-                    } ?: run {
-                        it.data?.apply {
-                            successdisfavourObserver.value = EventLiveData(this)
-                        }
+                    it.data?.apply {
+                        successdisfavourObserver.value = EventLiveData(this)
                     }
-
                 },
                 {
                     errorObserver.value =
