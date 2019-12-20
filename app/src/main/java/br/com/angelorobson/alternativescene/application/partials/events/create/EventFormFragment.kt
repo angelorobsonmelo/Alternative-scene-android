@@ -110,7 +110,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     }
 
     private fun eventPlaceClickListener() {
-        event_place.setOnClickListener {
+        /*event_place.setOnClickListener {
             val fieldSelector = PlacesFieldSelector()
             val autocompleteIntent = Autocomplete.IntentBuilder(
                 AutocompleteActivityMode.FULLSCREEN,
@@ -118,7 +118,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
             )
                 .build(requireContext())
             startActivityForResult(autocompleteIntent, PLACE_AUTOCOMPLETE_REQUEST_CODE)
-        }
+        }*/
     }
 
     private fun addMoreDateField() {
@@ -222,7 +222,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         when (item.itemId) {
             R.id.action_send_event -> {
                 // Todo está aqui temporariamente até ajeitar a questão do Google places
-                binding.eventPlace.setText("Rex Jazz Bar")
+//                binding.eventPlace.setText("Rex Jazz Bar")
                 eventRequest.cityName = "Maceió"
                 eventRequest.latitude = 5445.0
                 eventRequest.longitude = 9865.54
@@ -267,10 +267,10 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
                 showToast("A imagem do evento deve ser selecionada")
                 false
             }
-            binding.eventPlace.text.toString().isEmpty() -> {
+          /*  binding.eventPlace.text.toString().isEmpty() -> {
                 locationEventTextInputLayout.error = "Este campo deve ser preenchido"
                 false
-            }
+            }*/
             binding.editTextEventDate.text.toString().isEmpty() -> {
                 textInputLayoutEventDate.error = "Este campo deve ser preenchido"
                 false
@@ -369,7 +369,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         data?.apply {
             val place = Autocomplete.getPlaceFromIntent(this)
             place.latLng?.apply {
-                event_place.setText(place.name)
+//                event_place.setText(place.name)
                 val nameCity = getNameCity(this)
                 eventRequest.cityName = nameCity
                 eventRequest.latitude = this.latitude

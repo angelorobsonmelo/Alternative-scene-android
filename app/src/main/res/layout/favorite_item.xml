@@ -66,7 +66,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginBottom="16dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@{event.eventLocation}"
@@ -76,24 +76,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textViewDataTime"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewDataTime3"
-                    tools:text="Maceió, AL" />
-
-            <TextView
-                    android:id="@+id/textViewDataTime3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@{event.locality.address}"
-                    android:textColor="#808080"
-                    android:textSize="14sp"
-                    android:textStyle="italic"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textViewDataTime"
                     app:layout_constraintTop_toBottomOf="@+id/textViewDataTime"
-                    tools:text="Rua São Francisco de Assis, 190 A, fundos, Maceió, AL, 58754-00" />
+                    tools:text="Maceió, AL" />
 
 
             <LinearLayout

@@ -46,44 +46,19 @@
                     tools:src="@drawable/heavy_metal_default"
                     tools:visibility="visible" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/locationEventTextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="@string/event_place"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/previewEventImageView">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/event_place"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:drawableEnd="@drawable/ic_location_on_black_24dp"
-                        android:focusable="false"
-                        app:validateEmpty="@{true}"
-                        app:validateTypeAutoDismiss="@{true}" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
 
             <LinearLayout
                     android:id="@+id/eventDateLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:orientation="vertical"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/locationEventTextInputLayout">
+                    app:layout_constraintTop_toBottomOf="@+id/previewEventImageView">
 
                 <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutEventDate"
