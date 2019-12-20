@@ -21,25 +21,28 @@ import br.com.angelorobson.alternativescene.application.commom.di.components.fra
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.PLACE_AUTOCOMPLETE_REQUEST_CODE
-import br.com.angelorobson.alternativescene.application.commom.utils.PlacesFieldSelector
+import br.com.angelorobson.alternativescene.application.commom.utils.JsonUtil.jsonToListObject
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.decodeFile
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.encodeTobase64
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isEqual
 import br.com.angelorobson.alternativescene.application.partials.signin.SignInActivity
 import br.com.angelorobson.alternativescene.application.partials.signin.SignInActivity.Companion.GOOGLE_AUTH_REQUEST_CODE
 import br.com.angelorobson.alternativescene.databinding.EventFormFragmentBinding
+import br.com.angelorobson.alternativescene.domain.City
 import br.com.angelorobson.alternativescene.domain.request.DateEvent
 import br.com.angelorobson.alternativescene.domain.request.EventRequest
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.textfield.TextInputLayout
+import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat
+import ir.mirrajabi.searchdialog.core.SearchResultListener
 import kotlinx.android.synthetic.main.event_form_fragment.*
 import net.alhazmy13.mediapicker.Image.ImagePicker
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
@@ -54,6 +57,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     private lateinit var parentLinearLayoutDates: LinearLayout
 
     private val eventRequest = EventRequest()
+    private lateinit var mCities: List<City>
 
     @Inject
     lateinit var mFactory: ViewModelProvider.Factory
@@ -93,6 +97,12 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         parentLinearLayoutDates = binding.eventDateLinearLayout
         initObservers()
         handleClicks()
+        getCities()
+    }
+
+    private fun getCities() {
+        mCities = jsonToListObject(resources, R.raw.cities, City::class.java)
+        mCities.sortedBy { it.name }
     }
 
     private fun setUpDagger() {
@@ -106,20 +116,9 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         addMoreDateField()
         showDatePicker()
         uploadImageClickListener()
-        eventPlaceClickListener()
+        eventCityListener()
     }
 
-    private fun eventPlaceClickListener() {
-        /*event_place.setOnClickListener {
-            val fieldSelector = PlacesFieldSelector()
-            val autocompleteIntent = Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.FULLSCREEN,
-                fieldSelector.allFields
-            )
-                .build(requireContext())
-            startActivityForResult(autocompleteIntent, PLACE_AUTOCOMPLETE_REQUEST_CODE)
-        }*/
-    }
 
     private fun addMoreDateField() {
         binding.buttonAddMoreDate.setOnClickListener {
@@ -153,6 +152,12 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     private fun uploadImageClickListener() {
         binding.buttonUploadImage.setOnClickListener {
             showGallery()
+        }
+    }
+
+    private fun eventCityListener() {
+        binding.eventCity.setOnClickListener {
+            showCitiesDialog()
         }
     }
 
@@ -223,7 +228,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
             R.id.action_send_event -> {
                 // Todo está aqui temporariamente até ajeitar a questão do Google places
 //                binding.eventPlace.setText("Rex Jazz Bar")
-                eventRequest.cityName = "Maceió"
+                eventRequest.cityName = binding.eventCity.text.toString()
                 eventRequest.latitude = 5445.0
                 eventRequest.longitude = 9865.54
                 eventRequest.address = "Rua do nada"
@@ -267,10 +272,10 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
                 showToast("A imagem do evento deve ser selecionada")
                 false
             }
-          /*  binding.eventPlace.text.toString().isEmpty() -> {
-                locationEventTextInputLayout.error = "Este campo deve ser preenchido"
-                false
-            }*/
+            /*  binding.eventPlace.text.toString().isEmpty() -> {
+                  locationEventTextInputLayout.error = "Este campo deve ser preenchido"
+                  false
+              }*/
             binding.editTextEventDate.text.toString().isEmpty() -> {
                 textInputLayoutEventDate.error = "Este campo deve ser preenchido"
                 false
@@ -369,7 +374,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         data?.apply {
             val place = Autocomplete.getPlaceFromIntent(this)
             place.latLng?.apply {
-//                event_place.setText(place.name)
+                //                event_place.setText(place.name)
                 val nameCity = getNameCity(this)
                 eventRequest.cityName = nameCity
                 eventRequest.latitude = this.latitude
@@ -397,6 +402,25 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
             binding.previewEventImageView.setImageBitmap(bitmap)
             eventRequest.imageUrl = imagePath
         }
+    }
+
+    private fun showCitiesDialog() {
+        val items = ArrayList<SearchModel>()
+
+        mCities.forEach {
+            items.add(SearchModel(it.name))
+        }
+
+        SimpleSearchDialogCompat<SearchModel>(
+            requireContext(),
+            getString(R.string.cities),
+            getString(R.string.looking_for), null, items,
+            SearchResultListener<SearchModel> { dialog, item, position ->
+                val city = mCities.first { it.name == item.title }
+                binding.eventCity.setText(city.name)
+                dialog.dismiss()
+            }).show()
+
     }
 
     override fun onDestroy() {

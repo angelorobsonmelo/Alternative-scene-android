@@ -8,7 +8,7 @@
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
             android:layout_width="0dp"
-            android:layout_height="58dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:hint="@string/date_event"
@@ -19,7 +19,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/eventDateFieldRow"
                 android:layout_width="match_parent"
-                android:layout_height="43dp"
+                android:layout_height="wrap_content"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_event_black_24dp"
                 android:focusable="false" />

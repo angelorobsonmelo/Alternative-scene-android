@@ -41,6 +41,9 @@
     <string name="event_place">Local do Evento</string>
     <string name="event_detail" >Detalhes</string>
     <string name="no_favorite_event">Não há nenhum evento favorito</string>
+    <string name="city">Cidade</string>
+    <string name="looking_for">O que você está procurando…?</string>
+    <string name="cities">Cidades</string>
 
 
 </resources>
