@@ -15,11 +15,19 @@ class SessionUseCase @Inject constructor(private val mSessionLocalDataSource: Se
     }
 
     fun destroySession(): Boolean {
-       return mSessionLocalDataSource.destroySession()
+        return mSessionLocalDataSource.destroySession()
     }
 
     fun isLogged(): Boolean {
-      return mSessionLocalDataSource.isLogged()
+        return mSessionLocalDataSource.isLogged()
+    }
+
+    fun getToken(): String? {
+        return mSessionLocalDataSource.getToken()
+    }
+
+    fun saveToken(token: String) {
+        return mSessionLocalDataSource.saveToken(token)
     }
 
 }

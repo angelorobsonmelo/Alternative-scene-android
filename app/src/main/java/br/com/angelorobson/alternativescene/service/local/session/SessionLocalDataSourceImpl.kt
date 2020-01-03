@@ -10,6 +10,7 @@ import com.google.gson.Gson
 class SessionLocalDataSourceImpl(private val mContext: Context) : SessionLocalDataSource {
 
     private val preferenceShareNameIdentifier = "authResponse"
+    private val preferenceShareTokenIdentifier = "token"
 
     companion object {
 
@@ -34,6 +35,8 @@ class SessionLocalDataSourceImpl(private val mContext: Context) : SessionLocalDa
 
         editor.putString(preferenceShareNameIdentifier, authResponseToJson)
         editor.apply()
+
+        saveToken(authResponse.token)
     }
 
     override fun getAuthResponseInSession(): AuthResponse {
@@ -71,6 +74,21 @@ class SessionLocalDataSourceImpl(private val mContext: Context) : SessionLocalDa
         }
 
         return isUserLogged
+    }
+
+    override fun getToken(): String? {
+        val sharedPreferences =
+            this.mContext.getSharedPreferences(preferenceShareTokenIdentifier, MODE_PRIVATE)
+        return sharedPreferences.getString(preferenceShareNameIdentifier, "")
+    }
+
+    override fun saveToken(token: String) {
+        val sharedPreferences =
+            this.mContext.getSharedPreferences(preferenceShareTokenIdentifier, MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        editor.putString(preferenceShareNameIdentifier, token)
+        editor.apply()
     }
 
 }

@@ -60,8 +60,8 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
 
     private var mEventPosition: Int? = null
 
-    private val userLogeed =
-        AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()?.userAppDto
+    private val mSessionUseCase =
+        AlternativeSceneApplication.mSessionUseCase
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -90,11 +90,16 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
 
     private fun getEvents() {
         mEvents.clear()
-        userLogeed?.apply {
-            mViewModel.getEventsByUser(userId = this.id)
-        } ?: run {
-            mViewModel.getEvents()
+        if (mSessionUseCase.isLogged()) {
+            val user = mSessionUseCase.getAuthResponseInSession()?.userAppDto
+            user?.apply {
+                mViewModel.getEventsByUser(userId = id)
+            }
+
+            return
         }
+
+        mViewModel.getEvents()
     }
 
     private fun setUpDagger() {
@@ -119,11 +124,16 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         mRecyclerView.addOnScrollListener(object :
             EndlessRecyclerOnScrollListener(mLayoutManager) {
             override fun onLoadMore(currentPage: Int) {
-                userLogeed?.apply {
-                    mViewModel.getEventsByUser(currentPage, this.id)
-                } ?: run {
-                    mViewModel.getEvents(currentPage)
+                if (mSessionUseCase.isLogged()) {
+                    val user = mSessionUseCase.getAuthResponseInSession()?.userAppDto
+                    user?.apply {
+                        mViewModel.getEventsByUser(currentPage, id)
+                    }
+
+                    return
                 }
+
+                mViewModel.getEvents(currentPage)
             }
         })
     }
@@ -158,11 +168,16 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
             mEvents.clear()
             mEventsAdapter.notifyDataSetChanged()
 
-            userLogeed?.apply {
-                mViewModel.getEventsByUser(userId = this.id)
-            } ?: run {
-                mViewModel.getEvents()
+            if (mSessionUseCase.isLogged()) {
+                val user = mSessionUseCase.getAuthResponseInSession()?.userAppDto
+                user?.apply {
+                    mViewModel.getEventsByUser(userId = id)
+                }
+
+                return@setOnRefreshListener
             }
+
+            mViewModel.getEvents()
         }
     }
 
@@ -171,17 +186,21 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
     }
 
     override fun onPressFavorite(event: Event, position: Int) {
-        val authResponse =
-            AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()?.userAppDto
+        val isLogged =
+            AlternativeSceneApplication.mSessionUseCase.isLogged()
 
         mEventPosition = position
 
-        authResponse?.apply {
-            val favoriteRequest = FavoriteRequest(this.id, event.id)
-            mViewModel.favor(favoriteRequest)
-        } ?: run {
-            showToast("Você precisa está logado para favoritar um evento")
+        if (isLogged) {
+            mSessionUseCase.getAuthResponseInSession()?.userAppDto?.apply {
+                val favoriteRequest = FavoriteRequest(this.id, event.id)
+                mViewModel.favor(favoriteRequest)
+            }
+
+            return
         }
+
+        showToast("Você precisa está logado para favoritar um evento")
     }
 
     override fun onPressItem(event: Event, position: Int) {

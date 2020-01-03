@@ -5,7 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.View.*
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -53,8 +53,8 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
 
     private var mEventPosition: Int? = null
 
-    private val userLogeed =
-        AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()?.userAppDto
+    private val mSessionDataSource =
+        AlternativeSceneApplication.mSessionUseCase
 
     private var mEventsAdapter =
         FavoriteAdapter(mEvents, this)
@@ -91,7 +91,14 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
     private fun getEvents() {
         mEvents.clear()
 
-        mViewModel.getFavorsEventsByUser(userId = 4)
+        if (mSessionDataSource.isLogged()) {
+            val user = mSessionDataSource.getAuthResponseInSession()?.userAppDto
+            user?.apply {
+                mViewModel.getFavorsEventsByUser(userId = id)
+            }
+
+        }
+
     }
 
     private fun setUpDagger() {
@@ -158,20 +165,24 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
         binding.swipeToRefreshLayoutEvents.setOnRefreshListener {
             mEvents.clear()
             mEventsAdapter.notifyDataSetChanged()
-
-            userLogeed?.apply {
-                mViewModel.getFavorsEventsByUser(userId = this.id)
+            if (mSessionDataSource.isLogged()) {
+                val user = mSessionDataSource.getAuthResponseInSession()?.userAppDto
+                user?.apply {
+                    mViewModel.getFavorsEventsByUser(userId = this.id)
+                }
             }
         }
     }
-
 
     private fun setUpEndlessScrollListener() {
         mRecyclerView.addOnScrollListener(object :
             EndlessRecyclerOnScrollListener(mLayoutManager) {
             override fun onLoadMore(currentPage: Int) {
-                userLogeed?.apply {
-                    mViewModel.getFavorsEventsByUser(currentPage, this.id)
+                if (mSessionDataSource.isLogged()) {
+                    val user = mSessionDataSource.getAuthResponseInSession()?.userAppDto
+                    user?.apply {
+                        mViewModel.getFavorsEventsByUser(currentPage, this.id)
+                    }
                 }
             }
         })
@@ -209,7 +220,6 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
                 if (mEvents.isEmpty()) {
                     binding.noEventTextView.visibility = VISIBLE
                 }
-                return
             }
         }
     }
@@ -226,8 +236,11 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
 
     override fun onPressFavorite(event: Event, position: Int) {
         mEventPosition = position
-        val favoriteRequest = FavoriteRequest(4, event.id)
-        mViewModel.favor(favoriteRequest)
+        val user = mSessionDataSource.getAuthResponseInSession()?.userAppDto
+        user?.apply {
+            val favoriteRequest = FavoriteRequest(id, event.id)
+            mViewModel.favor(favoriteRequest)
+        }
     }
 
     override fun onPressItem(event: Event, position: Int) {
@@ -249,6 +262,14 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
 
     override fun onResume() {
         super.onResume()
+
+       /* if (mSessionDataSource.isLogged()) {
+            val user = mSessionDataSource.getAuthResponseInSession()?.userAppDto
+            user?.apply {
+                mViewModel.getFavorsEventsByUser(0, id)
+            }
+        }*/
+
         showBottomNavigation()
     }
 

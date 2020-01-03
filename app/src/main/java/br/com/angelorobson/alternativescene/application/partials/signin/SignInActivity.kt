@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication.Companion.mSessionUseCase
 import br.com.angelorobson.alternativescene.application.EventObserver
@@ -114,11 +113,11 @@ class SignInActivity : BindingActivity<SiginActivityBinding>() {
 
     override fun onStart() {
         super.onStart()
-        val userLogged = mSessionUseCase.getAuthResponseInSession()?.userAppDto
-
-        userLogged?.let {
+        val userLogged = mSessionUseCase.isLogged()
+        if (userLogged) {
             finishActivity()
         }
+
     }
 
     private fun finishActivity() {

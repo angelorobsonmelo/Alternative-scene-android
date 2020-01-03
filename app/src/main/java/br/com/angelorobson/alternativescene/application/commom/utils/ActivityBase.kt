@@ -21,7 +21,7 @@ open class ActivityBase : AppCompatActivity() {
     }
 
     fun hideProgressBarWithFragNotTouchable(progressBar: ProgressBar) {
-        progressBar.visibility = View.GONE;
+        progressBar.visibility = View.GONE
         window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 

@@ -45,11 +45,11 @@ class NetWorkModule {
         return CustomInterceptorRequest()
     }
 
- /*   @Provides
+    @Provides
     @Singleton
     fun provideTokenAuthenticator(): TokenAuthenticator {
         return TokenAuthenticator()
-    }*/
+    }
 
     @Provides
     @Singleton
@@ -64,12 +64,14 @@ class NetWorkModule {
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         customInterceptorRequest: CustomInterceptorRequest,
+        tokenAuthenticator: TokenAuthenticator,
         cache: Cache
     ): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
             .readTimeout(15, TimeUnit.SECONDS)
 
         httpClient.addInterceptor(customInterceptorRequest)
+        httpClient.authenticator(tokenAuthenticator)
         httpClient.addInterceptor(httpLoggingInterceptor)
         httpClient.cache(cache)
         return httpClient.build()

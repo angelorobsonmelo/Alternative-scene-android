@@ -22,7 +22,7 @@ class TokenAuthenticator : Authenticator {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    AlternativeSceneApplication.mSessionUseCase.saveAuthResponseInSession(it)
+                    AlternativeSceneApplication.mSessionUseCase.saveToken(it.token)
                 },
                 {
 

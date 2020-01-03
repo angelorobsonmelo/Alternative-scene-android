@@ -8,4 +8,6 @@ interface SessionLocalDataSource {
     fun getAuthResponseInSession(): AuthResponse
     fun destroySession(): Boolean
     fun isLogged(): Boolean
+    fun getToken(): String?
+    fun saveToken(token: String)
 }

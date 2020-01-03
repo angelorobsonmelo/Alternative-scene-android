@@ -17,9 +17,4 @@
             android:icon="@drawable/ic_megaphone"
             android:title="@string/spread" />
 
-    <item
-            android:id="@+id/aboutFragment"
-            android:icon="@drawable/ic_rock"
-            android:title="@string/about" />
-
 </menu>

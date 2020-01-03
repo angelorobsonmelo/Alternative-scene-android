@@ -53,7 +53,7 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
     private var mMenuItemFavorite: MenuItem? = null
 
     private val userLooged =
-        AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()?.userAppDto
+        AlternativeSceneApplication.mSessionUseCase.isLogged()
 
     private var mEvent: Event? = null
 
@@ -162,15 +162,16 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_favorite_event -> {
-                userLooged?.apply {
+                if (userLooged) {
                     favorEvent()
-                } ?: run {
-                    //                    showToast("Você precisa estar logado para favoritar um evento")
+                } else {
+                    Toast.makeText(this, "Você deve estar logado para favoritar este evento", Toast.LENGTH_SHORT).show()
                 }
             }
 
             R.id.action_share_event -> {
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "clicou no share", Toast.LENGTH_SHORT).show()
+
             }
         }
         return super.onOptionsItemSelected(item)

@@ -29,7 +29,11 @@ class CustomInterceptorRequest : Interceptor {
         return response
     }
 
-    private fun getResponse(response: Response?, chain: Interceptor.Chain, requestBuilder: Request.Builder): Response? {
+    private fun getResponse(
+        response: Response?,
+        chain: Interceptor.Chain,
+        requestBuilder: Request.Builder
+    ): Response? {
         var newResponse = response
         try {
             newResponse = chain.proceed(requestBuilder.build())
@@ -57,10 +61,10 @@ class CustomInterceptorRequest : Interceptor {
         val isLogged = AlternativeSceneApplication.mSessionUseCase.isLogged()
 
         return if (isLogged) {
-            val session = AlternativeSceneApplication.mSessionUseCase.getAuthResponseInSession()
+            val token = AlternativeSceneApplication.mSessionUseCase.getToken()
 
             original.newBuilder()
-                .addHeader("Authorization", "Bearer ${session?.token}")
+                .addHeader("Authorization", "Bearer $token")
         } else {
             original.newBuilder()
         }
