@@ -163,6 +163,9 @@ dependencies {
     // Facebook SDK
     implementation 'com.github.mirrajabi:search-dialog:1.2.4'
 
+    // About Screen
+    implementation 'com.github.jrvansuita:MaterialAbout:0.2.3'
+
     testImplementation 'junit:junit:4.12'
 
     // Robolectric environment

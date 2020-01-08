@@ -230,6 +230,9 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
             R.id.action_account -> {
                 findNavController().navigate(R.id.action_eventsFragment_to_accountFragment)
             }
+            R.id.action_about -> {
+                findNavController().navigate(R.id.action_eventsFragment_to_aboutFragment)
+            }
         }
         return super.onOptionsItemSelected(item)
 

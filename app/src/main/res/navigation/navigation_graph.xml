@@ -12,10 +12,17 @@
         <action
                 android:id="@+id/action_eventsFragment_to_accountFragment"
                 app:destination="@id/accountFragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                app:enterAnim="@anim/slide_in_bottom"
+                app:exitAnim="@anim/slide_out_top"
+                app:popEnterAnim="@anim/slide_in_bottom"
+                app:popExitAnim="@anim/slide_out_top" />
+        <action
+                android:id="@+id/action_eventsFragment_to_aboutFragment"
+                app:destination="@id/aboutFragment"
+                app:enterAnim="@anim/slide_in_bottom"
+                app:exitAnim="@anim/slide_out_top"
+                app:popEnterAnim="@anim/slide_out_top"
+                app:popExitAnim="@anim/slide_out_top" />
     </fragment>
 
     <fragment
