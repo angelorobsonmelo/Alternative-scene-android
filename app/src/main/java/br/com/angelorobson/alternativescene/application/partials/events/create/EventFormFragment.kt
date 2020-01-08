@@ -4,9 +4,11 @@ package br.com.angelorobson.alternativescene.application.partials.events.create
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context.LAYOUT_INFLATER_SERVICE
+import android.content.DialogInterface
 import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.*
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -14,9 +16,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.AlternativeSceneApplication.Companion.mSessionUseCase
 import br.com.angelorobson.alternativescene.application.EventObserver
+import br.com.angelorobson.alternativescene.application.NavigationHostActivity
 import br.com.angelorobson.alternativescene.application.commom.di.components.fragments.DaggerFragmentComponentGeneric
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
@@ -24,7 +28,7 @@ import br.com.angelorobson.alternativescene.application.commom.utils.Constants.E
 import br.com.angelorobson.alternativescene.application.commom.utils.JsonUtil.jsonToListObject
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.decodeFile
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.encodeTobase64
-import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isEqual
+import br.com.angelorobson.alternativescene.application.commom.utils.listeners.dialog.ListenerConfirmDialog
 import br.com.angelorobson.alternativescene.application.partials.signin.SignInActivity
 import br.com.angelorobson.alternativescene.application.partials.signin.SignInActivity.Companion.GOOGLE_AUTH_REQUEST_CODE
 import br.com.angelorobson.alternativescene.databinding.EventFormFragmentBinding
@@ -34,6 +38,7 @@ import br.com.angelorobson.alternativescene.domain.request.EventRequest
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat
 import ir.mirrajabi.searchdialog.core.SearchResultListener
@@ -223,9 +228,17 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    var mLastClickTime = 0L
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_send_event -> {
+
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                    return false
+                }
+                mLastClickTime = SystemClock.elapsedRealtime()
+
                 // Todo está aqui temporariamente até ajeitar a questão do Google places
 //                binding.eventPlace.setText("Rex Jazz Bar")
                 eventRequest.cityName = binding.eventCity.text.toString()
@@ -235,6 +248,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
                 eventRequest.locality = "Kfofo"
 
                 if (isValidForm()) {
+                    showProgressBarWithFragNotTouchable(binding.progressBar)
                     setDatesFromForm()
                     val authResponse =
                         mSessionUseCase.getAuthResponseInSession()
@@ -246,7 +260,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
                         mViewModel.save(eventRequest)
                     } ?: run {
-                        showToast("Usuário não encontrado")
+                        showToast(getString(R.string.user_not_found))
                     }
                 }
             }
@@ -258,7 +272,19 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
     private fun initObservers() {
         mViewModel.successObserver.observe(this, EventObserver {
-            showToast("Succcess!")
+            hideProgressBarWithFragNotTouchable(binding.progressBar)
+            showConfirmDialogWithCallback("", getString(R.string.event_success),
+                object : ListenerConfirmDialog {
+                    override fun onPressPositiveButton(dialog: DialogInterface, id: Int) {
+                        val ac = activity as NavigationHostActivity
+                        ac.clickOnEventMenu()
+                    }
+
+                    override fun onPressNegativeButton(dialog: DialogInterface, id: Int) {
+
+                    }
+
+                })
         })
 
         mViewModel.errorObserver.observe(this, EventObserver {
@@ -269,15 +295,18 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     private fun isValidForm(): Boolean {
         return when {
             eventRequest.imageUrl.isEmpty() -> {
-                showToast("A imagem do evento deve ser selecionada")
+                showToast(getString(R.string.select_event_image))
+                hideProgressBarWithFragNotTouchable(binding.progressBar)
                 false
             }
-            /*  binding.eventPlace.text.toString().isEmpty() -> {
-                  locationEventTextInputLayout.error = "Este campo deve ser preenchido"
-                  false
-              }*/
             binding.editTextEventDate.text.toString().isEmpty() -> {
-                textInputLayoutEventDate.error = "Este campo deve ser preenchido"
+                textInputLayoutEventDate.error = getString(R.string.can_not_be_empty)
+                hideProgressBarWithFragNotTouchable(binding.progressBar)
+                false
+            }
+
+            binding.eventCity.text.toString().isEmpty() -> {
+                locationEventTextInputLayout.error = getString(R.string.can_not_be_empty)
                 false
             }
             else -> true
@@ -324,7 +353,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
                         val parsedDate = formatter.parse(date)
                         eventRequest.eventDates.add(DateEvent(parsedDate))
                     } else {
-                        editText.error = "Este campo não pode ficar vazio"
+                        editText.error = getString(R.string.can_not_be_empty)
                     }
                 }
             }
@@ -426,13 +455,6 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
     override fun onDestroy() {
         super.onDestroy()
         mViewModel.disposables.clear()
-    }
-
-
-    private fun isSuccess(requestCode: Int, resultCode: Int): Boolean {
-        return requestCode.isEqual(GOOGLE_AUTH_REQUEST_CODE) && resultCode.isEqual(
-            Activity.RESULT_OK
-        )
     }
 
 }

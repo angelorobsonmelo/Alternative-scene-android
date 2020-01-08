@@ -13,9 +13,14 @@
     <item
             android:id="@+id/action_account"
             android:enabled="true"
-            android:icon="@drawable/ic_account_circle"
             android:title="@string/account"
-            app:showAsAction="always" />
+            app:showAsAction="never" />
+
+    <item
+            android:id="@+id/action_about"
+            android:enabled="true"
+            android:title="@string/about"
+            app:showAsAction="never" />
 
 
 </menu>

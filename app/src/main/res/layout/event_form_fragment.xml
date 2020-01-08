@@ -46,6 +46,17 @@
                     tools:src="@drawable/heavy_metal_default"
                     tools:visibility="visible" />
 
+            <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@+id/locationEventTextInputLayout"
+                    app:layout_constraintEnd_toEndOf="@+id/locationEventTextInputLayout"
+                    app:layout_constraintStart_toStartOf="@+id/locationEventTextInputLayout"
+                    app:layout_constraintTop_toTopOf="@+id/previewEventImageView" />
+
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/locationEventTextInputLayout"
                     android:layout_width="0dp"
@@ -64,9 +75,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
-                        android:inputType="textNoSuggestions"
                         android:drawableEnd="@drawable/ic_location_on_black_24dp"
                         android:focusable="false"
+                        android:inputType="textNoSuggestions"
                         app:validateEmpty="@{true}"
                         app:validateTypeAutoDismiss="@{true}" />
 

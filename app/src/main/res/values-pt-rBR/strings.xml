@@ -44,6 +44,10 @@
     <string name="city">Cidade</string>
     <string name="looking_for">O que você está procurando…?</string>
     <string name="cities">Cidades</string>
+    <string name="select_event_image">A imagem do evento deve ser selecionada</string>
+    <string name="can_not_be_empty">Este campo deve ser preenchido</string>
+    <string name="user_not_found">Usuário não encontrado</string>
+    <string name="event_success">Evento Cadastrado com sucesso!</string>
 
 
 </resources>

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -66,6 +68,23 @@ open class FragmentBase : Fragment() {
         builder.setNegativeButton(R.string.close) { dialog, id ->
             dialogListener.onPressNegativeButton(dialog, id)
         }
+
+        val alert = builder.create()
+        alert.show()
+    }
+
+    fun showConfirmDialogWithCallback(
+        title: String,
+        message: String,
+        dialogListener: ListenerConfirmDialog
+    ) {
+        val builder = AlertDialog.Builder(context!!)
+
+        builder
+            .setMessage(message)
+            .setPositiveButton("OK") { dialog, id ->
+                dialogListener.onPressPositiveButton(dialog, id)
+            }
 
         val alert = builder.create()
         alert.show()
@@ -170,6 +189,19 @@ open class FragmentBase : Fragment() {
             googleAuthHandler?.onException(it.exception)
             Log.w(ContentValues.TAG, "signInWithCredential:failure", it.exception)
         }
+    }
+
+    fun showProgressBarWithFragNotTouchable(progressBar: ProgressBar) {
+        progressBar.visibility = View.VISIBLE
+        activity?.window?.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+    }
+
+    fun hideProgressBarWithFragNotTouchable(progressBar: ProgressBar) {
+        progressBar.visibility = View.GONE
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
 

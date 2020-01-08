@@ -58,6 +58,10 @@
     <string name="city">City</string>
     <string name="looking_for">What are you looking for…?</string>
     <string name="cities">Cities</string>
+    <string name="select_event_image">Select a event image</string>
+    <string name="can_not_be_empty">This field can not be empty</string>
+    <string name="user_not_found">User not found</string>
+    <string name="event_success">Event registered successfully!</string>
 
 
 </resources>
