@@ -63,5 +63,8 @@
     <string name="user_not_found">User not found</string>
     <string name="event_success">Event registered successfully!</string>
 
+    <string name="logout">Logout</string>
+    <string name="are_you_logout">Do you really want to leave?</string>
+
 
 </resources>

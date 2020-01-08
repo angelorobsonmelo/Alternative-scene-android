@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.angelorobson.alternativescene.R
@@ -226,8 +227,20 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
             R.id.action_share_event -> {
                 Toast.makeText(requireContext(), "Share", Toast.LENGTH_SHORT).show()
             }
+            R.id.action_account -> {
+                findNavController().navigate(R.id.action_eventsFragment_to_accountFragment)
+            }
         }
         return super.onOptionsItemSelected(item)
+
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        if (mSessionUseCase.isLogged().not()) {
+            menu.findItem(R.id.action_account).isVisible = false
+        }
 
     }
 
