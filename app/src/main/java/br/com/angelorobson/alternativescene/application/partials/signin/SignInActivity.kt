@@ -72,6 +72,7 @@ class SignInActivity : BindingActivity<SiginActivityBinding>() {
                     googleSignInAccount.id!!
                 )
 
+                mGoogleSignInAccount = googleSignInAccount
             }
 
             override fun onApiException(apiException: ApiException) {
@@ -94,15 +95,18 @@ class SignInActivity : BindingActivity<SiginActivityBinding>() {
 
     private fun initObservers() {
         mViewModel.userNotFoundObserver.observe(this, EventObserver {
-            val user = UserRequest(
-                mGoogleSignInAccount?.email!!,
-                mGoogleSignInAccount?.id!!,
-                mGoogleSignInAccount?.id!!,
-                mGoogleSignInAccount?.photoUrl.toString(),
-                mGoogleSignInAccount?.displayName!!
-            )
 
-            mViewModel.save(user)
+            mGoogleSignInAccount?.apply {
+                val user = UserRequest(
+                    email ?: "",
+                    id ?: "",
+                    id ?: "",
+                    photoUrl.toString(),
+                    displayName ?: ""
+                )
+
+                mViewModel.save(user)
+            }
         })
 
         mViewModel.successObserver.observe(this, EventObserver {
