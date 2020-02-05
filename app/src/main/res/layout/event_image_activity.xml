@@ -11,14 +11,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/rounded_shape_close">
+            android:layout_marginTop="8dp">
 
         <ImageView
                 android:id="@+id/shareImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_margin="15dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_close_black_24dp" />
