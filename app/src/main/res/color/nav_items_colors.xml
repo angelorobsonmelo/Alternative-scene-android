@@ -2,12 +2,12 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_checked="true"
-          android:color="@color/ligthBlue"
+          android:color="@color/white"
             />
 
     <item android:state_enabled="false"
-          android:color="@color/black" />
+          android:color="@color/colorDarkGray" />
 
     <item
-          android:color="@color/black" />
+          android:color="@android:color/darker_gray" />
 </selector>

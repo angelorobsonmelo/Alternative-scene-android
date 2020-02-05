@@ -45,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
             app:itemIconTint="@color/nav_items_colors"
             app:itemTextColor="@color/nav_items_colors"
             app:labelVisibilityMode="labeled"
