@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,8 @@ import br.com.angelorobson.alternativescene.application.commom.di.modules.applic
 import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.RecyclerViewAnimatedModule
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.SignUpConstants
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.SignUpConstants.MSG
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isEqual
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isNotTrue
@@ -88,19 +91,6 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
         goToSignInActivity()
     }
 
-    private fun getEvents() {
-        mEvents.clear()
-
-        if (mSessionDataSource.isLogged()) {
-            val user = mSessionDataSource.getAuthResponseInSession()?.userAppDto
-            user?.apply {
-                mViewModel.getFavorsEventsByUser(userId = id)
-            }
-
-        }
-
-    }
-
     private fun setUpDagger() {
         DaggerFragmentGenericWithRecyclerViewAnimatedWithoutDividerComponent.builder()
             .contextModule(ContextModule(requireContext()))
@@ -119,10 +109,16 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
         binding.viewModel = mViewModel
     }
 
-
     private fun goToSignInActivity() {
+        val intent = Intent(requireContext(), SignInActivity::class.java)
+        val bundle = bundleOf(
+            MSG to getString(R.string.favorite_warning)
+        )
+
+        intent.putExtras(bundle)
+
         startActivityForResult(
-            Intent(requireContext(), SignInActivity::class.java),
+            intent,
             GOOGLE_AUTH_REQUEST_CODE
         )
     }
@@ -191,7 +187,7 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (isSuccess(requestCode, resultCode)) {
-            print("ffff")
+            getEvents()
         }
 
         if (resultCode.isEqual(Constants.EventsContants.DETAIL_EVENT_REQUEST_CODE)) {
@@ -199,6 +195,19 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
                 handleFavoriteIcon(this)
             }
         }
+    }
+
+    private fun getEvents() {
+        mEvents.clear()
+
+        if (mSessionDataSource.isLogged()) {
+            val user = mSessionDataSource.getAuthResponseInSession()?.userAppDto
+            user?.apply {
+                mViewModel.getFavorsEventsByUser(userId = id)
+            }
+
+        }
+
     }
 
     private fun handleFavoriteIcon(intent: Intent) {
@@ -263,12 +272,12 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
     override fun onResume() {
         super.onResume()
 
-       /* if (mSessionDataSource.isLogged()) {
-            val user = mSessionDataSource.getAuthResponseInSession()?.userAppDto
-            user?.apply {
-                mViewModel.getFavorsEventsByUser(0, id)
-            }
-        }*/
+        /* if (mSessionDataSource.isLogged()) {
+             val user = mSessionDataSource.getAuthResponseInSession()?.userAppDto
+             user?.apply {
+                 mViewModel.getFavorsEventsByUser(0, id)
+             }
+         }*/
 
         showBottomNavigation()
     }

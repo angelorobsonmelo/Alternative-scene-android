@@ -16,4 +16,8 @@ object Constants {
         const val HTTP = "http"
     }
 
+    object SignUpConstants {
+        const val MSG = "MSG"
+    }
+
 }

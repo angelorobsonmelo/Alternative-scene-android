@@ -6,6 +6,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import br.com.angelorobson.alternativescene.R
@@ -14,6 +15,7 @@ import br.com.angelorobson.alternativescene.application.EventObserver
 import br.com.angelorobson.alternativescene.application.NavigationHostActivity
 import br.com.angelorobson.alternativescene.application.commom.di.components.fragments.DaggerActivityComponentGeneric
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.SignUpConstants.MSG
 import br.com.angelorobson.alternativescene.application.commom.utils.googlemanager.GoogleManager
 import br.com.angelorobson.alternativescene.application.commom.utils.handlers.googleauth.GoogleAuthHandler
 import br.com.angelorobson.alternativescene.application.commom.utils.listeners.BindingActivity
@@ -53,9 +55,23 @@ class SignInActivity : BindingActivity<SiginActivityBinding>() {
 
     private fun setUp() {
         setUpDagger()
+        setMsg()
         initGoogleManager()
         siginClickListener()
         initObservers()
+        changeGoogleButtonText()
+    }
+
+    private fun changeGoogleButtonText() {
+        val textView = sign_in_button.getChildAt(0) as TextView
+        textView.text = getString(R.string.login_or_sign_up)
+    }
+
+    private fun setMsg() {
+        intent?.extras?.apply {
+            val msg = this.get(MSG) as String
+            binding.textViewEventMsg.text = msg
+        }
     }
 
     private fun siginClickListener() {

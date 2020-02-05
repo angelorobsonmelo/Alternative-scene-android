@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textView_event_msg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -59,7 +59,7 @@
                 android:id="@+id/group_need_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="textView2,sign_in_button">
+                app:constraint_referenced_ids="textView_event_msg,sign_in_button">
 
 
         </androidx.constraintlayout.widget.Group>

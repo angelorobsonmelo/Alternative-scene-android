@@ -44,7 +44,7 @@
     <string name="about_first_paragraph">E aí! Meu nome é Ângelo Robson, trabalho como Engenheiro de Software, formado em Sistemas de Informação e pós-graduado em Engenharia de Software. Tento contribuir para a cena da forma que posso e uma delas foi desponibilizando este App gratuito.</string>
     <string name="about_second_paragraph">Como vocês, sou fã de Heavy Metal \,,/ também sou fã de games e animes.</string>
     <string name="spread_event">Spread Event</string>
-    <string name="spred_event_msg" translatable="false">Você precisa estar logado para poder divulgar um evento</string>
+    <string name="spred_event_msg">You need to be registered or logged in to be able to publicize an event</string>
     <string name="search">Search</string>
 
     <string name="select_city">Selecionar Cidade</string>
@@ -65,6 +65,8 @@
 
     <string name="logout">Logout</string>
     <string name="are_you_logout">Do you really want to leave?</string>
+    <string name="favorite_warning">to see the favorites you need to be registered or logged in</string>
+    <string name="login_or_sign_up">Login or Sign up</string>
 
 
 </resources>

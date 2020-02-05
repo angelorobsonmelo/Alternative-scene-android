@@ -39,7 +39,7 @@
     <string name="date_event">Data do Evento</string>
     <string name="send">Enviar</string>
     <string name="event_place">Local do Evento</string>
-    <string name="event_detail" >Detalhes</string>
+    <string name="event_detail">Detalhes</string>
     <string name="no_favorite_event">Não há nenhum evento favorito</string>
     <string name="city">Cidade</string>
     <string name="looking_for">O que você está procurando…?</string>
@@ -50,6 +50,9 @@
     <string name="event_success">Evento Cadastrado com sucesso!</string>
     <string name="logout">Sair</string>
     <string name="are_you_logout">Deseja realmente sair?</string>
+    <string name="favorite_warning">Para ver os favoritos você precisa estar cadastrado ou logado</string>
+    <string name="login_or_sign_up">Logar/Cadastrar</string>
+    <string name="spred_event_msg">Você precisa estar cadastrado ou logado para poder divulgar um evento</string>
 
 
 </resources>
