@@ -125,7 +125,7 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
             binding.event?.favorite = false
             mEvent = binding.event
             isFavoriteIconClicked = true
-            mMenuItemFavorite?.setIcon(R.drawable.ic_favorite_border_24dp)
+            mMenuItemFavorite?.setIcon(R.drawable.ic_favorite_border_white_24dp)
         })
     }
 
@@ -165,7 +165,11 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
                 if (userLooged) {
                     favorEvent()
                 } else {
-                    Toast.makeText(this, "Você deve estar logado para favoritar este evento", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Você deve estar logado para favoritar este evento",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
