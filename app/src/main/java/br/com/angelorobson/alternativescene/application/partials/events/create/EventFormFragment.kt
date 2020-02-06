@@ -248,7 +248,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
                 eventRequest.locality = "Kfofo"
 
                 if (isValidForm()) {
-                    showProgressBarWithFragNotTouchable(binding.progressBar)
+                    binding.progressBar.visibility = View.VISIBLE
                     setDatesFromForm()
                     val authResponse =
                         mSessionUseCase.getAuthResponseInSession()
@@ -272,7 +272,8 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
     private fun initObservers() {
         mViewModel.successObserver.observe(this, EventObserver {
-            hideProgressBarWithFragNotTouchable(binding.progressBar)
+            binding.progressBar.visibility = View.GONE
+
             showConfirmDialogWithCallback("", getString(R.string.event_success),
                 object : ListenerConfirmDialog {
                     override fun onPressPositiveButton(dialog: DialogInterface, id: Int) {
@@ -288,6 +289,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
         })
 
         mViewModel.errorObserver.observe(this, EventObserver {
+            binding.progressBar.visibility = View.GONE
             showAlertError(it)
         })
     }

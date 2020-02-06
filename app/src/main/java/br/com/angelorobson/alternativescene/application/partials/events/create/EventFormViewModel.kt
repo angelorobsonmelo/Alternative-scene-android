@@ -29,7 +29,7 @@ class EventFormViewModel @Inject constructor(
                         EventLiveData(it)
                 },
                 {
-                    EventLiveData(it.localizedMessage)
+                    errorObserver.value = EventLiveData(it.localizedMessage)
                 }
             )
 
