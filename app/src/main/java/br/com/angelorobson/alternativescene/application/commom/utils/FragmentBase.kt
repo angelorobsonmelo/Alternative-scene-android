@@ -115,7 +115,7 @@ open class FragmentBase : Fragment() {
         appCompatActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    fun showToolbarWithoutDisplayArrowBack(title: String) {
+    fun showToolbarWithoutDisplayArrowBack(title: String = "") {
         val toolbar = activity?.toolbar
         toolbar?.visibility = View.VISIBLE
         toolbar?.title = title

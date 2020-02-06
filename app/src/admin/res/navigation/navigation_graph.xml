@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/navigation_graph"
+        app:startDestination="@id/loginFragment">
+    <fragment
+            android:id="@+id/eventsFragment"
+            android:name="br.com.angelorobson.alternativescene.application.partials.events.events.EventsAdminFragment"
+            android:label="events_fragment"
+            tools:layout="@layout/events_fragment">
+        <action
+                android:id="@+id/action_eventsFragment_to_accountFragment"
+                app:destination="@id/accountFragment"
+                app:enterAnim="@anim/slide_in_bottom"
+                app:exitAnim="@anim/slide_out_top"
+                app:popEnterAnim="@anim/slide_in_bottom"
+                app:popExitAnim="@anim/slide_out_top" />
+        <action
+                android:id="@+id/action_eventsFragment_to_aboutFragment"
+                app:destination="@id/aboutFragment"
+                app:enterAnim="@anim/slide_in_bottom"
+                app:exitAnim="@anim/slide_out_top"
+                app:popEnterAnim="@anim/slide_out_top"
+                app:popExitAnim="@anim/slide_out_top" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/aboutFragment"
+            android:name="br.com.angelorobson.alternativescene.application.partials.abount.AboutFragment"
+            android:label="about_fragment"
+            tools:layout="@layout/about_fragment" />
+    <fragment
+            android:id="@+id/eventFormFragment"
+            android:name="br.com.angelorobson.alternativescene.application.partials.events.create.EventFormFragment"
+            android:label="fragment_event_form"
+            tools:layout="@layout/event_form_fragment" />
+    <fragment
+            android:id="@+id/favoriteFragment"
+            android:name="br.com.angelorobson.alternativescene.application.partials.events.favorite.FavoriteFragment"
+            android:label="favorite_fragment"
+            tools:layout="@layout/favorite_fragment" />
+    <fragment
+            android:id="@+id/accountFragment"
+            android:name="br.com.angelorobson.alternativescene.application.partials.account.AccountFragment"
+            android:label="account_fragment"
+            tools:layout="@layout/account_fragment" />
+    <fragment
+            android:id="@+id/loginFragment"
+            android:name="br.com.angelorobson.alternativescene.LoginFragment"
+            android:label="fragment_login"
+            tools:layout="@layout/login_fragment">
+        <action
+                android:id="@+id/action_loginFragment_to_eventsFragment"
+                app:destination="@id/eventsFragment" />
+    </fragment>
+</navigation>

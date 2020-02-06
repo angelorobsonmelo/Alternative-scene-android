@@ -30,4 +30,10 @@ class ApiModule {
         return retrofit.create(FavoriteApiRemoteDataSource::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideAuthApiDataSource(retrofit: Retrofit): AuthApiDataSource {
+        return retrofit.create(AuthApiDataSource::class.java)
+    }
+
 }

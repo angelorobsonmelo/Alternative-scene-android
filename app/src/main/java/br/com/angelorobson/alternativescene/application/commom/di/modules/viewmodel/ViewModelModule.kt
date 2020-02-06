@@ -2,6 +2,7 @@ package br.com.angelorobson.alternativescene.application.commom.di.modules.viewm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import br.com.angelorobson.alternativescene.LoginViewModel
 import br.com.angelorobson.alternativescene.application.commom.di.utils.ViewModelFactory
 import br.com.angelorobson.alternativescene.application.commom.di.utils.ViewModelKey
 import br.com.angelorobson.alternativescene.application.partials.events.create.EventFormViewModel
@@ -43,5 +44,12 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FavoriteViewModel::class)
     internal abstract fun favoriteViewModel(eventFormViewModel: FavoriteViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginViewModel::class)
+    internal abstract fun loginViewModel(eventFormViewModel: LoginViewModel): ViewModel
+
 
 }
