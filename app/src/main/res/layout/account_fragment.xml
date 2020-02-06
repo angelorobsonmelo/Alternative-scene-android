@@ -33,62 +33,48 @@
                 android:id="@+id/nameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ProfileimageView"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@{user.name}"
-                tools:text="Ângelo Melo" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/ProfileimageView"
+                app:layout_constraintStart_toStartOf="@id/ProfileimageView"
+                app:layout_constraintTop_toBottomOf="@+id/ProfileimageView"
+                tools:text="Ângelo Robson" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/view"
+        <TextView
+                android:id="@+id/emailUserLogged"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/shape_rounded_view_account"
-                android:orientation="horizontal"
-                android:paddingStart="8dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="8dp"
-                android:paddingRight="8dp"
-                android:paddingBottom="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameTextView">
-
-            <TextView
-                    android:id="@+id/emailUserLogged"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/view"
-                    app:layout_constraintStart_toStartOf="@+id/view"
-                    app:layout_constraintTop_toTopOf="@+id/view"
-                    android:text="@{user.email}"
-                    tools:text="angelo@gmail.com" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@{user.email}"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/ProfileimageView"
+                app:layout_constraintStart_toStartOf="@id/ProfileimageView"
+                app:layout_constraintTop_toBottomOf="@id/nameTextView"
+                tools:text="angelo@gmail.com" />
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/logoutTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/transparent"
                 android:text="@string/logout"
                 android:textColor="@color/ligthBlue"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view" />
+                android:padding="16dp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/ProfileimageView"
+                app:layout_constraintStart_toStartOf="@id/ProfileimageView"
+                app:layout_constraintTop_toBottomOf="@id/emailUserLogged" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
