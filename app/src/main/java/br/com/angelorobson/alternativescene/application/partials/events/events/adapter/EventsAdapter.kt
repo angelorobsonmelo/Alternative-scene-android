@@ -3,6 +3,7 @@ package br.com.angelorobson.alternativescene.application.partials.events.events.
 import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingAdapter
 import br.com.angelorobson.alternativescene.application.partials.events.events.EventsHandler
+
 import br.com.angelorobson.alternativescene.databinding.EventItemBinding
 import br.com.angelorobson.alternativescene.domain.Event
 

@@ -67,6 +67,9 @@
     <string name="are_you_logout">Do you really want to leave?</string>
     <string name="favorite_warning">to see the favorites you need to be registered or logged in</string>
     <string name="login_or_sign_up">Login or Sign up</string>
+    <string name="no_event">No Event</string>
+    <string name="approve">Aprovar</string>
+    <string name="are_you_really_approved">Deseja realmente aprovar?</string>
 
 
 </resources>

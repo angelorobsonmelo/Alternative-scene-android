@@ -22,6 +22,7 @@ class EventsViewModel @Inject constructor(
     val disposables = CompositeDisposable()
     val successFavoriteObserver = MutableLiveData<EventLiveData<Favorite>>()
     val successdisfavourObserver = MutableLiveData<EventLiveData<Favorite>>()
+    val activeObserver = MutableLiveData<EventLiveData<Event>>()
 
     fun getEvents(
         page: Int = 0
@@ -70,6 +71,28 @@ class EventsViewModel @Inject constructor(
 
                     emptyObserver.value =
                         EventLiveData(true)
+
+                },
+                {
+                    errorObserver.value =
+                        EventLiveData(it.localizedMessage)
+                }
+            )
+
+        disposables.add(disposable)
+    }
+
+    fun active(
+        id: Long
+    ) {
+        val disposable = eventsApiDataSource.activateOrDeactivate(id, true)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { isLoadingObserver.value = true }
+            .doAfterTerminate { isLoadingObserver.value = false }
+            .subscribe(
+                {
+                    activeObserver.value = EventLiveData(it.data!!)
 
                 },
                 {

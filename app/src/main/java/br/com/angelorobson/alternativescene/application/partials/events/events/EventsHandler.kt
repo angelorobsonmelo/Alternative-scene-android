@@ -8,4 +8,6 @@ interface EventsHandler {
     fun onPressFavorite(event: Event, position: Int)
     fun onPressItem(event: Event, position: Int)
     fun onLongPressImage(event: Event)
+    fun onPressActive(event: Event, position: Int)
+
 }

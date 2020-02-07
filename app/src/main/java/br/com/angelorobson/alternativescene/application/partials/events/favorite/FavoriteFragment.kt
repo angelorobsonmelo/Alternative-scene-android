@@ -269,6 +269,10 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
 
     }
 
+    override fun onPressActive(event: Event, position: Int) {
+        // implemented in admin module
+    }
+
     override fun onResume() {
         super.onResume()
 

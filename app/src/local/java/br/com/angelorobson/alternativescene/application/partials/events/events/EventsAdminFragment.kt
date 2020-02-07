@@ -1,6 +1,6 @@
 package br.com.angelorobson.alternativescene.application.partials.events.events
 
-import android.content.DialogInterface
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -23,15 +23,17 @@ import br.com.angelorobson.alternativescene.application.commom.utils.BindingFrag
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.DETAIL_EVENT_REQUEST_CODE
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.EVENT_ID_EXTRA
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.EVENT_IS_FAVORITE_EXTRA
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.FAVORITE_ICON_IS_CLICKED
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventImageConstants.EVENT_IMAGE_URL_EXTRA
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
-import br.com.angelorobson.alternativescene.application.commom.utils.listeners.dialog.ListenerConfirmDialog
+import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isEqual
+import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isNotTrue
 import br.com.angelorobson.alternativescene.application.partials.events.event.EventActivity
 import br.com.angelorobson.alternativescene.application.partials.events.eventimage.EventImageActivity
 import br.com.angelorobson.alternativescene.application.partials.events.events.adapter.EventsAdapter
 import br.com.angelorobson.alternativescene.databinding.EventsFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
-import kotlinx.android.synthetic.main.events_fragment.*
+import br.com.angelorobson.alternativescene.domain.request.FavoriteRequest
 import javax.inject.Inject
 
 
@@ -64,14 +66,16 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showToolbarWithoutDisplayArrowBack("")
         setHasOptionsMenu(true)
         setUpElements()
     }
 
     override fun onResume() {
         super.onResume()
-        hideBottomNavigation()
-        showToolbarWithoutDisplayArrowBack(getString(R.string.events))
+
+
+        showBottomNavigation()
     }
 
     private fun setUpElements() {
@@ -88,9 +92,15 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
     private fun getEvents() {
         mEvents.clear()
         if (mSessionUseCase.isLogged()) {
-            mViewModel.getEventsByAdmin()
+            val user = mSessionUseCase.getAuthResponseInSession()?.userAppDto
+            user?.apply {
+                mViewModel.getEventsByUser(userId = id)
+            }
+
+            return
         }
 
+        mViewModel.getEvents()
     }
 
     private fun setUpDagger() {
@@ -116,26 +126,29 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
             EndlessRecyclerOnScrollListener(mLayoutManager) {
             override fun onLoadMore(currentPage: Int) {
                 if (mSessionUseCase.isLogged()) {
-                    mViewModel.getEventsByAdmin(currentPage)
+                    val user = mSessionUseCase.getAuthResponseInSession()?.userAppDto
+                    user?.apply {
+                        mViewModel.getEventsByUser(currentPage, id)
+                    }
+
+                    return
                 }
+
+                mViewModel.getEvents(currentPage)
             }
         })
     }
 
     private fun initSuccessOberserver() {
         mViewModel.successObserver.observe(this, EventObserver {
-            noEventTextView.visibility = View.GONE
-
             it.data?.content?.let { it1 -> mEvents.addAll(it1) }
             mEventsAdapter.notifyDataSetChanged()
         })
 
-        mViewModel.emptyObserver.observe(this, EventObserver {
-            noEventTextView.visibility = View.VISIBLE
-        })
-
-        mViewModel.activeObserver.observe(this, EventObserver {
-            getEvents()
+        mViewModel.successFavoriteObserver.observe(this, EventObserver {
+            mEventPosition?.apply {
+                setIconFavoriteOnEventPosition()
+            }
         })
 
         mViewModel.successdisfavourObserver.observe(this, EventObserver {
@@ -157,9 +170,15 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
             mEventsAdapter.notifyDataSetChanged()
 
             if (mSessionUseCase.isLogged()) {
-                mViewModel.getEventsByAdmin()
+                val user = mSessionUseCase.getAuthResponseInSession()?.userAppDto
+                user?.apply {
+                    mViewModel.getEventsByUser(userId = id)
+                }
+
+                return@setOnRefreshListener
             }
 
+            mViewModel.getEvents()
         }
     }
 
@@ -168,35 +187,21 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
     }
 
     override fun onPressFavorite(event: Event, position: Int) {
+        val isLogged =
+            AlternativeSceneApplication.mSessionUseCase.isLogged()
 
-    }
+        mEventPosition = position
 
-    override fun onPressActive(event: Event, position: Int) {
-        showConfirmDialog(
-            "",
-            R.string.are_you_really_approved.toString(),
-            object : ListenerConfirmDialog {
-                override fun onPressPositiveButton(dialog: DialogInterface, id: Int) {
-                    val isLogged =
-                        AlternativeSceneApplication.mSessionUseCase.isLogged()
+        if (isLogged) {
+            mSessionUseCase.getAuthResponseInSession()?.userAppDto?.apply {
+                val favoriteRequest = FavoriteRequest(this.id, event.id)
+                mViewModel.favor(favoriteRequest)
+            }
 
-                    if (isLogged) {
-                        mSessionUseCase.getAuthResponseInSession()?.userAppDto?.apply {
-                            mViewModel.active(event.id)
-                        }
+            return
+        }
 
-                        return
-                    }
-
-                    showToast("Você precisa está logado para favoritar um evento")
-
-                }
-
-                override fun onPressNegativeButton(dialog: DialogInterface, id: Int) {
-
-                }
-
-            })
+        showToast("Você precisa está logado para favoritar um evento")
     }
 
     override fun onPressItem(event: Event, position: Int) {
@@ -246,6 +251,42 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
         val intent = Intent(requireActivity(), EventImageActivity::class.java)
         intent.putExtra(EVENT_IMAGE_URL_EXTRA, event.imageUrl)
         startActivity(intent)
+    }
+
+    override fun onPressActive(event: Event, position: Int) {
+        // implemented function in admin
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode.isEqual(DETAIL_EVENT_REQUEST_CODE)) {
+            data?.apply {
+                handleFavoriteIcon(this)
+            }
+        }
+    }
+
+    private fun handleFavoriteIcon(intent: Intent) {
+        val isEventFavorite = intent.getBooleanExtra(EVENT_IS_FAVORITE_EXTRA, false)
+        val isFavoriteIconClicked = intent.getBooleanExtra(FAVORITE_ICON_IS_CLICKED, false)
+
+        if (isFavoriteIconClicked) {
+            if (isEventFavorite.isNotTrue()) {
+                setIconDisfavorOnEventPosition()
+                return
+            }
+            mEventPosition?.apply { setIconFavoriteOnEventPosition() }
+        }
+    }
+
+    private fun setIconFavoriteOnEventPosition() {
+        mEventPosition?.apply {
+            val eventsUpdated = mEvents[this]
+            eventsUpdated.favorite = true
+
+            mEvents[this] = eventsUpdated
+            mEventsAdapter.notifyItemChanged(this)
+        }
     }
 
     private fun setIconDisfavorOnEventPosition() {

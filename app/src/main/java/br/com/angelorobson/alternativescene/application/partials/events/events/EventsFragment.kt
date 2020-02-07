@@ -253,6 +253,10 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         startActivity(intent)
     }
 
+    override fun onPressActive(event: Event, position: Int) {
+        // implemented function in admin
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode.isEqual(DETAIL_EVENT_REQUEST_CODE)) {

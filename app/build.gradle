@@ -52,6 +52,7 @@ android {
         }
 
         local {
+            applicationId "br.com.angelorobson.alternativescene"
             buildConfigField("String", "BASE_URL", "\"http://192.168.0.105:8080/api/rest/\"")
         }
 
@@ -62,6 +63,7 @@ android {
         admin {
             buildConfigField("String", "BASE_URL", "\"http://192.168.0.105:8080/api/rest/\"")
         }
+
     }
 }
 

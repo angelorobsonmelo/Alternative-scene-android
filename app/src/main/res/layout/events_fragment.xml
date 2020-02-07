@@ -7,7 +7,7 @@
 
         <variable
                 name="viewModel"
-                type="br.com.angelorobson.alternativescene.application.partials.events.events.EventsViewModel"/>
+                type="br.com.angelorobson.alternativescene.application.partials.events.events.EventsViewModel" />
 
     </data>
 
@@ -15,25 +15,42 @@
             android:id="@+id/swipe_to_refresh_layout_events"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:refreshing="@{safeUnbox(viewModel.isLoadingObserver)}"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:refreshing="@{safeUnbox(viewModel.isLoadingObserver)}">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                           android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:id="@+id/noEventTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/no_event"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_events"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    tools:listitem="@layout/event_item"
                     android:horizontalSpacing="10dp"
                     android:verticalSpacing="5dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-            />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/event_item"
+                    />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
