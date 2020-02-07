@@ -7,8 +7,10 @@ import br.com.angelorobson.alternativescene.R
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventImageConstants.EVENT_IMAGE_URL_EXTRA
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventImageConstants.HTTP
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.convertBase64ToBitmap
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.event_image_activity.*
+import java.lang.Exception
 
 class EventImageActivity : AppCompatActivity() {
 
@@ -28,7 +30,7 @@ class EventImageActivity : AppCompatActivity() {
 
     private fun setImagePreviewFromArguments() {
         intent?.apply {
-           handleEventPreview()
+            handleEventPreview()
         }
     }
 
@@ -40,11 +42,22 @@ class EventImageActivity : AppCompatActivity() {
                     Picasso.get()
                         .load(imageUrl)
                         .placeholder(R.drawable.heavy_metal_default)
-                        .into(photo_view)
+                        .into(photo_view, object : Callback {
+                            override fun onSuccess() {
+                                mainContainer.removeView(frame_progress)
+                            }
+
+                            override fun onError(e: Exception?) {
+
+                            }
+
+                        })
+
                 }
                 else -> {
                     val imageBase64 = imageUrl.convertBase64ToBitmap()
                     photo_view.setImageBitmap(imageBase64)
+                    mainContainer.removeView(frame_progress)
                 }
             }
         }

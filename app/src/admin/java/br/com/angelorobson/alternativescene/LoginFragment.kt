@@ -78,12 +78,25 @@ class LoginFragment : BindingFragment<LoginFragmentBinding>() {
     private fun initObservables() {
         mViewModel.successObserver.observe(this, EventObserver {
             AlternativeSceneApplication.mSessionUseCase.saveAuthResponseInSession(it)
-            findNavController().navigate(R.id.action_loginFragment_to_eventsFragment)
+            goToEventsFragment()
         })
 
         mViewModel.errorObserver.observe(this, EventObserver {
             showAlertError(it)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AlternativeSceneApplication.mSessionUseCase.isLogged().apply {
+            if (this) {
+                goToEventsFragment()
+            }
+        }
+    }
+
+    private fun goToEventsFragment() {
+        findNavController().navigate(R.id.action_loginFragment_to_eventsFragment)
     }
 
 }

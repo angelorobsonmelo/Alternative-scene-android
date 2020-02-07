@@ -14,6 +14,9 @@ interface EventsApiDataSource {
     @POST("v1/events/findAll")
     fun getEvent(@Query("pag") page: Int): Observable<ResponseListBase<Event>>
 
+    @POST("v1/events/findAllByAdmin")
+    fun findAllByAdmin(@Query("pag") page: Int): Observable<ResponseListBase<Event>>
+
     @GET("v1/events/{id}")
     fun getEvent(@Path("id") id: Long): Observable<ResponseBase<Event>>
 

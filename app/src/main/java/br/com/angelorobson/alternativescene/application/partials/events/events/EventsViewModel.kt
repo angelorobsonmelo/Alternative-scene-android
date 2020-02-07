@@ -52,6 +52,35 @@ class EventsViewModel @Inject constructor(
         disposables.add(disposable)
     }
 
+    fun getEventsByAdmin(
+        page: Int = 0
+    ) {
+        val disposable = eventsApiDataSource.findAllByAdmin(page)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { isLoadingObserver.value = true }
+            .doAfterTerminate { isLoadingObserver.value = false }
+            .subscribe(
+                {
+                    if (it.data?.content?.isNotEmpty()!!) {
+                        successObserver.value =
+                            EventLiveData(it)
+                        return@subscribe
+                    }
+
+                    emptyObserver.value =
+                        EventLiveData(true)
+
+                },
+                {
+                    errorObserver.value =
+                        EventLiveData(it.localizedMessage)
+                }
+            )
+
+        disposables.add(disposable)
+    }
+
     fun getEventsByUser(
         page: Int = 0,
         userId: Long

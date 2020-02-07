@@ -89,15 +89,9 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
     private fun getEvents() {
         mEvents.clear()
         if (mSessionUseCase.isLogged()) {
-            val user = mSessionUseCase.getAuthResponseInSession()?.userAppDto
-            user?.apply {
-                mViewModel.getEventsByUser(userId = id)
-            }
-
-            return
+            mViewModel.getEventsByAdmin()
         }
 
-        mViewModel.getEvents()
     }
 
     private fun setUpDagger() {
@@ -123,15 +117,8 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
             EndlessRecyclerOnScrollListener(mLayoutManager) {
             override fun onLoadMore(currentPage: Int) {
                 if (mSessionUseCase.isLogged()) {
-                    val user = mSessionUseCase.getAuthResponseInSession()?.userAppDto
-                    user?.apply {
-                        mViewModel.getEventsByUser(currentPage, id)
-                    }
-
-                    return
+                    mViewModel.getEventsByAdmin(currentPage)
                 }
-
-                mViewModel.getEvents(currentPage)
             }
         })
     }
@@ -167,15 +154,9 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
             mEventsAdapter.notifyDataSetChanged()
 
             if (mSessionUseCase.isLogged()) {
-                val user = mSessionUseCase.getAuthResponseInSession()?.userAppDto
-                user?.apply {
-                    mViewModel.getEventsByUser(userId = id)
-                }
-
-                return@setOnRefreshListener
+                mViewModel.getEventsByAdmin()
             }
 
-            mViewModel.getEvents()
         }
     }
 

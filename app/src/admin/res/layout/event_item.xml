@@ -122,6 +122,9 @@
                         tools:src="@drawable/ic_favorite_border_24dp" />
 
             </LinearLayout>
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
