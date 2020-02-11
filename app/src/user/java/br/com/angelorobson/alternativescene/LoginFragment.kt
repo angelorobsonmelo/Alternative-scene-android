@@ -18,7 +18,7 @@ import br.com.angelorobson.alternativescene.application.commom.utils.BindingFrag
 import br.com.angelorobson.alternativescene.application.partials.events.events.EventsViewModel
 import br.com.angelorobson.alternativescene.databinding.LoginFragmentBinding
 import br.com.ilhasoft.support.validation.Validator
-import kotlinx.android.synthetic.local.login_fragment.*
+import kotlinx.android.synthetic.user.login_fragment.*
 import javax.inject.Inject
 
 
