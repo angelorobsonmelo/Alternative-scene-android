@@ -130,8 +130,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-core:17.2.0'
-    implementation 'com.google.firebase:firebase-auth:19.1.0'
+    implementation 'com.google.firebase:firebase-core:17.2.2'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+
 
     // Facebook SDK
     implementation 'com.facebook.android:facebook-android-sdk:5.5.0'
@@ -148,13 +150,13 @@ dependencies {
     implementation 'com.github.angelorobsonmelo:generic-viewholder:1.0.1'
 
     // Circular image
-    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // Firebase Analytics
-    implementation 'com.google.firebase:firebase-analytics:17.2.0'
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
 
     // Firebase auth
-    implementation 'com.google.firebase:firebase-auth:19.1.0'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
