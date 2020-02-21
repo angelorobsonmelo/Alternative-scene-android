@@ -56,6 +56,7 @@
     <string name="no_event">Sem eventos no momento</string>
     <string name="approve">Aprovar</string>
     <string name="are_you_really_approved">Deseja realmente aprovar?</string>
+    <string name="default_notification_channel_id">default</string>
 
 
 </resources>
