@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.RingtoneManager
 import android.os.Build
@@ -14,6 +15,9 @@ import br.com.angelorobson.alternativescene.application.commom.utils.Constants
 import br.com.angelorobson.alternativescene.application.partials.events.event.EventActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.MessageFormat
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
@@ -33,11 +37,25 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         remoteMessage.data.isNotEmpty().let {
             data = remoteMessage.data as MutableMap<String, String>
 
-            val resultPendingIntent = getPendingIntent()
-            buildNotification(resultPendingIntent)
+            val bitmap = getBitmapfromUrl(data!!["imageThumbUrl"] as String)
+            val pendingIntent = getPendingIntent()
+            buildNotification(pendingIntent, bitmap)
         }
+    }
 
 
+    private fun getBitmapfromUrl(imageUrl: String?): Bitmap? {
+        return try {
+            val url = URL(imageUrl)
+            val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+            connection.doInput = true
+            connection.connect()
+            val input: InputStream = connection.inputStream
+            BitmapFactory.decodeStream(input)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
     private fun getPendingIntent(): PendingIntent? {
@@ -61,10 +79,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun buildNotification(
-        resultPendingIntent: PendingIntent?
+        resultPendingIntent: PendingIntent?,
+        bitmap: Bitmap?
     ) {
         val uuid = UUID.randomUUID().toString()
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.heavy_metal_default)
         val eventInfo = "{0}. {1}"
         val eventMessageText =
             MessageFormat.format(eventInfo, data!!["eventDate"], data!!["eventLocation"])
