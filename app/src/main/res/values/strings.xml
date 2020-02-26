@@ -71,6 +71,7 @@
     <string name="approve">Aprovar</string>
     <string name="are_you_really_approved">Deseja realmente aprovar?</string>
     <string name="default_notification_channel_id">default</string>
+    <string name="new_event_add">Novo Evento Adicionado</string>
 
 
 </resources>
