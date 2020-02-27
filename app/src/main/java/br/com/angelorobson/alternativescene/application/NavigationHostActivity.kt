@@ -10,8 +10,10 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.angelorobson.alternativescene.R
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.DETAIL_EVENT_REQUEST_CODE
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.notEqual
+import br.com.angelorobson.alternativescene.application.partials.events.event.EventActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import kotlinx.android.synthetic.main.host_navigation_activity.*
@@ -30,40 +32,29 @@ class NavigationHostActivity : AppCompatActivity() {
         bottomNavigation?.setupWithNavController(navController)
 
         mBottomNavigationView = bottomNavigation
+        initDynamicLinksListener()
+    }
 
-
+    private fun initDynamicLinksListener() {
         FirebaseDynamicLinks.getInstance()
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                // Get deep link from result (may be null if no link is found)
-                var deepLink: Uri? = null
+                var deepLink: Uri?
                 if (pendingDynamicLinkData != null) {
                     deepLink = pendingDynamicLinkData.link
+                    val idEvent = deepLink?.getQueryParameter("id")
+                    navigateToEventScreen(idEvent)
                 }
-
-                // Handle the deep link. For example, open the linked
-                // content, or apply promotional credit to the user's
-                // account.
-                // ...
-
-                // ...
             }
             .addOnFailureListener(this) { e -> Log.w("TAG", "getDynamicLink:onFailure", e) }
-
-        val id = 166
-        val firebaseLink = "https://angelorobsonn.page.link"
-        val myLink = "https://www.angelorobson.com?id=$id"
-        val myPackage = "br.com.angelorobson.alternativescene"
-        val link = "{0}?link={1}&apn={2}"
     }
 
-    private fun shareDeepLink(deepLink: String) {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Firebase Deep Link")
-        intent.putExtra(Intent.EXTRA_TEXT, deepLink)
+    private fun navigateToEventScreen(idEvent: String?) {
+        val notifyIntent = Intent(this, EventActivity::class.java).apply {
+            putExtra(Constants.EventsContants.EVENT_ID_EXTRA, idEvent!!.toLong())
+        }
 
-        startActivity(intent)
+        startActivity(notifyIntent)
     }
 
     override fun onSupportNavigateUp(): Boolean =

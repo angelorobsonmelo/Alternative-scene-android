@@ -34,6 +34,7 @@ import br.com.angelorobson.alternativescene.application.partials.events.events.a
 import br.com.angelorobson.alternativescene.databinding.EventsFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.request.FavoriteRequest
+import java.text.MessageFormat
 import javax.inject.Inject
 
 
@@ -183,7 +184,7 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
     }
 
     override fun onPressShare(event: Event) {
-        Toast.makeText(requireContext(), "clicou no share", Toast.LENGTH_SHORT).show()
+        shareDeepLink(event)
     }
 
     override fun onPressFavorite(event: Event, position: Int) {
@@ -302,6 +303,21 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
     override fun onDestroy() {
         super.onDestroy()
         mViewModel.disposables.clear()
+    }
+
+    private fun shareDeepLink(event: Event) {
+        val firebaseLink = "https://angelorobsonn.page.link"
+        val myLink = "https://www.angelorobson.com?id=${event.id}"
+        val myPackage = "br.com.angelorobson.alternativescene"
+        val link = "{0}?link={1}&apn={2}"
+        val deepLink = MessageFormat.format(link, firebaseLink, myLink, myPackage)
+
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Evento")
+        intent.putExtra(Intent.EXTRA_TEXT, deepLink)
+
+        startActivity(intent)
     }
 
 

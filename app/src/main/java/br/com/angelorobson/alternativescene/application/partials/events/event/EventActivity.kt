@@ -25,6 +25,7 @@ import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.EventDate
 import br.com.angelorobson.alternativescene.domain.request.FavoriteRequest
 import kotlinx.android.synthetic.main.event_activity.*
+import java.text.MessageFormat
 import javax.inject.Inject
 
 
@@ -174,8 +175,9 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
             }
 
             R.id.action_share_event -> {
-                Toast.makeText(this, "clicou no share", Toast.LENGTH_SHORT).show()
-
+                mEvent?.apply {
+                    shareDeepLink(this)
+                }
             }
         }
         return super.onOptionsItemSelected(item)
@@ -205,6 +207,22 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
 
         finish()
         return false
+    }
+
+
+    private fun shareDeepLink(event: Event) {
+        val firebaseLink = "https://angelorobsonn.page.link"
+        val myLink = "https://www.angelorobson.com?id=${event.id}"
+        val myPackage = "br.com.angelorobson.alternativescene"
+        val link = "{0}?link={1}&apn={2}"
+        val deepLink = MessageFormat.format(link, firebaseLink, myLink, myPackage)
+
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Evento")
+        intent.putExtra(Intent.EXTRA_TEXT, deepLink)
+
+        startActivity(intent)
     }
 
     override fun onDestroy() {
