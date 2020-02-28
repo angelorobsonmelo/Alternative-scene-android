@@ -4,6 +4,7 @@ import br.com.angelorobson.alternativescene.service.remote.auth.AuthApiDataSourc
 import br.com.angelorobson.alternativescene.service.remote.events.EventsApiDataSource
 import br.com.angelorobson.alternativescene.service.remote.favorite.FavoriteApiRemoteDataSource
 import br.com.angelorobson.alternativescene.service.remote.user.UserApiDataSource
+import br.com.angelorobson.alternativescene.service.remote.userdevice.UserDeviceApiDataSource
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -34,6 +35,12 @@ class ApiModule {
     @Singleton
     fun provideAuthApiDataSource(retrofit: Retrofit): AuthApiDataSource {
         return retrofit.create(AuthApiDataSource::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserDeviceApiDataSource(retrofit: Retrofit): UserDeviceApiDataSource {
+        return retrofit.create(UserDeviceApiDataSource::class.java)
     }
 
 }

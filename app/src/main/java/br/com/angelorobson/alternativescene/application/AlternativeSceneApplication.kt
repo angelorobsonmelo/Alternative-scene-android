@@ -11,6 +11,7 @@ import br.com.angelorobson.alternativescene.application.usecases.local.SessionUs
 import br.com.angelorobson.alternativescene.service.local.event.EventLocalDataSource
 import br.com.angelorobson.alternativescene.service.local.session.SessionLocalDataSource
 import br.com.angelorobson.alternativescene.service.remote.auth.AuthApiDataSource
+import br.com.angelorobson.alternativescene.service.remote.userdevice.UserDeviceApiDataSource
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.libraries.places.api.Places
 import com.google.firebase.iid.FirebaseInstanceId
@@ -26,7 +27,6 @@ class AlternativeSceneApplication : Application() {
         lateinit var instance: AlternativeSceneApplication
     }
 
-
     override fun onCreate() {
         super.onCreate()
         setUpInjections()
@@ -36,20 +36,6 @@ class AlternativeSceneApplication : Application() {
         if (isNotInitialized) {
             Places.initialize(applicationContext, getString(R.string.google_places_api_key))
         }
-
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w(TAG, "getInstanceId failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                // Get new Instance ID token
-                val token = task.result?.token
-
-                // Log and toast
-                Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
-            })
     }
 
     private fun setUpInjections() {
@@ -60,6 +46,8 @@ class AlternativeSceneApplication : Application() {
         mSessionUseCase = applicationComponent.getSessionUseCase()
         mEventLocalDataSource = applicationComponent.getEventLocalDataSource()
         mAuthApiDataSource = applicationComponent.getAuthApiDataSource()
+        mAuthApiDataSource = applicationComponent.getAuthApiDataSource()
     }
+
 
 }

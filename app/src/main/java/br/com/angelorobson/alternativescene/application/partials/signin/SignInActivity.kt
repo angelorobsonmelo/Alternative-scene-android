@@ -20,10 +20,14 @@ import br.com.angelorobson.alternativescene.application.commom.utils.googlemanag
 import br.com.angelorobson.alternativescene.application.commom.utils.handlers.googleauth.GoogleAuthHandler
 import br.com.angelorobson.alternativescene.application.commom.utils.listeners.BindingActivity
 import br.com.angelorobson.alternativescene.databinding.SiginActivityBinding
+import br.com.angelorobson.alternativescene.domain.request.UserDeviceRequest
 import br.com.angelorobson.alternativescene.domain.request.UserRequest
+import br.com.angelorobson.alternativescene.domain.response.AuthResponse
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.sigin_activity.*
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -127,8 +131,30 @@ class SignInActivity : BindingActivity<SiginActivityBinding>() {
 
         mViewModel.successObserver.observe(this, EventObserver {
             mSessionUseCase.saveAuthResponseInSession(it)
+            saveFirebaseToken(it)
+        })
+
+        mViewModel.userDeviceSavedObserver.observe(this, EventObserver {
             finishActivity()
         })
+    }
+
+    private fun saveFirebaseToken(it: AuthResponse) {
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(ContentValues.TAG, "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                val token = task.result?.token
+                mViewModel.saveUserDevice(
+                    UserDeviceRequest(
+                        it.userAppDto.id,
+                        token!!
+                    )
+                )
+            })
     }
 
     override fun onStart() {
@@ -167,6 +193,11 @@ class SignInActivity : BindingActivity<SiginActivityBinding>() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         return super.onSupportNavigateUp()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mViewModel.compositeDisposable.clear()
     }
 
 }
