@@ -257,6 +257,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
                     authResponse?.userAppDto?.let {
                         eventRequest.userAppId = it.id
+
                         eventRequest.imageUrl =
                             binding.previewEventImageView.drawable.toBitmap().encodeTobase64() ?: ""
 
