@@ -150,6 +150,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
                 dDay
             )
 
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
             datePickerDialog.show()
         }
     }
@@ -210,6 +211,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
                 dDay
             )
 
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
             datePickerDialog.show()
         }
 
