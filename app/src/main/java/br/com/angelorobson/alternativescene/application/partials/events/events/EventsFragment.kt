@@ -1,7 +1,9 @@
 package br.com.angelorobson.alternativescene.application.partials.events.events
 
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -20,11 +22,11 @@ import br.com.angelorobson.alternativescene.application.commom.di.components.fra
 import br.com.angelorobson.alternativescene.application.commom.di.modules.application.ContextModule
 import br.com.angelorobson.alternativescene.application.commom.di.modules.recyclerview.RecyclerViewAnimatedWithDividerModule
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
+import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventImageConstants.EVENT_IMAGE_URL_EXTRA
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.DETAIL_EVENT_REQUEST_CODE
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.EVENT_ID_EXTRA
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.EVENT_IS_FAVORITE_EXTRA
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.FAVORITE_ICON_IS_CLICKED
-import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventImageConstants.EVENT_IMAGE_URL_EXTRA
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isEqual
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isNotTrue
@@ -226,7 +228,7 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_event -> {
-                Toast.makeText(requireContext(), "Share", Toast.LENGTH_SHORT).show()
+                shareApp()
             }
             R.id.action_account -> {
                 findNavController().navigate(R.id.action_eventsFragment_to_accountFragment)
@@ -314,10 +316,19 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
 
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Evento")
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Veja este evento")
         intent.putExtra(Intent.EXTRA_TEXT, deepLink)
+        startActivity(Intent.createChooser(intent, getString(R.string.share_via)))
+    }
 
-        startActivity(intent)
+    private fun shareApp() {
+        val appLink = "https://play.google.com/store/apps/details?id=${activity?.packageName}"
+
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+        intent.putExtra(Intent.EXTRA_TEXT, appLink)
+        startActivity(Intent.createChooser(intent, getString(R.string.share_via)))
     }
 
 

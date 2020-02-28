@@ -1,6 +1,8 @@
 package br.com.angelorobson.alternativescene.application.partials.events.event
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -209,7 +211,6 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
         return false
     }
 
-
     private fun shareDeepLink(event: Event) {
         val firebaseLink = "https://angelorobsonn.page.link"
         val myLink = "https://www.angelorobson.com?id=${event.id}"
@@ -219,10 +220,10 @@ class EventActivity : BindingActivity<EventActivityBinding>() {
 
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Evento")
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Veja este evento")
         intent.putExtra(Intent.EXTRA_TEXT, deepLink)
 
-        startActivity(intent)
+        startActivity(Intent.createChooser(intent, getString(R.string.share_via)))
     }
 
     override fun onDestroy() {
