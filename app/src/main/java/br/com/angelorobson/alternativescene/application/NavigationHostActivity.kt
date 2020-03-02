@@ -39,7 +39,7 @@ class NavigationHostActivity : AppCompatActivity() {
         FirebaseDynamicLinks.getInstance()
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                var deepLink: Uri?
+                val deepLink: Uri?
                 if (pendingDynamicLinkData != null) {
                     deepLink = pendingDynamicLinkData.link
                     val idEvent = deepLink?.getQueryParameter("id")

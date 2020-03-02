@@ -28,6 +28,7 @@ import br.com.angelorobson.alternativescene.application.commom.utils.Constants.E
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.EVENT_IS_FAVORITE_EXTRA
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.EventsContants.FAVORITE_ICON_IS_CLICKED
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
+import br.com.angelorobson.alternativescene.application.commom.utils.deeplink.ShareDeepLink.getDeepLinkIntent
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isEqual
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isNotTrue
 import br.com.angelorobson.alternativescene.application.partials.events.event.EventActivity
@@ -336,16 +337,7 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
     }
 
     private fun shareDeepLink(event: Event) {
-        val firebaseLink = "https://angelorobsonn.page.link"
-        val myLink = "https://www.angelorobson.com?id=${event.id}"
-        val myPackage = "br.com.angelorobson.alternativescene"
-        val link = "{0}?link={1}&apn={2}"
-        val deepLink = MessageFormat.format(link, firebaseLink, myLink, myPackage)
-
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Veja este evento")
-        intent.putExtra(Intent.EXTRA_TEXT, deepLink)
+        val intent = getDeepLinkIntent(event)
         startActivity(Intent.createChooser(intent, getString(R.string.share_via)))
     }
 

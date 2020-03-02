@@ -23,6 +23,8 @@ import br.com.angelorobson.alternativescene.application.commom.utils.Constants
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.SignUpConstants
 import br.com.angelorobson.alternativescene.application.commom.utils.Constants.SignUpConstants.MSG
 import br.com.angelorobson.alternativescene.application.commom.utils.EndlessRecyclerOnScrollListener
+import br.com.angelorobson.alternativescene.application.commom.utils.deeplink.ShareDeepLink
+import br.com.angelorobson.alternativescene.application.commom.utils.deeplink.ShareDeepLink.getDeepLinkIntent
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isEqual
 import br.com.angelorobson.alternativescene.application.commom.utils.extensions.isNotTrue
 import br.com.angelorobson.alternativescene.application.partials.events.event.EventActivity
@@ -240,7 +242,7 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
     }
 
     override fun onPressShare(event: Event) {
-        Toast.makeText(requireContext(), "clicou no share", Toast.LENGTH_SHORT).show()
+        shareDeepLink(event)
     }
 
     override fun onPressFavorite(event: Event, position: Int) {
@@ -284,6 +286,11 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
          }*/
 
         showBottomNavigation()
+    }
+
+    private fun shareDeepLink(event: Event) {
+        val intent = getDeepLinkIntent(event)
+        startActivity(Intent.createChooser(intent, getString(R.string.share_via)))
     }
 
     override fun onDestroy() {
