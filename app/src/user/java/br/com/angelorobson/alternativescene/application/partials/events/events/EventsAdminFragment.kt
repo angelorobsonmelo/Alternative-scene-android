@@ -253,7 +253,7 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
         startActivity(intent)
     }
 
-    override fun onPressActive(event: Event, position: Int) {
+    override fun onPressApprovedOrReprove(event: Event, position: Int) {
         // implemented function in admin
     }
 
