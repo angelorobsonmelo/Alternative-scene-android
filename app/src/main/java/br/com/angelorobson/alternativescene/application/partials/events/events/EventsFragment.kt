@@ -33,9 +33,14 @@ import br.com.angelorobson.alternativescene.application.commom.utils.extensions.
 import br.com.angelorobson.alternativescene.application.partials.events.event.EventActivity
 import br.com.angelorobson.alternativescene.application.partials.events.eventimage.EventImageActivity
 import br.com.angelorobson.alternativescene.application.partials.events.events.adapter.EventsAdapter
+import br.com.angelorobson.alternativescene.application.partials.userdevice.UserDeviceViewModel
 import br.com.angelorobson.alternativescene.databinding.EventsFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.request.FavoriteRequest
+import br.com.angelorobson.alternativescene.domain.request.UserDeviceRequest
+import br.com.angelorobson.alternativescene.domain.response.AuthResponse
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import java.text.MessageFormat
 import javax.inject.Inject
 
@@ -50,6 +55,10 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
 
     private val mViewModel: EventsViewModel by lazy {
         ViewModelProviders.of(this, mFactory)[EventsViewModel::class.java]
+    }
+
+    private val mUserDeviceViewModel: UserDeviceViewModel by lazy {
+        ViewModelProviders.of(this, mFactory)[UserDeviceViewModel::class.java]
     }
 
     @Inject
@@ -76,9 +85,28 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
 
     override fun onResume() {
         super.onResume()
-
-
         showBottomNavigation()
+        if (mSessionUseCase.isLogged()) {
+            sendFireBaseTokenToServer()
+        }
+    }
+
+    private fun sendFireBaseTokenToServer() {
+        val user = mSessionUseCase.getAuthResponseInSession()?.userAppDto
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    return@OnCompleteListener
+                }
+
+                val token = task.result?.token
+                mUserDeviceViewModel.saveUserDevice(
+                    UserDeviceRequest(
+                        user?.id!!,
+                        token!!
+                    )
+                )
+            })
     }
 
     private fun setUpElements() {

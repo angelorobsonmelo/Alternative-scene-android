@@ -22,7 +22,6 @@ class SignInViewModel @Inject constructor(
 
     val compositeDisposable = CompositeDisposable()
     val userNotFoundObserver = MutableLiveData<EventLiveData<String>>()
-    val userDeviceSavedObserver = MutableLiveData<EventLiveData<Boolean>>()
 
     fun getUserByEmailAndGoogleAccountId(email: String, googleAccountId: String) {
         val disposable = apiDataSource.findByEmailAndGoogleAccountId(email, googleAccountId)
@@ -71,26 +70,6 @@ class SignInViewModel @Inject constructor(
             )
 
         compositeDisposable.add(disposable)
-    }
-
-    fun saveUserDevice(userDeviceRequest: UserDeviceRequest) {
-        val disposable = userDeviceApiDataSource.saveUserDevice(userDeviceRequest)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { loadingStarted() }
-            .doAfterTerminate { loadingFinished() }
-            .subscribe(
-                {
-                    userDeviceSavedObserver.value = EventLiveData(it.data!!)
-                },
-                {
-                    errorObserver.value =
-                        EventLiveData(it.localizedMessage)
-                }
-            )
-
-        compositeDisposable.add(disposable)
-
     }
 
 }

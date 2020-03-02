@@ -131,30 +131,8 @@ class SignInActivity : BindingActivity<SiginActivityBinding>() {
 
         mViewModel.successObserver.observe(this, EventObserver {
             mSessionUseCase.saveAuthResponseInSession(it)
-            saveFirebaseToken(it)
-        })
-
-        mViewModel.userDeviceSavedObserver.observe(this, EventObserver {
             finishActivity()
         })
-    }
-
-    private fun saveFirebaseToken(it: AuthResponse) {
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w(ContentValues.TAG, "getInstanceId failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                val token = task.result?.token
-                mViewModel.saveUserDevice(
-                    UserDeviceRequest(
-                        it.userAppDto.id,
-                        token!!
-                    )
-                )
-            })
     }
 
     override fun onStart() {

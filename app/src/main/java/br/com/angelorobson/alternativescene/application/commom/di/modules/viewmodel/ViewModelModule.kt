@@ -10,6 +10,7 @@ import br.com.angelorobson.alternativescene.application.partials.events.event.Ev
 import br.com.angelorobson.alternativescene.application.partials.events.events.EventsViewModel
 import br.com.angelorobson.alternativescene.application.partials.events.favorite.FavoriteViewModel
 import br.com.angelorobson.alternativescene.application.partials.signin.SignInViewModel
+import br.com.angelorobson.alternativescene.application.partials.userdevice.UserDeviceViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -50,6 +51,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
     internal abstract fun loginViewModel(eventFormViewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserDeviceViewModel::class)
+    internal abstract fun userDeviceViewModel(userDeviceViewModel: UserDeviceViewModel): ViewModel
 
 
 }

@@ -1,7 +1,9 @@
 package br.com.angelorobson.alternativescene
 
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +19,11 @@ import br.com.angelorobson.alternativescene.application.commom.di.modules.applic
 import br.com.angelorobson.alternativescene.application.commom.utils.BindingFragment
 import br.com.angelorobson.alternativescene.application.partials.events.events.EventsViewModel
 import br.com.angelorobson.alternativescene.databinding.LoginFragmentBinding
+import br.com.angelorobson.alternativescene.domain.request.UserDeviceRequest
+import br.com.angelorobson.alternativescene.domain.response.AuthResponse
 import br.com.ilhasoft.support.validation.Validator
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.admin.login_fragment.*
 import javax.inject.Inject
 
