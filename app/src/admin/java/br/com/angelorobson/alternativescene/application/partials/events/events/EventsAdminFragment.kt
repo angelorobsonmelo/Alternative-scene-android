@@ -303,7 +303,7 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_event -> {
-                Toast.makeText(requireContext(), "Share", Toast.LENGTH_SHORT).show()
+                shareApp()
             }
             R.id.action_account -> {
                 findNavController().navigate(R.id.action_eventsFragment_to_accountFragment)
