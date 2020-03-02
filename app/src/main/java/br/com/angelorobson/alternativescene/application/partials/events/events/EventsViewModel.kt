@@ -82,10 +82,11 @@ class EventsViewModel @Inject constructor(
         disposables.add(disposable)
     }
 
-    fun active(
-        id: Long
+    fun approvedOrReprove(
+        id: Long,
+        status: String
     ) {
-        val disposable = eventsApiDataSource.activateOrDeactivate(id, true)
+        val disposable = eventsApiDataSource.approvedOrReprove(id, status)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { isLoadingObserver.value = true }

@@ -7,7 +7,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -33,6 +35,7 @@ import br.com.angelorobson.alternativescene.application.partials.userdevice.User
 import br.com.angelorobson.alternativescene.databinding.EventsFragmentBinding
 import br.com.angelorobson.alternativescene.domain.Event
 import br.com.angelorobson.alternativescene.domain.request.UserDeviceRequest
+import br.com.angelorobson.alternativescene.enum.StatusEnum
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.events_fragment.*
@@ -41,6 +44,9 @@ import javax.inject.Inject
 
 class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
 
+
+    val APPROVED = 0
+    val REPPROVED = 1
 
     override fun getLayoutResId(): Int = R.layout.events_fragment
 
@@ -160,7 +166,9 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
         })
 
         mViewModel.emptyObserver.observe(this, EventObserver {
-            noEventTextView.visibility = View.VISIBLE
+            if (mEvents.isEmpty()) {
+                noEventTextView.visibility = View.VISIBLE
+            }
         })
 
         mViewModel.activeObserver.observe(this, EventObserver {
@@ -193,17 +201,63 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
     }
 
     override fun onPressShare(event: Event) {
-        Toast.makeText(requireContext(), "clicou no share", Toast.LENGTH_SHORT).show()
+        shareApp()
     }
 
     override fun onPressFavorite(event: Event, position: Int) {
 
     }
 
-    override fun onPressActive(event: Event, position: Int) {
-        showConfirmDialog(
+    override fun onPressApprovedOrReprove(event: Event, position: Int) {
+        val builderSingle: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builderSingle.setTitle(getString(R.string.select_option))
+
+        val arrayAdapter =
+            ArrayAdapter<String>(requireContext(), android.R.layout.select_dialog_singlechoice)
+        arrayAdapter.add(getString(R.string.approved))
+        arrayAdapter.add(getString(R.string.reprove))
+
+        builderSingle.setNegativeButton(getString(R.string.cancel)) { dialog, which -> dialog.dismiss() }
+
+        builderSingle.setAdapter(arrayAdapter) { dialog, which ->
+            when (which) {
+                APPROVED -> {
+                    showDialogToApprovedOrReprove(
+                        event,
+                        getString(
+                            R.string.are_you_really_approved_or_reproved,
+                            getString(R.string.approve)
+                        ),
+                        StatusEnum.APPROVED.name
+                    )
+                }
+
+                REPPROVED -> {
+                    showDialogToApprovedOrReprove(
+                        event,
+                        getString(
+                            R.string.are_you_really_approved_or_reproved,
+                            getString(R.string.reprove)
+                        ),
+                        StatusEnum.REPROVE.name
+                    )
+                }
+
+            }
+
+
+        }
+        builderSingle.show()
+    }
+
+    private fun showDialogToApprovedOrReprove(
+        event: Event,
+        message: String,
+        status: String
+    ) {
+        showConfirmDialogWithMessageString(
             "",
-            R.string.are_you_really_approved.toString(),
+            message,
             object : ListenerConfirmDialog {
                 override fun onPressPositiveButton(dialog: DialogInterface, id: Int) {
                     val isLogged =
@@ -211,14 +265,14 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
 
                     if (isLogged) {
                         mSessionUseCase.getAuthResponseInSession()?.userAppDto?.apply {
-                            mViewModel.active(event.id)
+                            mViewModel.approvedOrReprove(
+                                event.id,
+                                status
+                            )
                         }
 
                         return
                     }
-
-                    showToast("Você precisa está logado para favoritar um evento")
-
                 }
 
                 override fun onPressNegativeButton(dialog: DialogInterface, id: Int) {
@@ -292,5 +346,15 @@ class EventsAdminFragment : BindingFragment<EventsFragmentBinding>(), EventsHand
         mViewModel.disposables.clear()
     }
 
+    private fun shareApp() {
+        val appLink =
+            "https://play.google.com/store/apps/details?id=br.com.angelorobson.alternativescene"
+
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+        intent.putExtra(Intent.EXTRA_TEXT, appLink)
+        startActivity(Intent.createChooser(intent, getString(R.string.share_via)))
+    }
 
 }

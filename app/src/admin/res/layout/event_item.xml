@@ -81,13 +81,13 @@
 
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/FavoriteImageView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="16dp"
                     android:backgroundTint="@android:color/holo_green_light"
-                    android:onClick="@{() -> handler.onPressActive(event, position)}"
-                    android:text="@string/approve"
+                    android:onClick="@{() -> handler.onPressApprovedOrReprove(event, position)}"
+                    android:text="@string/approved_or_reproved_button"
                     android:textColor="@android:color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/eventImageView"

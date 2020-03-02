@@ -271,7 +271,7 @@ class FavoriteFragment : BindingFragment<FavoriteFragmentBinding>(), EventsHandl
 
     }
 
-    override fun onPressActive(event: Event, position: Int) {
+    override fun onPressApprovedOrReprove(event: Event, position: Int) {
         // implemented in admin module
     }
 

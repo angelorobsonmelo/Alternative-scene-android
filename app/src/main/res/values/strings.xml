@@ -68,11 +68,16 @@
     <string name="favorite_warning">to see the favorites you need to be registered or logged in</string>
     <string name="login_or_sign_up">Login or Sign up</string>
     <string name="no_event">No Event</string>
-    <string name="approve">Aprovar</string>
-    <string name="are_you_really_approved">Deseja realmente aprovar?</string>
+    <string name="approve">Approved</string>
+    <string name="are_you_really_approved_or_reproved">Are you really %s?</string>
     <string name="default_notification_channel_id">default</string>
     <string name="new_event_add">Novo Evento Adicionado</string>
     <string name="share_via">Share via</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_option">Select one option</string>
+    <string name="approved">Approved</string>
+    <string name="reprove">Reprove</string>
+    <string name="approved_or_reproved_button">To manage</string>
 
 
 </resources>

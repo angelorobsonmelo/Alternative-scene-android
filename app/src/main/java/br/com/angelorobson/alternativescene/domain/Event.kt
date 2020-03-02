@@ -16,7 +16,7 @@ data class Event(
     val eventDates: List<EventDate>,
     val musicalGenres: List<MusicalGenre>,
     val category: Category,
-    val status: Boolean,
+    val status: String,
     val userApp: UserApp,
     val eventDate: String,
     val eventLocation: String,

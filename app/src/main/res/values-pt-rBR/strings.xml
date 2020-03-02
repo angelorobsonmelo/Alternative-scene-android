@@ -55,10 +55,15 @@
     <string name="spred_event_msg">Você precisa estar cadastrado ou logado para poder divulgar um evento</string>
     <string name="no_event">Sem eventos no momento</string>
     <string name="approve">Aprovar</string>
-    <string name="are_you_really_approved">Deseja realmente aprovar?</string>
+    <string name="are_you_really_approved_or_reproved">Deseja realmente aprovar %s?</string>
     <string name="default_notification_channel_id">default</string>
     <string name="new_event_add">Novo Evento Adicionado</string>
     <string name="share_via">Compartilhe via</string>
+    <string name="cancel">cancelar</string>
+    <string name="select_option">Select one option</string>
+    <string name="approved">Aprovar</string>
+    <string name="reprove">Reprovar</string>
+    <string name="approved_or_reproved_button">Gerenciar</string>
 
 
 </resources>

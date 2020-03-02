@@ -42,6 +42,7 @@ import br.com.angelorobson.alternativescene.domain.request.UserDeviceRequest
 import br.com.angelorobson.alternativescene.domain.response.AuthResponse
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
+import kotlinx.android.synthetic.main.events_fragment.*
 import java.text.MessageFormat
 import javax.inject.Inject
 
@@ -188,6 +189,12 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
                 setIconDisfavorOnEventPosition()
             }
         })
+
+        mViewModel.emptyObserver.observe(this, EventObserver {
+            if (mEvents.isEmpty()) {
+                noEventTextView.visibility = View.VISIBLE
+            }
+        })
     }
 
     private fun initErrorObserver() {
@@ -285,7 +292,7 @@ class EventsFragment : BindingFragment<EventsFragmentBinding>(), EventsHandler {
         startActivity(intent)
     }
 
-    override fun onPressActive(event: Event, position: Int) {
+    override fun onPressApprovedOrReprove(event: Event, position: Int) {
         // implemented function in admin
     }
 

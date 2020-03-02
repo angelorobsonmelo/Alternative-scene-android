@@ -73,6 +73,27 @@ open class FragmentBase : Fragment() {
         alert.show()
     }
 
+    fun showConfirmDialogWithMessageString(
+        title: String,
+        message: String,
+        dialogListener: ListenerConfirmDialog
+    ) {
+        val builder = AlertDialog.Builder(context!!)
+
+        builder
+            .setMessage(message)
+            .setCancelable(false)
+            .setPositiveButton("OK") { dialog, id ->
+                dialogListener.onPressPositiveButton(dialog, id)
+            }
+        builder.setNegativeButton(R.string.close) { dialog, id ->
+            dialogListener.onPressNegativeButton(dialog, id)
+        }
+
+        val alert = builder.create()
+        alert.show()
+    }
+
     fun showConfirmDialogWithCallback(
         title: String,
         message: String,

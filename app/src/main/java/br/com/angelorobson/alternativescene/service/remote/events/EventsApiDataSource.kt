@@ -20,8 +20,8 @@ interface EventsApiDataSource {
     @GET("v1/events/{id}")
     fun getEvent(@Path("id") id: Long): Observable<ResponseBase<Event>>
 
-    @PUT("v1/events/activateOrDeactivate/{id}")
-    fun activateOrDeactivate(@Path("id") id: Long, @Query("active") active: Boolean): Observable<ResponseBase<Event>>
+    @PUT("v1/events/approvedOrReprove/{id}")
+    fun approvedOrReprove(@Path("id") id: Long, @Query("status") status: String): Observable<ResponseBase<Event>>
 
     @POST("v1/events")
     fun save(@Body eventRequest: EventRequest): Observable<ResponseBase<Event>>
