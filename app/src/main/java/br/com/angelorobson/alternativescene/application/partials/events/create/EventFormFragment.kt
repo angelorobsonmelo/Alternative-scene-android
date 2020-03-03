@@ -63,6 +63,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
     private val eventRequest = EventRequest()
     private lateinit var mCities: List<City>
+    private var base64String = ""
 
     @Inject
     lateinit var mFactory: ViewModelProvider.Factory
@@ -257,9 +258,7 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
 
                     authResponse?.userAppDto?.let {
                         eventRequest.userAppId = it.id
-
-                        eventRequest.imageUrl =
-                            binding.previewEventImageView.drawable.toBitmap().encodeTobase64() ?: ""
+                        eventRequest.imageUrl = base64String
 
                         mViewModel.save(eventRequest)
                     } ?: run {
@@ -434,7 +433,8 @@ class EventFormFragment : BindingFragment<EventFormFragmentBinding>() {
             binding.previewEventImageView.visibility = View.VISIBLE
             val bitmap = imagePath.decodeFile()
             binding.previewEventImageView.setImageBitmap(bitmap)
-            eventRequest.imageUrl = imagePath
+            eventRequest.imageUrl = it
+            base64String = bitmap.encodeTobase64() ?: ""
         }
     }
 

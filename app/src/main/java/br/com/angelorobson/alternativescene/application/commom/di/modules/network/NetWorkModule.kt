@@ -68,7 +68,9 @@ class NetWorkModule {
         cache: Cache
     ): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
-            .readTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(3, TimeUnit.MINUTES)
+            .connectTimeout(3, TimeUnit.MINUTES)
+            .writeTimeout(3, TimeUnit.MINUTES)
 
         httpClient.addInterceptor(customInterceptorRequest)
         httpClient.authenticator(tokenAuthenticator)
